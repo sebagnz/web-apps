@@ -6,5 +6,5 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
-  return <div>Welcome to your finance app</div>
+  return <div>💸</div>
 }

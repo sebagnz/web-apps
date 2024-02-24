@@ -28,7 +28,7 @@ export const BaseLayout = (props: BaseLayoutProps) => {
   }
 
   return (
-    <div className="grid grid-cols-5">
+    <div className="grid grid-cols-5 grid-rows-[auto_1fr_auto] min-h-[100svh]">
       {props.header ? <div className="col-span-5">{props.header}</div> : null}
 
       {props.leftSidebar ? <div className="hidden lg:block col-span-1">{props.leftSidebar}</div> : null}

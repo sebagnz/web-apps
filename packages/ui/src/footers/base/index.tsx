@@ -1,9 +1,9 @@
-import type { FC, HTMLAttributes } from 'react'
 import clsx from 'clsx'
+import type { FC, HTMLAttributes } from 'react'
 
 export const BaseFooter: FC<HTMLAttributes<HTMLDivElement>> = ({ children, className, ...props }) => {
   return (
-    <footer className={clsx('px-4 py-2', className)} {...props}>
+    <footer className={clsx(className, 'flex')} {...props}>
       {children}
     </footer>
   )

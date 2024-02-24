@@ -1,5 +1,5 @@
-import type { FC, HTMLAttributes } from 'react'
 import clsx from 'clsx'
+import type { FC, HTMLAttributes } from 'react'
 
 export const BaseHeader: FC<HTMLAttributes<HTMLDivElement>> = ({ children, className, ...props }) => {
   return (

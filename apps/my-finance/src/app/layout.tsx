@@ -1,6 +1,7 @@
-import { BaseFooter, BaseHeader, BaseLayout } from '@web-apps/ui'
 import clsx from 'clsx'
 import { Sarabun } from 'next/font/google'
+
+import { BaseFooter, BaseHeader, BaseLayout } from '@web-apps/ui'
 
 import './globals.css'
 
@@ -11,19 +12,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${font.className}`}>
         <BaseLayout
-          header={<BaseHeader className={clsx('relative', 'px-4', 'py-3 lg:py-2', 'border-b border-x-slate-300')}>{/* <MainNav /> */}</BaseHeader>}
+          header={<BaseHeader className={clsx('py-2', 'justify-center', 'border-b border-x-slate-300')}>This is the header</BaseHeader>}
+          leftSidebar={<div className="h-full flex flex-col justify-center items-center bg-slate-700">👈</div>}
           main={
             <>
               <main>{children}</main>
             </>
           }
-          footer={
-            <BaseFooter className="bg-slate-600/20 text-base-content-3 text-xs !py-10">
-              <div className="flex flex-col gap-y-4 justify-between md:flex-row md:justify-around items-center max-w-screen-xl mx-auto">
-                <div className="grid grid-cols-1 gap-y-2 md:grid-cols-3 md:gap-x-3 text-center"></div>
-              </div>
-            </BaseFooter>
-          }
+          rightSidebar={<div className="h-full flex flex-col justify-center items-center bg-slate-700">👉</div>}
+          footer={<BaseFooter className={clsx('py-2', 'justify-center', 'border-t border-x-slate-300')}>This is the footer</BaseFooter>}
         />
       </body>
     </html>
