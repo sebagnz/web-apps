@@ -1,1 +1,1 @@
-export { createAccountService } from './accounts/accounts-service'
+export { type AccountsService, createAccountService } from './accounts/accounts-service'

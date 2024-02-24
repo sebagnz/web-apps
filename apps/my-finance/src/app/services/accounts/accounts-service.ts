@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import { Account, AccountListSchema, AccountsRepository } from '@/domain'
+import { Account, AccountsRepository } from '@/domain'
 
 export interface AccountsService {
   create: (account: Omit<Account, 'id'>) => Promise<Account>
