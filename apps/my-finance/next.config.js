@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  transpilePackages: ['@my-finance/ui'],
+  transpilePackages: ['@web-apps/ui'],
   webpack: (config) => {
     return config
   },

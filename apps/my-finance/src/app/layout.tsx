@@ -1,7 +1,6 @@
+import { BaseFooter, BaseHeader, BaseLayout } from '@web-apps/ui'
 import clsx from 'clsx'
 import { Sarabun } from 'next/font/google'
-
-import { BaseFooter, BaseHeader, BaseLayout } from '@my-finance/ui'
 
 import './globals.css'
 
