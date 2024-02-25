@@ -17,7 +17,7 @@ export default function AccountsPage() {
     <div className="px-4 lg:px-0">
       <p className="text-center mt-4">
         <span className="block text-xl">Total balance</span>
-        <span className="block text-5xl font-semibold">€ {totalBalance}</span>
+        <span className="block text-5xl font-medium">€ {totalBalance}</span>
       </p>
       <div className="flex justify-between items-center my-4">
         <h1 className="text-xl">Accounts</h1>
@@ -29,11 +29,13 @@ export default function AccountsPage() {
         {accounts.map((account) => (
           <div className="flex justify-between items-center bg-accent hover:bg-accent-focus text-accent-content rounded-md p-4 my-2" key={account.id}>
             <div>
-              <p className="text-xl">{account.name}</p>
+              <p className="text-xl">
+                {account.image} {account.name}
+              </p>
               <p>€ {account.balance}</p>
             </div>
             <button aria-label={`Delete account ${account.name}`} onClick={() => deleteAccount(account.id)}>
-              <TrashCanIcon hoverable className="text-accent-content" />
+              <TrashCanIcon hoverable className="text-accent-content/70" />
             </button>
           </div>
         ))}

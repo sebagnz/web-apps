@@ -16,7 +16,7 @@ export default function AccountsLayout({ children, modal }: AccountsLayoutProps)
   return (
     <>
       {children}
-      <Modal onClickOutside={router.back} show={pathname !== '/accounts'}>
+      <Modal onClickOutside={router.back} onClose={router.back} show={pathname !== '/accounts'}>
         {modal}
       </Modal>
     </>
