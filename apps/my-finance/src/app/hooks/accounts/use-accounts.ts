@@ -1,36 +1,54 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo } from 'react'
+import useSWR, { useSWRConfig } from 'swr'
 
-import { Account, AccountList } from '@/domain'
+import { Account } from '@/domain'
 
 import { AccountsService } from '@/services'
 
-export const createUseAccounts = (accountsService: AccountsService) => () => {
-  const [accounts, setAccounts] = useState<AccountList>([])
+const ACCOUNTS_KEY = 'accounts'
 
-  const fetchAccounts = async () => {
-    console.log('Fetching accounts')
-    const accounts = await accountsService.getAll()
-    setAccounts(accounts)
-  }
+export const createUseAccounts = (accountsService: AccountsService) => () => {
+  const { mutate } = useSWRConfig()
+
+  const {
+    data: accounts,
+    error,
+    isLoading,
+  } = useSWR(ACCOUNTS_KEY, accountsService.getAll, {
+    fallbackData: [],
+  })
 
   const createAccount = async (name: Account['name'], balance: Account['balance'], image: Account['image']) => {
-    await accountsService.create({ name, balance, image })
-    await fetchAccounts()
+    const createAndUpdateAccounts = async () => {
+      await accountsService.create({ name, balance, image })
+      return accountsService.getAll()
+    }
+
+    return mutate(ACCOUNTS_KEY, createAndUpdateAccounts)
   }
 
   const deleteAccount = async (id: Account['id']) => {
-    console.log('Deleting account')
-    await accountsService.delete(id)
-    await fetchAccounts()
+    const deleteAndUpdateAccounts = async () => {
+      await accountsService.delete(id)
+      return accountsService.getAll()
+    }
+
+    return mutate(ACCOUNTS_KEY, deleteAndUpdateAccounts, {
+      optimisticData: accounts.filter((account) => account.id !== id),
+      rollbackOnError: true,
+    })
   }
 
-  const totalBalance = useMemo(() => accounts.reduce((acc, account) => account.balance + acc, 0), [accounts])
+  const totalBalance = useMemo(() => {
+    return accounts.reduce((acc, account) => account.balance + acc, 0)
+  }, [accounts])
 
   return {
     accounts,
+    error,
+    isLoading,
     totalBalance,
-    fetchAccounts: useCallback(fetchAccounts, []),
-    createAccount: useCallback(createAccount, []),
-    deleteAccount: useCallback(deleteAccount, []),
+    createAccount: useCallback(createAccount, [mutate]),
+    deleteAccount: useCallback(deleteAccount, [mutate, accounts]),
   }
 }

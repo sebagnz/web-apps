@@ -1,17 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 
 import { useAccounts } from '@/hooks/accounts'
 
 export default function AccountsPage() {
-  const { accounts, totalBalance, fetchAccounts, createAccount, deleteAccount } = useAccounts()
-  const [error, setError] = useState<Error | null>(null)
-
-  useEffect(() => {
-    fetchAccounts().catch(setError)
-  }, [fetchAccounts])
+  const { accounts, error, isLoading, totalBalance, deleteAccount } = useAccounts()
 
   const handleDeleteAccountClick = () => {
     const [firstAccount] = accounts
@@ -19,14 +13,9 @@ export default function AccountsPage() {
     deleteAccount(firstAccount.id)
   }
 
-  if (error) {
-    return (
-      <div>
-        <h1>Something went wrong</h1>
-        <p>{error.message}</p>
-      </div>
-    )
-  }
+  if (isLoading) return <div>Loading...</div>
+
+  if (error) return <p>{error.message}</p>
 
   return (
     <div>
