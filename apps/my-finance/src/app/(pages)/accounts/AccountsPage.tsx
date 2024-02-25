@@ -9,6 +9,15 @@ import { useAccounts } from '@/hooks/accounts'
 export default function AccountsPage() {
   const { accounts, error, isLoading, totalBalance, deleteAccount } = useAccounts()
 
+  const handleDeleteAccountIntent = (id: string) => {
+    const account = accounts.find((account) => account.id === id)
+
+    if (!account) return
+
+    const confirmIntent = window.confirm(`Are you sure you want to delete ${account.name} account?`)
+    if (confirmIntent) deleteAccount(id)
+  }
+
   if (isLoading) return <div>Loading...</div>
 
   if (error) return <p>{error.message}</p>
@@ -34,7 +43,7 @@ export default function AccountsPage() {
               </p>
               <p>€ {account.balance}</p>
             </div>
-            <button aria-label={`Delete account ${account.name}`} onClick={() => deleteAccount(account.id)}>
+            <button aria-label={`Delete account ${account.name}`} onClick={() => handleDeleteAccountIntent(account.id)}>
               <TrashCanIcon hoverable className="text-accent-content/70" />
             </button>
           </div>
