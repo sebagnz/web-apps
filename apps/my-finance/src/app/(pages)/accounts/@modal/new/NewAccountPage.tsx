@@ -9,7 +9,7 @@ export default function Page() {
   const { createAccount } = useAccounts()
 
   const handleCreateAccountClick = async () => {
-    const accountName = 'New Account'
+    const accountName = 'Santander (Esp)'
     const accountBalance = 1500
     const accountImage = 'https://via.placeholder.com/150'
 

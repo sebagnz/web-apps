@@ -15,13 +15,13 @@ module.exports = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
       colors: {
-        'base-1': colors.neutral[100],
+        'base-1': colors.zinc[100],
         'base-content-1': colors.black,
         'base-content-2': colors.gray[700],
         'base-content-3': colors.gray[500],
-        accent: colors.indigo[600],
-        'accent-focus': colors.indigo[700],
-        'accent-content': colors.white,
+        accent: colors.zinc[200],
+        'accent-focus': colors.zinc[300],
+        'accent-content': colors.zinc[700],
       },
       keyframes: {
         fade: { from: { opacity: 0 }, to: { opacity: 1 } },

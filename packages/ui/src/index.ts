@@ -11,4 +11,5 @@ export * from './table'
 /**
  * Icons
  */
-export { HalfStar, Star } from './icons/star'
+export * from './icons/trash-can'
+export * from './icons/plus'
