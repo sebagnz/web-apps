@@ -11,9 +11,6 @@ module.exports = {
       transitionProperty: {
         height: 'height',
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-      },
       colors: {
         'base-1': colors.zinc[100],
         'base-content-1': colors.black,

@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${font.className}`}>
         <BaseLayout
-          header={<BaseHeader className={clsx('py-2', 'justify-center', 'border-b border-x-slate-300')}>My Finances</BaseHeader>}
+          header={<BaseHeader className={clsx('py-2', 'justify-center', 'border-b border-white/10 border-x-slate-300')}>My Finances</BaseHeader>}
           leftSidebar={<div className="h-full flex flex-col justify-center items-center"></div>}
           main={<main>{children}</main>}
           rightSidebar={<div className="h-full flex flex-col justify-center items-center"></div>}

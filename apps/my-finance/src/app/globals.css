@@ -26,13 +26,13 @@ body {
 
 html,
 body {
-  font-family: theme(fontFamily.sans);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior-x: none;
 
-  @apply bg-base-1 text-base-content-1;
+  @apply bg-gradient-to-br from-slate-300 to-slate-400;
+  @apply text-base-content-1;
 }
 
 .content-grid {

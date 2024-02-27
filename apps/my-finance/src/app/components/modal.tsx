@@ -22,7 +22,7 @@ export const Modal = ({ show, className, onClickOutside, onClose, children }: Mo
   ) : null
 
   return (
-    <div className="absolute inset-0 bg-slate-500/50" onClick={onClickOutside}>
+    <div className="absolute inset-0 bg-slate-500/50 backdrop-blur-sm" onClick={onClickOutside}>
       <div
         onClick={(e) => e.stopPropagation()}
         className={clsx(
