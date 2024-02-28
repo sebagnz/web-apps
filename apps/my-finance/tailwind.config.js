@@ -16,9 +16,13 @@ module.exports = {
         'base-content-1': colors.black,
         'base-content-2': colors.gray[700],
         'base-content-3': colors.gray[500],
+        error: colors.red[500],
         accent: colors.zinc[200],
         'accent-focus': colors.zinc[300],
         'accent-content': colors.zinc[700],
+        control: colors.zinc[100],
+        'control-focus': colors.zinc[50],
+        'control-content': colors.zinc[700],
       },
       keyframes: {
         fade: { from: { opacity: 0 }, to: { opacity: 1 } },

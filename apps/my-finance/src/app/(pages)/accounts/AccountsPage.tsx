@@ -61,11 +61,12 @@ export default function AccountsPage() {
               )}
               key={account.id}
             >
-              <div>
-                <p className="text-xl">
-                  {account.image} {account.name}
-                </p>
-                <p>€ {account.balance}</p>
+              <div className="flex items-center gap-x-4">
+                <p className="text-5xl">{account.image}</p>
+                <div>
+                  <p className="text-xl">{account.name}</p>
+                  <p>€ {account.balance}</p>
+                </div>
               </div>
               <button aria-label={`Delete account ${account.name}`} onClick={() => handleDeleteAccountIntent(account.id)}>
                 <TrashCanIcon hoverable className="text-accent-content/70" />
