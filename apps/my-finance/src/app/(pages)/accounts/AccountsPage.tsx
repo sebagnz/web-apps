@@ -2,6 +2,8 @@
 
 import clsx from 'clsx'
 import Link from 'next/link'
+import { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 import { PlusIcon, TrashCanIcon } from '@web-apps/ui'
 
@@ -10,13 +12,23 @@ import { useAccounts } from '@/hooks/accounts'
 export default function AccountsPage() {
   const { accounts, error, isLoading, totalBalance, deleteAccount } = useAccounts()
 
-  const handleDeleteAccountIntent = (id: string) => {
+  useEffect(() => {
+    if (error) toast.error(error.message)
+  }, [error])
+
+  const handleDeleteAccountIntent = async (id: string) => {
     const account = accounts.find((account) => account.id === id)
 
     if (!account) return
 
     const confirmIntent = window.confirm(`Are you sure you want to delete ${account.name} account?`)
-    if (confirmIntent) deleteAccount(id)
+    if (confirmIntent) {
+      try {
+        await deleteAccount(id)
+      } catch (error) {
+        if (error instanceof Error) toast.error(error.message)
+      }
+    }
   }
 
   if (isLoading) return <div>Loading...</div>

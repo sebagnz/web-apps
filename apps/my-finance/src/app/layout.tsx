@@ -1,5 +1,7 @@
 import clsx from 'clsx'
 import { Sarabun } from 'next/font/google'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.min.css'
 
 import { BaseHeader, BaseLayout } from '@web-apps/ui'
 
@@ -17,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           main={<main>{children}</main>}
           rightSidebar={<div className="h-full flex flex-col justify-center items-center"></div>}
         />
+        <ToastContainer position="bottom-center" autoClose={4000} closeOnClick />
       </body>
     </html>
   )
