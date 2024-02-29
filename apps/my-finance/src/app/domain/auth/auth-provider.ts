@@ -5,5 +5,5 @@ export interface AuthProvider {
   login: (email: string, password: string) => Promise<void>
   logout: () => Promise<void>
   getLoggerUser: () => Promise<User | null>
-  onAuthStateChanged: (callback: (user: User | null) => void) => void
+  onAuthStateChanged: (callback: (user: User | null) => void) => () => void
 }

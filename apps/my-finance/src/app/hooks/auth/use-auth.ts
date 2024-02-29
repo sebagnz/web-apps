@@ -10,9 +10,7 @@ export const createUseAuth = (authService: AuthService) => () => {
 
   const { data: user, error, isLoading } = useSWR(USER_KEY, authService.getLoggedUser, { fallbackData: null, revalidateOnMount: true })
 
-  useEffect(() => {
-    authService.onAuthStateChanged((user) => mutate(USER_KEY))
-  }, [mutate])
+  useEffect(() => authService.onAuthStateChanged((user) => mutate(USER_KEY)), [mutate])
 
   const register = async (email: string, password: string) => {
     const registerFn = async () => await authService.register(email, password)

@@ -5,7 +5,7 @@ export interface AuthService {
   login: (email: string, password: string) => Promise<void>
   logout: () => Promise<void>
   getLoggedUser: () => Promise<User | null>
-  onAuthStateChanged: (callback: (user: User | null) => void) => void
+  onAuthStateChanged: (callback: (user: User | null) => void) => () => void
 }
 
 export const createAuthService = (provider: AuthProvider): AuthService => {

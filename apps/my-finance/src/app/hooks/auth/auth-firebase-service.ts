@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 
 import { AuthProvider } from '@/domain'
 
@@ -22,13 +22,13 @@ const createAuthFirebaseProvider = (): AuthProvider => {
       return { id: auth.currentUser.uid }
     },
     onAuthStateChanged: (callback) => {
-      return auth.onAuthStateChanged(
-        (auth,
-        (user) => {
-          if (!user) callback(null)
-          else callback({ id: user.uid })
-        }),
-      )
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        console.log('onAuthStateChanged', user)
+        if (!user) callback(null)
+        else callback({ id: user.uid })
+      })
+
+      return unsubscribe
     },
   }
 }
