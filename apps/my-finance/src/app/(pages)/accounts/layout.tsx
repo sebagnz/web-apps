@@ -1,5 +1,6 @@
 'use client'
 
+import { Authenticated } from '@/app/components/Authentication'
 import { usePathname, useRouter } from 'next/navigation'
 
 import { Modal } from '@/components/modal'
@@ -14,11 +15,11 @@ export default function AccountsLayout({ children, modal }: AccountsLayoutProps)
   const pathname = usePathname()
 
   return (
-    <>
+    <Authenticated redirectToLogin fallback={<div>Checking authentication...</div>}>
       {children}
       <Modal onClickOutside={router.back} onClose={router.back} show={pathname !== '/accounts'}>
         {modal}
       </Modal>
-    </>
+    </Authenticated>
   )
 }

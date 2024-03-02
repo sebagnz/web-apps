@@ -1,24 +1,15 @@
-'use client'
-
 import clsx from 'clsx'
-import { getFirestore } from 'firebase/firestore'
 import { Sarabun } from 'next/font/google'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
 
 import { BaseHeader, BaseLayout } from '@web-apps/ui'
 
-import { firebaseApp } from './firebase'
 import './globals.css'
-import { useAuth } from './hooks/auth'
 
 const font = Sarabun({ subsets: ['latin'], weight: ['200', '300', '400', '500', '600', '700', '800'] })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const db = getFirestore(firebaseApp)
-
-  useAuth()
-
   return (
     <html lang="en">
       <body className={`${font.className}`}>
