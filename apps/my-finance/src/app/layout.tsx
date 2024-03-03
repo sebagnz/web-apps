@@ -22,13 +22,13 @@ const AuthButton = () => {
   return (
     <>
       <Authenticated>
-        <button className="flex items-center gap-x-1 text-sm text-base-content-2" onClick={logout}>
+        <button className="flex items-center gap-x-1 text-sm text-content-secondary" onClick={logout}>
           <span>Sign out</span>
           <ArrowRightToBracketIcon className="relative top-[1px] w-[20px] h-[20px]" />
         </button>
       </Authenticated>
       <Unauthenticated>
-        <button className="flex items-center gap-x-1 text-sm text-base-content-2" onClick={() => login('sebastiangon11@gmail.com', '123456')}>
+        <button className="flex items-center gap-x-1 text-sm text-content-secondary" onClick={() => login('sebastiangon11@gmail.com', '123456')}>
           <span>Sign in</span>
           <ArrowLeftToBracketIcon className="relative top-[1px] w-[20px] h-[20px]" />
         </button>

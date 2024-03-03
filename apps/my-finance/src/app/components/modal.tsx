@@ -22,18 +22,18 @@ export const Modal = ({ show, className, onClickOutside, onClose, children }: Mo
   ) : null
 
   return (
-    <div className="absolute inset-0 bg-slate-500/50 backdrop-blur-sm" onClick={onClickOutside}>
+    <div className="absolute inset-0 bg-modal-overlay backdrop-blur-sm" onClick={onClickOutside}>
       <div
         onClick={(e) => e.stopPropagation()}
         className={clsx(
+          'bg-modal-base',
           'inline-block',
-          'max-md:min-w-[90vw] max-xl:min-w-[50vw] min-w-[35vw] max-w-[90vw]',
-          'min-h-[400px] max-h-[90vh]',
           'relative',
           'top-1/4 md:top-1/3 left-1/2',
           '-translate-y-1/3 -translate-x-1/2',
+          'max-md:min-w-[90vw] max-xl:min-w-[50vw] min-w-[35vw] max-w-[90vw]',
+          'min-h-[400px] max-h-[90vh]',
           'rounded-md',
-          'bg-white/70',
           'p-6',
           className,
         )}

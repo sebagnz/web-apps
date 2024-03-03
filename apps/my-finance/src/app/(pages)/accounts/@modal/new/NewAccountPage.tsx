@@ -37,16 +37,16 @@ export default function Page() {
     back()
   }
 
-  const inputClassNames = 'text-control-content bg-control focus:bg-control-focus focus:outline-none py-3 px-2 border-accent border rounded-md'
+  const inputClassNames = 'fi-input py-3 px-2 border rounded-md'
 
   return (
     <form className="flex flex-col justify-between gap-y-3" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="text-center text-3xl my-4">Create account</h2>
       <div>
         <div className="flex gap-x-4">
-          <div className="rounded-md border-accent border">
+          <div className="rounded-md border">
             <select
-              className="text-zinc-400 h-full text-2xl pl-3 pr-5 py-2 min-w-[60px] rounded-md border-transparent border-r-8 bg-control active:bg-control-focus focus:outline-none"
+              className="fi-input text-content-tertiery h-full text-2xl pl-3 pr-5 py-2 min-w-[60px] rounded-md border-transparent border-r-8"
               {...register('image')}
             >
               <option value="💶">💶</option>
@@ -81,7 +81,7 @@ export default function Page() {
         {errors.balance?.message && <p className="text-error">{errors.balance?.message}</p>}
       </div>
 
-      <input className="border rounded-md mt-4 mx-auto px-3 py-2 hover:bg-accent" type="submit" value="Create Account" />
+      <input className="fi-control rounded-md mt-4 mx-auto px-3 py-2" type="submit" value="Create Account" />
     </form>
   )
 }

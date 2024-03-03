@@ -54,7 +54,7 @@ export default function AccountsPage() {
               className={clsx(
                 'flex justify-between items-center',
                 'rounded-md p-4',
-                'bg-accent text-accent-content',
+                'bg-content-base text-content-secondary',
                 'shadow-sm',
                 'transition-shadow duration-300',
                 'hover:shadow-md',
@@ -69,7 +69,7 @@ export default function AccountsPage() {
                 </div>
               </div>
               <button aria-label={`Delete account ${account.name}`} onClick={() => handleDeleteAccountIntent(account.id)}>
-                <TrashCanIcon hoverable className="text-accent-content/70" />
+                <TrashCanIcon hoverable className="text-content-tertiary" />
               </button>
             </div>
           ))}
