@@ -7,8 +7,7 @@ import { z } from 'zod'
 
 import { useAccounts } from '@/hooks/accounts'
 
-import { LabeledSelect } from '@/components/LabeledSelect'
-import { LabeledTextInput } from '@/components/LabeledTextInput'
+import { LabeledInput } from '@/components/forms/LabeledInput'
 
 const errorMessages = {
   nameRequired: 'Please, introduce a name for your new account',
@@ -45,36 +44,44 @@ export default function Page() {
       <div>
         <div className="flex gap-x-4">
           <div>
-            <LabeledSelect label="Image" {...register('image')}>
-              <option value="💶">💶</option>
-              <option value="💵">💵</option>
-              <option value="💸">💸</option>
-              <option value="💰">💰</option>
-              <option value="🤑">🤑</option>
-              <option value="💳">💳</option>
-              <option value="💲">💲</option>
-              <option value="🪙">🪙</option>
-            </LabeledSelect>
+            <LabeledInput>
+              <LabeledInput.Label htmlFor="image">Image</LabeledInput.Label>
+              <LabeledInput.Select id="image" {...register('image')}>
+                <LabeledInput.Option value="💶">💶</LabeledInput.Option>
+                <LabeledInput.Option value="💵">💵</LabeledInput.Option>
+                <LabeledInput.Option value="💸">💸</LabeledInput.Option>
+                <LabeledInput.Option value="💰">💰</LabeledInput.Option>
+                <LabeledInput.Option value="🤑">🤑</LabeledInput.Option>
+                <LabeledInput.Option value="💳">💳</LabeledInput.Option>
+                <LabeledInput.Option value="💲">💲</LabeledInput.Option>
+                <LabeledInput.Option value="🪙">🪙</LabeledInput.Option>
+              </LabeledInput.Select>
+            </LabeledInput>
           </div>
           <div className="w-full">
-            <LabeledTextInput label="Name" autoComplete="off" id="name" placeholder="Name" {...register('name')} />
+            <LabeledInput>
+              <LabeledInput.Label htmlFor="name">Name</LabeledInput.Label>
+              <LabeledInput.Text id="name" autoComplete="off" placeholder="Name" {...register('name')} />
+            </LabeledInput>
           </div>
         </div>
         {errors.name?.message && <p className="text-error text-sm">{errors.name?.message}</p>}
       </div>
 
       <div>
-        <LabeledTextInput
-          label="Balance"
-          className="text-3xl text-center"
-          id="balance"
-          placeholder="100"
-          autoComplete="off"
-          type="number"
-          inputMode="decimal"
-          step="any"
-          {...register('balance', { valueAsNumber: true })}
-        />
+        <LabeledInput>
+          <LabeledInput.Label htmlFor="balance">Balance</LabeledInput.Label>
+          <LabeledInput.Text
+            id="balance"
+            className="text-3xl text-center"
+            placeholder="100"
+            autoComplete="off"
+            type="number"
+            inputMode="decimal"
+            step="any"
+            {...register('balance', { valueAsNumber: true })}
+          />
+        </LabeledInput>
         {errors.balance?.message && <p className="text-error text-sm">{errors.balance?.message}</p>}
       </div>
 

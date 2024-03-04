@@ -10,14 +10,15 @@ type AuthenticationProps = {
 
 const Authenticated = ({ redirectToLogin = false, children, fallback = null }: AuthenticationProps & { redirectToLogin?: boolean }) => {
   const { user, isLoading } = useAuth()
-  const { replace } = useRouter()
+  const router = useRouter()
   const pathname = usePathname()
 
   useEffect(() => {
     if (isLoading) return
     if (user) return
-    if (redirectToLogin) replace(`/?login=true&origin=${pathname}`)
-  }, [isLoading, user, replace, pathname, redirectToLogin])
+    if (pathname === '/login') return
+    if (redirectToLogin) router.replace(`/login?origin=${encodeURIComponent(pathname)}`)
+  }, [isLoading, user, router, pathname, redirectToLogin])
 
   if (isLoading) return fallback
   if (!user) return null

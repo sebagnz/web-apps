@@ -43,7 +43,7 @@ export default function AccountsPage() {
       </p>
       <div className="flex justify-between items-center mt-8 mb-4">
         <h1 className="text-sm uppercase">Accounts</h1>
-        <Link aria-label="Create new account" className="hover:underline" href="/accounts/new">
+        <Link aria-label="Create new account" href="/accounts/new">
           <PlusIcon hoverable />
         </Link>
       </div>
