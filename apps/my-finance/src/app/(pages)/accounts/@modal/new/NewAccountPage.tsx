@@ -1,12 +1,14 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { useAccounts } from '@/hooks/accounts'
+
+import { LabeledSelect } from '@/components/LabeledSelect'
+import { LabeledTextInput } from '@/components/LabeledTextInput'
 
 const errorMessages = {
   nameRequired: 'Please, introduce a name for your new account',
@@ -37,18 +39,13 @@ export default function Page() {
     back()
   }
 
-  const inputClassNames = 'fi-input py-3 px-2 border rounded-md'
-
   return (
     <form className="flex flex-col justify-between gap-y-3" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="text-center text-3xl my-4">Create account</h2>
       <div>
         <div className="flex gap-x-4">
-          <div className="rounded-md border">
-            <select
-              className="fi-input text-content-tertiery h-full text-2xl pl-3 pr-5 py-2 min-w-[60px] rounded-md border-transparent border-r-8"
-              {...register('image')}
-            >
+          <div>
+            <LabeledSelect label="Image" {...register('image')}>
               <option value="💶">💶</option>
               <option value="💵">💵</option>
               <option value="💸">💸</option>
@@ -57,19 +54,19 @@ export default function Page() {
               <option value="💳">💳</option>
               <option value="💲">💲</option>
               <option value="🪙">🪙</option>
-            </select>
+            </LabeledSelect>
           </div>
-          <input className={clsx(inputClassNames, 'w-full')} autoComplete="off" id="name" placeholder="Name" {...register('name')} />
+          <div className="w-full">
+            <LabeledTextInput label="Name" autoComplete="off" id="name" placeholder="Name" {...register('name')} />
+          </div>
         </div>
-        {errors.name?.message && <p className="text-error">{errors.name?.message}</p>}
+        {errors.name?.message && <p className="text-error text-sm">{errors.name?.message}</p>}
       </div>
 
-      <div className="flex flex-col gap-x-4">
-        <label className="my-2" htmlFor="balance">
-          Balance
-        </label>
-        <input
-          className={`text-3xl text-center ${inputClassNames}`}
+      <div>
+        <LabeledTextInput
+          label="Balance"
+          className="text-3xl text-center"
           id="balance"
           placeholder="100"
           autoComplete="off"
@@ -78,10 +75,10 @@ export default function Page() {
           step="any"
           {...register('balance', { valueAsNumber: true })}
         />
-        {errors.balance?.message && <p className="text-error">{errors.balance?.message}</p>}
+        {errors.balance?.message && <p className="text-error text-sm">{errors.balance?.message}</p>}
       </div>
 
-      <input className="fi-control rounded-md mt-4 mx-auto px-3 py-2" type="submit" value="Create Account" />
+      <input type="submit" value="Create Account" className="fi-control rounded-md mt-4 mx-auto px-3 py-2" />
     </form>
   )
 }

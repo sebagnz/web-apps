@@ -40,7 +40,7 @@ const AuthButton = () => {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${font.className}`}>
+      <body className={font.className}>
         <BaseLayout
           header={
             <BaseHeader className={clsx('py-2 mx-4', 'justify-center items-center', 'border-b border-white/10 border-x-slate-300')}>
