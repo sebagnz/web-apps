@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 import { z } from 'zod'
 
 import { useAccounts } from '@/hooks/accounts'
@@ -34,56 +35,54 @@ export default function Page() {
   const { errors } = formState
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
-    await createAccount(data.name, data.balance, data.image)
-    back()
+    try {
+      await createAccount(data.name, data.balance, data.image)
+      back()
+    } catch (error) {
+      if (error instanceof Error) toast.error(error.message)
+    }
   }
 
   return (
     <form className="flex flex-col justify-between gap-y-3" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="text-center text-3xl my-4">Create account</h2>
       <div>
-        <div className="flex gap-x-4">
-          <div>
-            <LabeledInput>
-              <LabeledInput.Label htmlFor="image">Image</LabeledInput.Label>
-              <LabeledInput.Select id="image" {...register('image')}>
-                <LabeledInput.Option value="💶">💶</LabeledInput.Option>
-                <LabeledInput.Option value="💵">💵</LabeledInput.Option>
-                <LabeledInput.Option value="💸">💸</LabeledInput.Option>
-                <LabeledInput.Option value="💰">💰</LabeledInput.Option>
-                <LabeledInput.Option value="🤑">🤑</LabeledInput.Option>
-                <LabeledInput.Option value="💳">💳</LabeledInput.Option>
-                <LabeledInput.Option value="💲">💲</LabeledInput.Option>
-                <LabeledInput.Option value="🪙">🪙</LabeledInput.Option>
-              </LabeledInput.Select>
-            </LabeledInput>
-          </div>
-          <div className="w-full">
-            <LabeledInput>
-              <LabeledInput.Label htmlFor="name">Name</LabeledInput.Label>
-              <LabeledInput.Text id="name" autoComplete="off" placeholder="Name" {...register('name')} />
-            </LabeledInput>
-          </div>
+        <div className="flex max-md:flex-col max-md:gap-y-3 md:gap-x-4">
+          <LabeledInput className="max-md:flex-1">
+            <LabeledInput.Label htmlFor="image">Image</LabeledInput.Label>
+            <LabeledInput.Select id="image" {...register('image')}>
+              <LabeledInput.Option value="💶">💶</LabeledInput.Option>
+              <LabeledInput.Option value="💵">💵</LabeledInput.Option>
+              <LabeledInput.Option value="💸">💸</LabeledInput.Option>
+              <LabeledInput.Option value="💰">💰</LabeledInput.Option>
+              <LabeledInput.Option value="🤑">🤑</LabeledInput.Option>
+              <LabeledInput.Option value="💳">💳</LabeledInput.Option>
+              <LabeledInput.Option value="💲">💲</LabeledInput.Option>
+              <LabeledInput.Option value="🪙">🪙</LabeledInput.Option>
+            </LabeledInput.Select>
+          </LabeledInput>
+          <LabeledInput className="flex-1">
+            <LabeledInput.Label htmlFor="name">Name</LabeledInput.Label>
+            <LabeledInput.Text id="name" autoComplete="off" placeholder="Name" {...register('name')} />
+          </LabeledInput>
         </div>
         {errors.name?.message && <p className="text-error text-sm">{errors.name?.message}</p>}
       </div>
 
-      <div>
-        <LabeledInput>
-          <LabeledInput.Label htmlFor="balance">Balance</LabeledInput.Label>
-          <LabeledInput.Text
-            id="balance"
-            className="text-3xl text-center"
-            placeholder="100"
-            autoComplete="off"
-            type="number"
-            inputMode="decimal"
-            step="any"
-            {...register('balance', { valueAsNumber: true })}
-          />
-        </LabeledInput>
-        {errors.balance?.message && <p className="text-error text-sm">{errors.balance?.message}</p>}
-      </div>
+      <LabeledInput>
+        <LabeledInput.Label htmlFor="balance">Balance</LabeledInput.Label>
+        <LabeledInput.Text
+          id="balance"
+          className="text-3xl"
+          placeholder="100"
+          autoComplete="off"
+          type="number"
+          inputMode="decimal"
+          step="any"
+          {...register('balance', { valueAsNumber: true })}
+        />
+      </LabeledInput>
+      {errors.balance?.message && <p className="text-error text-sm">{errors.balance?.message}</p>}
 
       <input type="submit" value="Create Account" className="fi-control rounded-md mt-4 mx-auto px-3 py-2" />
     </form>

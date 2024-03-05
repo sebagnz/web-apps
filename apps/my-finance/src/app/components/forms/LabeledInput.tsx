@@ -1,8 +1,8 @@
 import clsx from 'clsx'
 import { ComponentPropsWithoutRef, ReactNode, forwardRef } from 'react'
 
-function LabeledInput(props: { children: ReactNode }) {
-  return <div className={clsx('relative', 'flex', 'border rounded-md overflow-hidden', 'focus-within:ring-1')} {...props} />
+function LabeledInput({ className, ...props }: { className?: string; children: ReactNode }) {
+  return <div className={clsx('relative', 'flex', 'border rounded-md overflow-hidden', 'focus-within:ring-1', className)} {...props} />
 }
 
 function Label(
@@ -27,7 +27,7 @@ type SelectProps = ComponentPropsWithoutRef<'select'>
 const Select = forwardRef<SelectRef, SelectProps>(function SelectInput({ className, ...props }, ref) {
   return (
     <select
-      className={clsx('fi-input text-content-tertiery text-2xl pl-3 pr-5 py-2 min-w-[60px] border-r-transparent border-r-8', className)}
+      className={clsx('fi-input flex-1 text-content-tertiery text-2xl pl-3 pr-5 py-2 min-w-[60px] border-r-transparent border-r-8', className)}
       {...props}
       ref={ref}
     />
