@@ -1,10 +1,8 @@
-import { v4 as uuidv4 } from 'uuid'
-
 import { Account, AccountsRepository } from '@/domain'
 
 export interface AccountsService {
-  create: (account: Omit<Account, 'id'>) => Promise<Account>
-  update: (account: Account) => Promise<Account>
+  create: (account: Omit<Account, 'id'>) => Promise<void>
+  update: (account: Account) => Promise<void>
   delete: (id: Account['id']) => Promise<void>
   getById: (id: Account['id']) => Promise<Account | undefined>
   getAll: () => Promise<Account[]>
@@ -13,9 +11,7 @@ export interface AccountsService {
 export const createAccountService = (repository: AccountsRepository): AccountsService => {
   return {
     create: async (account: Omit<Account, 'id'>) => {
-      const id = uuidv4()
-      const newAccount = { ...account, id }
-      return repository.create(newAccount)
+      return repository.create(account)
     },
     update: async (account: Account) => {
       return repository.update(account)

@@ -16,24 +16,38 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
     isLoading,
   } = useSWR(ACCOUNTS_KEY, accountsService.getAll, {
     fallbackData: [],
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
   })
 
   const createAccount = async (name: Account['name'], balance: Account['balance'], image: Account['image']) => {
-    const createAndUpdateAccounts = async () => {
+    const createAndRevalidateAccounts = async () => {
       await accountsService.create({ name, balance, image })
       return accountsService.getAll()
     }
 
-    return mutate(ACCOUNTS_KEY, createAndUpdateAccounts)
+    return mutate(ACCOUNTS_KEY, createAndRevalidateAccounts)
+  }
+
+  const updateAccount = async (account: Account) => {
+    const updateAndRevalidateAccounts = async () => {
+      await accountsService.update(account)
+      return accountsService.getAll()
+    }
+
+    return mutate(ACCOUNTS_KEY, updateAndRevalidateAccounts, {
+      optimisticData: accounts.map((acc) => (acc.id === account.id ? account : acc)),
+      rollbackOnError: true,
+    })
   }
 
   const deleteAccount = async (id: Account['id']) => {
-    const deleteAndUpdateAccounts = async () => {
+    const deleteAndRevalidateAccounts = async () => {
       await accountsService.delete(id)
       return accountsService.getAll()
     }
 
-    return mutate(ACCOUNTS_KEY, deleteAndUpdateAccounts, {
+    return mutate(ACCOUNTS_KEY, deleteAndRevalidateAccounts, {
       optimisticData: accounts.filter((account) => account.id !== id),
       rollbackOnError: true,
     })
@@ -49,6 +63,7 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
     isLoading,
     totalBalance,
     createAccount: useCallback(createAccount, [mutate]),
+    updateAccount: useCallback(updateAccount, [mutate, accounts]),
     deleteAccount: useCallback(deleteAccount, [mutate, accounts]),
   }
 }

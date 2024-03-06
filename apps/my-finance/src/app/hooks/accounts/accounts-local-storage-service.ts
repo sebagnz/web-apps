@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid'
+
 import { Account, AccountListSchema, AccountsRepository } from '@/domain'
 
 import { createAccountService } from '@/services'
@@ -7,13 +9,14 @@ const LOCALSTORAGE_ACCOUNTS_KEY = `${LOCALSTORAGE_NAMESPACE}:accounts`
 
 const createLocalStorageAccountsRepository = (): AccountsRepository => {
   return {
-    create: async (account: Account) => {
+    create: async (account: Omit<Account, 'id'>) => {
+      const id = uuidv4()
       const maybeAccountList = JSON.parse(localStorage.getItem(LOCALSTORAGE_ACCOUNTS_KEY) || '[]')
       const accountList = AccountListSchema.parse(maybeAccountList)
 
-      const newAccountList = accountList.concat(account)
+      const newAccount = { ...account, id }
+      const newAccountList = accountList.concat(newAccount)
       localStorage.setItem(LOCALSTORAGE_ACCOUNTS_KEY, JSON.stringify(newAccountList))
-      return account
     },
     update: async (account: Account) => {
       const maybeAccountList = JSON.parse(localStorage.getItem(LOCALSTORAGE_ACCOUNTS_KEY) || '[]')
@@ -21,7 +24,6 @@ const createLocalStorageAccountsRepository = (): AccountsRepository => {
 
       const newAccountList = accountList.map((a) => (a.id === account.id ? account : a))
       localStorage.setItem(LOCALSTORAGE_ACCOUNTS_KEY, JSON.stringify(newAccountList))
-      return account
     },
     delete: async (id: Account['id']) => {
       const maybeAccountList = JSON.parse(localStorage.getItem(LOCALSTORAGE_ACCOUNTS_KEY) || '[]')
