@@ -9,8 +9,8 @@ export const createMockAccount: (override: Partial<Account>) => Account = (overr
 
 export const createMockAccountsRepository: () => AccountsRepository = () => {
   return {
-    create: async (account: Account) => account,
-    update: async (account: Account) => account,
+    create: async (account: Omit<Account, 'id'>) => {},
+    update: async (account: Account) => {},
     delete: async (id: Account['id']) => {},
     getById: async (id: Account['id']) => createMockAccount({ id }),
     getAll: async () => [createMockAccount({ id: uuidv4() }), createMockAccount({ id: uuidv4() })],
