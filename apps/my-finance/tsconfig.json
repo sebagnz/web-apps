@@ -20,8 +20,6 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@lib/*": ["lib/*"],
       "@/hooks/*": ["./src/app/hooks/*"],
       "@/components/*": ["./src/app/components/*"],
       "@/domain": ["./src/app/domain/index"],
