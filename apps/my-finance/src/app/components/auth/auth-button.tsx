@@ -5,7 +5,7 @@ import { ArrowLeftToBracketIcon, ArrowRightToBracketIcon } from '@web-apps/ui'
 
 import { useAuth } from '@/hooks/auth'
 
-import { Authenticated, Unauthenticated } from '@/components/auth/authentication'
+import { Authenticated, Unauthenticated } from '@/components/auth/auth'
 
 export const AuthButton = ({ className }: { className?: string }) => {
   const { logout } = useAuth()

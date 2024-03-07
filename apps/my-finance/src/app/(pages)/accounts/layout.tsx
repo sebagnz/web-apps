@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 
-import { Authenticated } from '@/components/auth/authentication'
+import { Authenticated } from '@/components/auth/auth'
 import { Modal } from '@/components/modal'
 
 type AccountsLayoutProps = {
