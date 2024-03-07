@@ -2,8 +2,6 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { Account, AccountListSchema, AccountsRepository } from '@/domain'
 
-import { createAccountService } from '@/services'
-
 const LOCALSTORAGE_NAMESPACE = 'my-finance'
 const LOCALSTORAGE_ACCOUNTS_KEY = `${LOCALSTORAGE_NAMESPACE}:accounts`
 
@@ -12,7 +10,7 @@ function delay(minMs: number = 2000, maxMs: number = 3000) {
   return new Promise((res) => setTimeout(res, delayMs))
 }
 
-const createLocalStorageAccountsRepository = (): AccountsRepository => {
+export const createLocalStorageAccountsRepository = (): AccountsRepository => {
   return {
     create: async (account: Omit<Account, 'id'>) => {
       const id = uuidv4()
@@ -61,5 +59,3 @@ const createLocalStorageAccountsRepository = (): AccountsRepository => {
     },
   }
 }
-
-export const accountsLocalStorageService = createAccountService(createLocalStorageAccountsRepository())

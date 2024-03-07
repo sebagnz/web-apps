@@ -1,5 +1,5 @@
 import { getApps, initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
+import { QueryDocumentSnapshot, getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -20,4 +20,9 @@ export const getFirestoreDB = () => {
   const firebaseApp = getFirebaseApp()
   const firestoreDB = getFirestore(firebaseApp)
   return firestoreDB
+}
+
+export type FirestoreConverer<TDB, TDomain> = {
+  toFirestore: (data: TDomain) => TDB
+  fromFirestore: (snapshot: QueryDocumentSnapshot, options: any) => TDomain
 }

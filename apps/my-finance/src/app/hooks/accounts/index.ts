@@ -1,13 +1,15 @@
-import { accountsFirestoreService } from './accounts-firestore-service'
-import { accountsLocalStorageService } from './accounts-local-storage-service'
+import { AccountsService, createAccountService } from '@/services'
+
+import { createFirestoreAccountsRepository } from './accounts-firestore-repository'
+import { createLocalStorageAccountsRepository } from './accounts-local-storage-repository'
 import { createUseAccounts } from './use-accounts'
 
-let useAccounts: ReturnType<typeof createUseAccounts>
+let accountsService: AccountsService
 
 if (process.env.NEXT_PUBLIC_ENV === 'development') {
-  useAccounts = createUseAccounts(accountsLocalStorageService)
+  accountsService = createAccountService(createLocalStorageAccountsRepository())
 } else {
-  useAccounts = createUseAccounts(accountsFirestoreService)
+  accountsService = createAccountService(createFirestoreAccountsRepository())
 }
 
-export { useAccounts }
+export const useAccounts = createUseAccounts(accountsService)
