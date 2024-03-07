@@ -18,7 +18,7 @@ type TextRef = HTMLInputElement
 type TextProps = ComponentPropsWithoutRef<'input'>
 
 const Text = forwardRef<TextRef, TextProps>(function TextInput({ className, ...props }, ref) {
-  return <input className={clsx('fi-input', 'inline-block', 'py-3 pl-3 pr-2', 'flex flex-1', className)} {...props} ref={ref} />
+  return <input className={clsx('fi-input', 'inline-block', 'py-3 pl-3 pr-2', 'flex flex-1', 'rounded-l-none', className)} {...props} ref={ref} />
 })
 
 type SelectRef = HTMLSelectElement
@@ -27,7 +27,10 @@ type SelectProps = ComponentPropsWithoutRef<'select'>
 const Select = forwardRef<SelectRef, SelectProps>(function SelectInput({ className, ...props }, ref) {
   return (
     <select
-      className={clsx('fi-input flex-1 text-content-tertiery text-2xl pl-3 pr-5 py-2 min-w-[60px] border-r-transparent border-r-8', className)}
+      className={clsx(
+        'fi-input flex-1 text-content-tertiery text-2xl pl-3 pr-5 py-2 min-w-[60px] border-r-transparent border-r-8 rounded-l-none',
+        className,
+      )}
       {...props}
       ref={ref}
     />

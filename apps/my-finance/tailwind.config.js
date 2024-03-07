@@ -19,7 +19,7 @@ module.exports = {
         'content-primary': colors.black,
         'content-secondary': colors.gray[700],
         'content-tertiary': colors.gray[500],
-        'content-accent': colors.emerald[300],
+        'content-accent': colors.green[400],
         'modal-base': 'rgba(255, 255, 255, .7)',
         'modal-overlay': 'rgba(100, 116, 139, .5)',
         'control-base': colors.zinc[100],

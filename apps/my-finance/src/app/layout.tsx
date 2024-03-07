@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.min.css'
 
 import { BaseHeader, BaseLayout } from '@web-apps/ui'
 
-import { AuthButton } from '@/components/auth/AuthButton'
+import { AuthButton } from '@/components/auth/auth-button'
 
 import { Modal } from './components/modal'
 import './globals.css'
@@ -34,10 +34,10 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
         <BaseLayout
           header={
             <BaseHeader className={clsx('py-2 mx-4', 'justify-center items-center', 'border-b border-white/10 border-x-slate-300')}>
-              <div className="min-w-max mr-auto"></div>
+              <div className="min-w-[100px] mr-auto"></div>
               <p className="text-lg">My Finances</p>
-              <div className="min-w-max ml-auto">
-                <AuthButton />
+              <div className="min-w-[100px] ml-auto">
+                <AuthButton className="ml-auto" />
               </div>
             </BaseHeader>
           }

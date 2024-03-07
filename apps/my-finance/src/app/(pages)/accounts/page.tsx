@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import AccountsPage from './AccountsPage'
+import AccountsPage from './accounts-page'
 
 export const metadata: Metadata = {
   title: 'My Finance | Accounts',
