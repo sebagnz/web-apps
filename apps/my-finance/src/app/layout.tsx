@@ -1,7 +1,7 @@
 'use client'
 
 import clsx from 'clsx'
-import { Sarabun } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import { usePathname, useRouter } from 'next/navigation'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
@@ -13,7 +13,7 @@ import { AuthButton } from '@/components/auth/auth-button'
 import { Modal } from './components/modal'
 import './globals.css'
 
-const font = Sarabun({ subsets: ['latin'], weight: ['200', '300', '400', '500', '600', '700', '800'] })
+const font = Roboto({ subsets: ['latin'], weight: ['100', '300', '400', '500', '700', '900'] })
 
 type RootLayoutProps = {
   children: React.ReactNode
