@@ -1,29 +1,29 @@
-import { Account, AccountsRepository } from '@/domain'
+import { Account, AccountsRepository, User } from '@/domain'
 
 export interface AccountsService {
   create: (account: Omit<Account, 'id'>) => Promise<void>
   update: (account: Account) => Promise<void>
   delete: (id: Account['id']) => Promise<void>
-  getById: (id: Account['id']) => Promise<Account | undefined>
-  getAll: () => Promise<Account[]>
+  get: (id: Account['id']) => Promise<Account | undefined>
+  getByUser: (userId: User['id']) => Promise<Account[]>
 }
 
-export const createAccountService = (repository: AccountsRepository): AccountsService => {
+export const createAccountsService = (repository: AccountsRepository): AccountsService => {
   return {
-    create: async (account: Omit<Account, 'id'>) => {
+    create: async (account) => {
       return repository.create(account)
     },
-    update: async (account: Account) => {
+    update: async (account) => {
       return repository.update(account)
     },
-    delete: async (id: Account['id']) => {
+    delete: async (id) => {
       return repository.delete(id)
     },
-    getById: async (id: Account['id']) => {
-      return repository.getById(id)
+    get: async (id) => {
+      return repository.get(id)
     },
-    getAll: async () => {
-      return repository.getAll()
+    getByUser: async (userId) => {
+      return repository.getByUser(userId)
     },
   }
 }

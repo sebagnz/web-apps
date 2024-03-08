@@ -5,16 +5,25 @@ import { Account } from '@/domain'
 
 import { AccountsService } from '@/services'
 
+import { useAuth } from '../auth'
+
 const ACCOUNTS_KEY = 'accounts'
 
 export const createUseAccounts = (accountsService: AccountsService) => () => {
   const { mutate } = useSWRConfig()
 
+  const { user } = useAuth()
+
+  const getAccountsByUser = useCallback(async () => {
+    if (!user) throw new Error('You must be logged in to fetch accounts')
+    return accountsService.getByUser(user.id)
+  }, [user])
+
   const {
     data: accounts,
     error,
     isLoading,
-  } = useSWR(ACCOUNTS_KEY, accountsService.getAll, {
+  } = useSWR(ACCOUNTS_KEY, getAccountsByUser, {
     fallbackData: [],
     shouldRetryOnError: false,
     revalidateOnFocus: false,
@@ -23,7 +32,7 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
   const createAccount = async (name: Account['name'], balance: Account['balance'], image: Account['image']) => {
     const createAndRevalidateAccounts = async () => {
       await accountsService.create({ name, balance, image })
-      return accountsService.getAll()
+      return getAccountsByUser()
     }
 
     return mutate(ACCOUNTS_KEY, createAndRevalidateAccounts)
@@ -32,7 +41,7 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
   const updateAccount = async (account: Account) => {
     const updateAndRevalidateAccounts = async () => {
       await accountsService.update(account)
-      return accountsService.getAll()
+      return getAccountsByUser()
     }
 
     return mutate(ACCOUNTS_KEY, updateAndRevalidateAccounts, {
@@ -44,7 +53,7 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
   const deleteAccount = async (id: Account['id']) => {
     const deleteAndRevalidateAccounts = async () => {
       await accountsService.delete(id)
-      return accountsService.getAll()
+      return getAccountsByUser()
     }
 
     return mutate(ACCOUNTS_KEY, deleteAndRevalidateAccounts, {
@@ -62,8 +71,8 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
     error,
     isLoading,
     totalBalance,
-    createAccount: useCallback(createAccount, [mutate]),
-    updateAccount: useCallback(updateAccount, [mutate, accounts]),
-    deleteAccount: useCallback(deleteAccount, [mutate, accounts]),
+    createAccount: useCallback(createAccount, [mutate, getAccountsByUser]),
+    updateAccount: useCallback(updateAccount, [mutate, accounts, getAccountsByUser]),
+    deleteAccount: useCallback(deleteAccount, [mutate, accounts, getAccountsByUser]),
   }
 }

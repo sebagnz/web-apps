@@ -26,7 +26,7 @@ const FormInputSchema = z.object({
 type FormInput = z.infer<typeof FormInputSchema>
 
 export default function Page() {
-  const { login } = useAuth()
+  const { login, isLoading } = useAuth()
   const router = useRouter()
   const qs = useSearchParams()
 
@@ -34,9 +34,9 @@ export default function Page() {
     resolver: zodResolver(FormInputSchema),
   })
 
-  const { errors, isSubmitting, isSubmitSuccessful } = formState
+  const { errors, isSubmitting, isSubmitted } = formState
 
-  const isLoading = isSubmitting || isSubmitSuccessful
+  const isFormLoading = isSubmitting || (isSubmitted && isLoading)
 
   const onSubmit: SubmitHandler<FormInput> = async ({ username, password }) => {
     try {
@@ -66,10 +66,10 @@ export default function Page() {
         {errors.password?.message && <p className="text-error text-sm">{errors.password?.message}</p>}
       </div>
 
-      <Button type="submit" disabled={isLoading}>
+      <Button type="submit" disabled={isFormLoading}>
         <span className="flex items-center gap-x-2">
-          {isLoading ? <Spinner className="w-6" /> : null}
-          <span>{isLoading ? 'Logging in' : 'Log in'}</span>
+          {isFormLoading ? <Spinner className="w-6" /> : null}
+          <span>{isFormLoading ? 'Logging in' : 'Log in'}</span>
         </span>
       </Button>
     </form>

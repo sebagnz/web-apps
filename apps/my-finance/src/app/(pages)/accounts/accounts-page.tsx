@@ -9,6 +9,7 @@ import { toast } from 'react-toastify'
 import { PlusIcon, TrashCanIcon } from '@web-apps/ui'
 
 import { useAccounts } from '@/hooks/accounts'
+import '@/hooks/snapshots'
 
 import EmptyStateImg from '../../../../public/empty-state.png'
 

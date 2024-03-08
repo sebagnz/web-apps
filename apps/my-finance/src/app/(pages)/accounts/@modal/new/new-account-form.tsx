@@ -29,15 +29,15 @@ type FormInput = z.infer<typeof FormInputSchema>
 
 export default function Page() {
   const { back } = useRouter()
-  const { createAccount } = useAccounts()
+  const { createAccount, isLoading } = useAccounts()
 
   const { register, handleSubmit, formState } = useForm<FormInput>({
     resolver: zodResolver(FormInputSchema),
   })
 
-  const { errors, isSubmitting, isSubmitSuccessful } = formState
+  const { errors, isSubmitting, isSubmitted } = formState
 
-  const isLoading = isSubmitting || isSubmitSuccessful
+  const isFormLoading = isSubmitting || (isSubmitted && isLoading)
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     try {
@@ -89,10 +89,10 @@ export default function Page() {
       </LabeledInput>
       {errors.balance?.message && <p className="text-error text-sm">{errors.balance?.message}</p>}
 
-      <Button type="submit" disabled={isLoading}>
+      <Button type="submit" disabled={isFormLoading}>
         <span className="flex items-center gap-x-2">
-          {isLoading ? <Spinner className="w-6" /> : null}
-          <span>{isLoading ? 'Creating account' : 'Create account'}</span>
+          {isFormLoading ? <Spinner className="w-6" /> : null}
+          <span>{isFormLoading ? 'Creating account' : 'Create account'}</span>
         </span>
       </Button>
     </form>

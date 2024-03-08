@@ -4,15 +4,15 @@ import { Account } from './account'
 import { AccountsRepository } from './accounts-repository'
 
 export const createMockAccount: (override: Partial<Account>) => Account = (override) => {
-  return { id: uuidv4(), name: 'Mock Account', balance: 1000, image: '🏦', ...override }
+  return { id: uuidv4(), name: 'Mock Account', balance: 1000, image: '🏦', userId: '123', ...override }
 }
 
 export const createMockAccountsRepository: () => AccountsRepository = () => {
   return {
-    create: async (account: Omit<Account, 'id'>) => {},
-    update: async (account: Account) => {},
-    delete: async (id: Account['id']) => {},
-    getById: async (id: Account['id']) => createMockAccount({ id }),
-    getAll: async () => [createMockAccount({ id: uuidv4() }), createMockAccount({ id: uuidv4() })],
+    create: async (account) => {},
+    update: async (account) => {},
+    delete: async (id) => {},
+    get: async (id) => createMockAccount({ id }),
+    getByUser: async (userId) => [createMockAccount({ id: uuidv4() }), createMockAccount({ id: uuidv4() })],
   }
 }

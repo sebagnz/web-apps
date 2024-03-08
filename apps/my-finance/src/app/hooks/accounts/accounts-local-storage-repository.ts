@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import { Account, AccountListSchema, AccountsRepository } from '@/domain'
+import { AccountListSchema, AccountsRepository } from '@/domain'
 
 const LOCALSTORAGE_NAMESPACE = 'my-finance'
 const LOCALSTORAGE_ACCOUNTS_KEY = `${LOCALSTORAGE_NAMESPACE}:accounts`
@@ -12,7 +12,7 @@ function delay(minMs: number = 2000, maxMs: number = 3000) {
 
 export const createLocalStorageAccountsRepository = (): AccountsRepository => {
   return {
-    create: async (account: Omit<Account, 'id'>) => {
+    create: async (account) => {
       const id = uuidv4()
       const maybeAccountList = JSON.parse(localStorage.getItem(LOCALSTORAGE_ACCOUNTS_KEY) || '[]')
       const accountList = AccountListSchema.parse(maybeAccountList)
@@ -23,7 +23,7 @@ export const createLocalStorageAccountsRepository = (): AccountsRepository => {
 
       await delay()
     },
-    update: async (account: Account) => {
+    update: async (account) => {
       const maybeAccountList = JSON.parse(localStorage.getItem(LOCALSTORAGE_ACCOUNTS_KEY) || '[]')
       const accountList = AccountListSchema.parse(maybeAccountList)
 
@@ -32,7 +32,7 @@ export const createLocalStorageAccountsRepository = (): AccountsRepository => {
 
       await delay()
     },
-    delete: async (id: Account['id']) => {
+    delete: async (id) => {
       const maybeAccountList = JSON.parse(localStorage.getItem(LOCALSTORAGE_ACCOUNTS_KEY) || '[]')
       const accountList = AccountListSchema.parse(maybeAccountList)
 
@@ -41,7 +41,7 @@ export const createLocalStorageAccountsRepository = (): AccountsRepository => {
 
       await delay()
     },
-    getById: async (id: Account['id']) => {
+    get: async (id) => {
       const maybeAccountList = JSON.parse(localStorage.getItem(LOCALSTORAGE_ACCOUNTS_KEY) || '[]')
       const accountList = AccountListSchema.parse(maybeAccountList)
 
@@ -49,7 +49,7 @@ export const createLocalStorageAccountsRepository = (): AccountsRepository => {
 
       return accountList.find((a) => a.id === id)
     },
-    getAll: async () => {
+    getByUser: async (userId) => {
       const maybeAccountList = JSON.parse(localStorage.getItem(LOCALSTORAGE_ACCOUNTS_KEY) || '[]')
       const accountList = AccountListSchema.parse(maybeAccountList)
 

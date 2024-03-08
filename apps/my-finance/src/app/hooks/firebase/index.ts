@@ -26,3 +26,6 @@ export type FirestoreConverer<TDB, TDomain> = {
   toFirestore: (data: TDomain) => TDB
   fromFirestore: (snapshot: QueryDocumentSnapshot, options: any) => TDomain
 }
+
+export const ACCOUNTS_FIRESTORE_COLLECTION_PATH = 'accounts'
+export const SNAPSHOTS_FIRESTORE_COLLECTION_PATH = 'snapshots'
