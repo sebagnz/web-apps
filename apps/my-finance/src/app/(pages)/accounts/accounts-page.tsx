@@ -11,6 +11,8 @@ import { PlusIcon, TrashCanIcon } from '@web-apps/ui'
 import { useAccounts } from '@/hooks/accounts'
 import '@/hooks/snapshots'
 
+import { TranslucentCard } from '@/components/translucent-card'
+
 import EmptyStateImg from '../../../../public/empty-state.png'
 
 export default function AccountsPage() {
@@ -40,49 +42,22 @@ export default function AccountsPage() {
 
   if (error) return <p>{error.message}</p>
 
-  const emptyState = (
-    <div className="flex flex-col items-center gap-y-2 pb-2 px-2 text-content-secondary">
-      <Image src={EmptyStateImg} alt="Empty state" height={100} />
-      <p className="text-center">You don&apos;t have any accounts yet.</p>
-      <p className="text-center text-sm">
-        <Link className="underline" href="/accounts/new">
-          Create a new one
-        </Link>{' '}
-        to start tracking your savings.
-      </p>
-    </div>
-  )
-
-  const accountsList = (
-    <div className="backdrop-blur-sm bg-white/30 p-2 rounded-lg">
-      <div className="flex flex-col gap-y-2">
-        {accounts.map((account) => (
-          <div
-            className={clsx(
-              'flex justify-between items-center',
-              'rounded-md p-4',
-              'bg-content-base text-content-secondary',
-              'shadow-sm',
-              'transition-shadow duration-300',
-              'hover:shadow-md',
-            )}
-            key={account.id}
-          >
-            <div className="flex items-center gap-x-4">
-              <p className="text-5xl">{account.image}</p>
-              <div>
-                <p className="text-xl">{account.name}</p>
-                <p>€ {account.balance}</p>
-              </div>
-            </div>
-            <button aria-label={`Delete account ${account.name}`} onClick={() => handleDeleteAccountIntent(account.id)}>
-              <TrashCanIcon hoverable className="text-content-tertiary" />
-            </button>
-          </div>
-        ))}
+  if (accounts.length === 0) {
+    return (
+      <div className="px-4 lg:px-0 mx-auto max-w-2xl">
+        <div className="flex flex-col items-center gap-y-2 pb-2 px-2 text-content-secondary">
+          <Image src={EmptyStateImg} alt="Empty state" height={100} />
+          <p className="text-center">You don&apos;t have any accounts yet.</p>
+          <p className="text-center text-sm">
+            <Link className="underline" href="/accounts/new">
+              Create a new one
+            </Link>{' '}
+            to start tracking your savings.
+          </p>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 
   return (
     <div className="px-4 lg:px-0 mx-auto max-w-2xl">
@@ -96,7 +71,22 @@ export default function AccountsPage() {
           <PlusIcon hoverable />
         </Link>
       </div>
-      {accounts.length === 0 ? emptyState : accountsList}
+      <div className="flex flex-col gap-y-2">
+        {accounts.map((account) => (
+          <TranslucentCard key={account.id} className={clsx('flex justify-between items-center cursor-pointer')}>
+            <Link className="flex flex-1 items-center gap-x-4" href={`/accounts/${account.id}/snapshots`}>
+              <p className="text-5xl">{account.image}</p>
+              <div>
+                <p className="text-xl">{account.name}</p>
+                <p>€ {account.balance}</p>
+              </div>
+            </Link>
+            <button aria-label={`Delete account ${account.name}`} onClick={() => handleDeleteAccountIntent(account.id)}>
+              <TrashCanIcon hoverable className="text-content-tertiary" />
+            </button>
+          </TranslucentCard>
+        ))}
+      </div>
     </div>
   )
 }
