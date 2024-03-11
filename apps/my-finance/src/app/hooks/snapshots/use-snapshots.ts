@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import useSWR, { useSWRConfig } from 'swr'
 
 import { Snapshot } from '@/domain'
@@ -12,7 +12,7 @@ const SNAPSHOTS_KEY = 'snapshots'
 export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accountIds: Array<Snapshot['id']>) => {
   const { mutate } = useSWRConfig()
 
-  const { user } = useAuth()
+  const { user, isLoading: isLoadingUser } = useAuth()
 
   const getSnapshots = useCallback(async () => {
     if (!user) throw new Error('You must be logged in to fetch accounts')
@@ -22,8 +22,10 @@ export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accou
   const {
     data: snapshots,
     error,
-    isLoading,
-  } = useSWR(SNAPSHOTS_KEY, getSnapshots, { fallbackData: [], shouldRetryOnError: false, revalidateOnFocus: false })
+    isLoading: isLoadingSnapshots,
+  } = useSWR(user ? SNAPSHOTS_KEY : null, getSnapshots, { fallbackData: [], shouldRetryOnError: false, revalidateOnFocus: false })
+
+  const isLoading = useMemo(() => isLoadingUser || isLoadingSnapshots, [isLoadingUser, isLoadingSnapshots])
 
   const createAccount = async (accountId: Snapshot['accountId'], balance: Snapshot['balance']) => {
     const createAndRevalidateSnapshots = async () => {

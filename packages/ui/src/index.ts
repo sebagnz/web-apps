@@ -5,6 +5,7 @@ export * from './footers/base'
 export * from './headers/base'
 export * from './layouts/base'
 export * from './spinner'
+export * from './skeleton'
 
 /**
  * Icons

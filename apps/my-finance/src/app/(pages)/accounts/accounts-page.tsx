@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 
-import { PlusIcon, TrashCanIcon } from '@web-apps/ui'
+import { PlusIcon, Skeleton, TrashCanIcon } from '@web-apps/ui'
 
 import { useAccounts } from '@/hooks/accounts'
 import '@/hooks/snapshots'
@@ -38,9 +38,25 @@ export default function AccountsPage() {
     }
   }
 
-  if (isLoading) return <div>Loading...</div>
-
   if (error) return <p>{error.message}</p>
+
+  if (isLoading) {
+    return (
+      <div className="px-4 lg:px-0 mx-auto max-w-2xl">
+        <div className="mt-4 flex flex-col items-center content-center gap-y-2">
+          <Skeleton className="h-4 w-32" />
+          <Skeleton className="h-12 w-48" />
+        </div>
+        <div className="mt-8">
+          <Skeleton className="h-4 w-32" />
+        </div>
+        <div className="mt-4 flex flex-col gap-y-2">
+          <Skeleton className="h-24" />
+          <Skeleton className="h-24" />
+        </div>
+      </div>
+    )
+  }
 
   if (accounts.length === 0) {
     return (
@@ -74,7 +90,7 @@ export default function AccountsPage() {
       <div className="flex flex-col gap-y-2">
         {accounts.map((account) => (
           <TranslucentCard key={account.id} className={clsx('flex justify-between items-center cursor-pointer')}>
-            <Link className="flex flex-1 items-center gap-x-4" href={`/accounts/${account.id}/snapshots`}>
+            <Link className="flex flex-1 items-center gap-x-4" href={`/accounts/${account.id}`}>
               <p className="text-5xl">{account.image}</p>
               <div>
                 <p className="text-xl">{account.name}</p>

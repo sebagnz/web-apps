@@ -12,7 +12,7 @@ const ACCOUNTS_KEY = 'accounts'
 export const createUseAccounts = (accountsService: AccountsService) => () => {
   const { mutate } = useSWRConfig()
 
-  const { user } = useAuth()
+  const { user, isLoading: isLoadingUser } = useAuth()
 
   const getAccountsByUser = useCallback(async () => {
     if (!user) throw new Error('You must be logged in to fetch accounts')
@@ -22,12 +22,14 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
   const {
     data: accounts,
     error,
-    isLoading,
-  } = useSWR(ACCOUNTS_KEY, getAccountsByUser, {
+    isLoading: isLoadingAccounts,
+  } = useSWR(user ? ACCOUNTS_KEY : null, getAccountsByUser, {
     fallbackData: [],
     shouldRetryOnError: false,
     revalidateOnFocus: false,
   })
+
+  const isLoading = useMemo(() => isLoadingUser || isLoadingAccounts, [isLoadingUser, isLoadingAccounts])
 
   const createAccount = async (name: Account['name'], balance: Account['balance'], image: Account['image']) => {
     const createAndRevalidateAccounts = async () => {
