@@ -9,6 +9,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:local-storage": "NEXT_PUBLIC_STORAGE=local-storage turbo run dev",
     "start": "turbo run start",
     "lint": "turbo run lint",
     "clean": "turbo run clean"

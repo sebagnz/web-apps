@@ -6,7 +6,8 @@ import { createUseAccounts } from './use-accounts'
 
 let accountsService: AccountsService
 
-if (process.env.NEXT_PUBLIC_ENV === 'development') {
+if (process.env.NEXT_PUBLIC_STORAGE === 'local-storage') {
+  console.warn('[Accounts storage has been set to local storage]')
   accountsService = createAccountsService(createLocalStorageAccountsRepository())
 } else {
   accountsService = createAccountsService(createFirestoreAccountsRepository())
