@@ -1,0 +1,107 @@
+import clsx from 'clsx'
+import { ReactNode, createContext, useContext, useLayoutEffect, useRef } from 'react'
+
+const TabsContext = createContext<{
+  selectedIndex: number
+  onSelect: (index: number) => void
+  containerRef: React.RefObject<HTMLUListElement>
+  selectedTabRef: React.RefObject<HTMLLIElement>
+}>({
+  selectedIndex: 0,
+  onSelect: () => {},
+  containerRef: { current: null },
+  selectedTabRef: { current: null },
+})
+
+const useTabs = () => useContext(TabsContext)
+
+type TabsProps = {
+  selectedIndex: number
+  onSelect: (index: number) => void
+  children: ReactNode
+}
+
+export const Tabs = ({ selectedIndex, onSelect, ...props }: TabsProps) => {
+  const containerRef = useRef<HTMLUListElement | null>(null)
+  const selectedTabRef = useRef<HTMLLIElement | null>(null)
+
+  return <TabsContext.Provider value={{ selectedIndex, onSelect, containerRef, selectedTabRef }} {...props} />
+}
+
+type TabListProps = {
+  className?: string
+  children: ReactNode
+}
+
+export const TabList = ({ className, ...props }: TabListProps) => {
+  const { containerRef, selectedTabRef } = useTabs()
+
+  useLayoutEffect(() => {
+    if (containerRef.current && selectedTabRef.current) {
+      const newTabWidth = selectedTabRef.current.offsetWidth / containerRef.current.offsetWidth
+      const newTabLeft = selectedTabRef.current.offsetLeft
+      containerRef.current.style.setProperty('--width', `${newTabWidth}`)
+      containerRef.current.style.setProperty('--left', `${newTabLeft}px`)
+    }
+  })
+
+  return (
+    <ul
+      ref={containerRef}
+      role="tablist"
+      className={clsx(
+        'isolate',
+        'w-fit',
+        'list-none',
+        'relative flex justify-between',
+        'gap-x-4 sm:gap-x-6',
+        'px-3',
+        'bg-content-base/30',
+        'rounded-xl',
+        'py-2 before:my-2',
+        'before:bg-content-base/40',
+        'before:rounded-lg',
+        'before:content-[""]',
+        'before:absolute',
+        'before:z-0',
+        'before:left-0 before:right-0 before:bottom-0 before:top-0',
+        'before:duration-300',
+        'before:transition-transform ease-in',
+        'before:origin-left',
+        'before:scale-x-[var(--width,_0)]',
+        'before:translate-x-[var(--left,_0)]',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
+
+type TabProps = {
+  index: number
+  className?: string
+  children: ReactNode
+}
+
+export const Tab = ({ index, className, ...props }: TabProps) => {
+  const { selectedIndex, onSelect, selectedTabRef } = useTabs()
+
+  return (
+    <li ref={selectedIndex === index ? selectedTabRef : null} onClick={() => onSelect(index)} className={clsx('z-10', className)}>
+      <p
+        role="tab"
+        aria-selected={selectedIndex === index}
+        className={clsx(
+          'select-none',
+          'cursor-pointer',
+          'rounded-lg',
+          'transition-all ease-in-out',
+          'px-2 py-1 sm:px-6 sm:py-3',
+          'text-lg',
+          'text-content-secondary',
+        )}
+        {...props}
+      />
+    </li>
+  )
+}
