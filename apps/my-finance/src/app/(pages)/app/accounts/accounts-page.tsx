@@ -20,10 +20,6 @@ import EmptyStateImg from '../../../../../public/empty-state.png'
 export default function AccountsPage() {
   const { accounts, error, isLoading, totalBalance, deleteAccount } = useAccounts()
 
-  useEffect(() => {
-    if (error) toast.error(error.message)
-  }, [error])
-
   const handleDeleteAccountIntent = async (id: string) => {
     const account = accounts.find((account) => account.id === id)
 
@@ -78,21 +74,16 @@ export default function AccountsPage() {
   }
 
   return (
-    <>
-      <p className="text-center mt-4">
+    <div className="px-4 sm:py-4">
+      <p className="text-center">
         <span className="block text-xl">Total balance</span>
         <span className="block text-5xl font-medium">€ {totalBalance}</span>
       </p>
-      <div className="flex justify-between items-center mt-8 mb-4">
-        <h1 className="text-base">Accounts</h1>
-        <Link aria-label="Create new account" href={Routes.app.accounts.new}>
-          <PlusIcon hoverable />
-        </Link>
-      </div>
-      <div className="flex flex-col gap-y-2 mt-8">
+
+      <div className="flex flex-col gap-y-2 mt-4 sm:mt-8">
         {accounts.map((account) => (
           <TranslucentCard key={account.id} className={clsx('flex justify-between items-center cursor-pointer')}>
-            <Link className="flex flex-1 items-center gap-x-4" href={`/accounts/${account.id}`}>
+            <Link className="flex flex-1 items-center gap-x-4" href={Routes.app.accounts.id(account.id)}>
               <p className="text-5xl">{account.image}</p>
               <div>
                 <p className="text-xl">{account.name}</p>
@@ -105,6 +96,23 @@ export default function AccountsPage() {
           </TranslucentCard>
         ))}
       </div>
-    </>
+
+      <div className="w-fit mt-8 mx-auto">
+        <Link
+          className={clsx(
+            'inline-flex border',
+            'gap-x-2 p-2',
+            'rounded-md',
+            'border-control-accent text-control-accent-content',
+            'hover:font-medium hover:shadow-md',
+          )}
+          aria-label="Create new account"
+          href={Routes.app.accounts.new}
+        >
+          <PlusIcon />
+          New account
+        </Link>
+      </div>
+    </div>
   )
 }

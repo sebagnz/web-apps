@@ -22,3 +22,9 @@ export const ArrowRight = ({ className, hoverable = false }: arrowIconProps) => 
     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="M19 12H5m14 0-4 4m4-4-4-4" />
   </svg>
 )
+
+export const ArrowLeft = ({ className, hoverable = false }: arrowIconProps) => (
+  <svg className={clsx('w-[24px] h-[24px]', 'stroke-1', { 'hover:stroke-[1.5]': hoverable }, className)} aria-hidden fill="none" viewBox="0 0 24 24">
+    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M5 12l4-4m-4 4 4 4" />
+  </svg>
+)

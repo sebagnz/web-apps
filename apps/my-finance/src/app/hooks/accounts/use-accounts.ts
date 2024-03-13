@@ -1,4 +1,5 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
+import { toast } from 'react-toastify'
 import useSWR, { useSWRConfig } from 'swr'
 
 import { Account } from '@/domain'
@@ -28,6 +29,10 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
     shouldRetryOnError: false,
     revalidateOnFocus: false,
   })
+
+  useEffect(() => {
+    if (error) toast.error(error.message)
+  }, [error])
 
   const isLoading = useMemo(() => isLoadingUser || isLoadingAccounts, [isLoadingUser, isLoadingAccounts])
 

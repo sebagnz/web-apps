@@ -15,19 +15,20 @@
 @layer components {
   .fi-input {
     @apply bg-input-base text-input-content;
-    @apply focus:bg-input-accent focus:outline-none;
-    @apply active:bg-input-accent;
+    @apply focus:bg-input-focus focus:outline-none;
+    @apply active:bg-input-focus;
   }
 
   .fi-control {
     @apply bg-control-base text-control-content;
-    @apply focus:bg-control-accent focus:outline-none;
-    @apply hover:bg-control-accent;
+    @apply focus:bg-control-focus focus:outline-none;
+    @apply hover:bg-control-focus;
   }
 }
 
 body {
-  @apply bg-gradient-to-br from-base-primary to-base-secondary;
+  /* @apply bg-gradient-to-br from-base-primary to-base-secondary; */
+  @apply bg-base-primary;
   @apply text-content-primary;
 }
 

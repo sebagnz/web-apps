@@ -1,8 +1,9 @@
 'use client'
 
+import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Routes } from '@/routes'
 
@@ -28,24 +29,27 @@ export default function AccountsLayout({ children, modal }: AccountsLayoutProps)
   const router = useRouter()
   const pathname = usePathname()
 
-  const [selectedIndex, onSelect] = useState(0)
+  const [selectedIndex, onSelect] = useState(-1)
+
+  useEffect(() => {
+    const selectedTab = TABS.findIndex((tab) => tab.href === pathname)
+    onSelect(selectedTab)
+  }, [pathname])
 
   useRedirectToLogin()
 
   return (
     <>
-      <div className="py-4 px-2 mb-4">
-        <Tabs selectedIndex={selectedIndex} onSelect={onSelect}>
-          <TabList className="mx-auto">
-            {TABS.map((tab, i) => (
-              <Tab key={tab.id} index={i}>
-                <Link href={tab.href}>{tab.label}</Link>
-              </Tab>
-            ))}
-          </TabList>
-        </Tabs>
-      </div>
-      <div className="px-4 lg:px-0 mx-auto max-w-2xl">{children}</div>
+      <Tabs selectedIndex={selectedIndex} onSelect={onSelect}>
+        <TabList className="mx-auto -translate-y-1/3 bg-base-primary/50 backdrop-blur-md border border-base-accent/10">
+          {TABS.map((tab, i) => (
+            <Tab key={tab.id} index={i}>
+              <Link href={tab.href}>{tab.label}</Link>
+            </Tab>
+          ))}
+        </TabList>
+      </Tabs>
+      <div className="mx-auto max-w-2xl">{children}</div>
       <Modal onClickOutside={router.back} onClose={router.back} show={MODAL_VIEWS.includes(pathname)}>
         {modal}
       </Modal>

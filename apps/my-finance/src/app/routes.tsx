@@ -6,6 +6,7 @@ export const Routes = {
     accounts: {
       index: '/app/accounts',
       new: '/app/accounts/new',
+      id: (id: string) => `/app/accounts/${id}`,
     },
     expenses: {
       index: '/app/expenses',

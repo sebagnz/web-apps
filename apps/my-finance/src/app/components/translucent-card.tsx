@@ -6,12 +6,13 @@ export const TranslucentCard = ({ className, children }: ComponentPropsWithoutRe
     <div
       className={clsx(
         'backdrop-blur-sm',
-        'bg-gradient-to-br from-content-base/90 to-content-base/50',
+        'bg-purple-50/50 backdrop-blur-sm',
+        'border border-purple-300/10',
         'text-content-secondary',
-        'rounded-3xl',
+        'rounded-2xl',
         'p-5',
         'transition-shadow duration-300',
-        'shadow-md hover:shadow-lg',
+        'shadow-sm hover:shadow-md',
         className,
       )}
     >

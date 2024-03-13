@@ -1,4 +1,5 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
+import { toast } from 'react-toastify'
 import useSWR, { useSWRConfig } from 'swr'
 
 import { Snapshot } from '@/domain'
@@ -24,6 +25,10 @@ export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accou
     error,
     isLoading: isLoadingSnapshots,
   } = useSWR(user ? SNAPSHOTS_KEY : null, getSnapshots, { fallbackData: [], shouldRetryOnError: false, revalidateOnFocus: false })
+
+  useEffect(() => {
+    if (error) toast.error(error.message)
+  }, [error])
 
   const isLoading = useMemo(() => isLoadingUser || isLoadingSnapshots, [isLoadingUser, isLoadingSnapshots])
 

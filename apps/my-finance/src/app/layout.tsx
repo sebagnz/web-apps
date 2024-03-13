@@ -1,7 +1,7 @@
 'use client'
 
 import clsx from 'clsx'
-import { Roboto } from 'next/font/google'
+import { Ubuntu } from 'next/font/google'
 import { usePathname, useRouter } from 'next/navigation'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
@@ -13,7 +13,7 @@ import { AuthButton } from '@/components/auth/auth-button'
 import { Modal } from './components/modal'
 import './globals.css'
 
-const font = Roboto({ subsets: ['latin'], weight: ['100', '300', '400', '500', '700', '900'] })
+const font = Ubuntu({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
 
 type RootLayoutProps = {
   children: React.ReactNode
@@ -33,11 +33,17 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
       <body className={font.className}>
         <BaseLayout
           header={
-            <BaseHeader className={clsx('py-2 mx-4', 'justify-center items-center')}>
+            <BaseHeader
+              className={clsx(
+                'pt-6 pb-12 px-4',
+                'justify-center items-center',
+                'bg-gradient-to-b from-base-accent to-base-accent/80 text-content-accent',
+              )}
+            >
               <div className="min-w-[100px] mr-auto"></div>
-              <p className="text-lg">My Finances</p>
+              <p className="text-xl font-medium">My Finances</p>
               <div className="min-w-[100px] ml-auto">
-                <AuthButton className="ml-auto" />
+                <AuthButton className="ml-auto text-content-accent" />
               </div>
             </BaseHeader>
           }
