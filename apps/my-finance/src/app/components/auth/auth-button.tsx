@@ -1,6 +1,8 @@
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 
+import { Routes } from '@/routes'
+
 import { ArrowLeftToBracketIcon, ArrowRightToBracketIcon } from '@web-apps/ui'
 
 import { useAuth } from '@/hooks/auth'
@@ -11,7 +13,7 @@ export const AuthButton = ({ className }: { className?: string }) => {
   const { logout } = useAuth()
   const { push } = useRouter()
 
-  const pushLogin = () => push('/login')
+  const pushLogin = () => push(Routes.login.index)
 
   return (
     <>

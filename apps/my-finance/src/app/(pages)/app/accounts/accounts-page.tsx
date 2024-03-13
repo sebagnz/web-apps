@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 
+import { Routes } from '@/routes'
+
 import { PlusIcon, Skeleton, TrashCanIcon } from '@web-apps/ui'
 
 import { useAccounts } from '@/hooks/accounts'
@@ -13,7 +15,7 @@ import '@/hooks/snapshots'
 
 import { TranslucentCard } from '@/components/translucent-card'
 
-import EmptyStateImg from '../../../../public/empty-state.png'
+import EmptyStateImg from '../../../../../public/empty-state.png'
 
 export default function AccountsPage() {
   const { accounts, error, isLoading, totalBalance, deleteAccount } = useAccounts()
@@ -65,7 +67,7 @@ export default function AccountsPage() {
           <Image src={EmptyStateImg} alt="Empty state" height={100} />
           <p className="text-center">You don&apos;t have any accounts yet.</p>
           <p className="text-center text-sm">
-            <Link className="underline" href="/accounts/new">
+            <Link className="underline" href={Routes.app.accounts.new}>
               Create a new one
             </Link>{' '}
             to start tracking your savings.
@@ -76,18 +78,18 @@ export default function AccountsPage() {
   }
 
   return (
-    <div className="px-4 lg:px-0 mx-auto max-w-2xl">
+    <>
       <p className="text-center mt-4">
         <span className="block text-xl">Total balance</span>
         <span className="block text-5xl font-medium">€ {totalBalance}</span>
       </p>
       <div className="flex justify-between items-center mt-8 mb-4">
-        <h1 className="text-md">Accounts</h1>
-        <Link aria-label="Create new account" href="/accounts/new">
+        <h1 className="text-base">Accounts</h1>
+        <Link aria-label="Create new account" href={Routes.app.accounts.new}>
           <PlusIcon hoverable />
         </Link>
       </div>
-      <div className="flex flex-col gap-y-2">
+      <div className="flex flex-col gap-y-2 mt-8">
         {accounts.map((account) => (
           <TranslucentCard key={account.id} className={clsx('flex justify-between items-center cursor-pointer')}>
             <Link className="flex flex-1 items-center gap-x-4" href={`/accounts/${account.id}`}>
@@ -103,6 +105,6 @@ export default function AccountsPage() {
           </TranslucentCard>
         ))}
       </div>
-    </div>
+    </>
   )
 }

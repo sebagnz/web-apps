@@ -33,7 +33,7 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
       <body className={font.className}>
         <BaseLayout
           header={
-            <BaseHeader className={clsx('py-2 mx-4', 'justify-center items-center', 'border-b border-white/10 border-x-slate-300')}>
+            <BaseHeader className={clsx('py-2 mx-4', 'justify-center items-center')}>
               <div className="min-w-[100px] mr-auto"></div>
               <p className="text-lg">My Finances</p>
               <div className="min-w-[100px] ml-auto">

@@ -24,6 +24,7 @@
       "@/components/*": ["./src/app/components/*"],
       "@/domain": ["./src/app/domain/index"],
       "@/services": ["./src/app/services/index"],
+      "@/routes": ["./src/app/routes"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

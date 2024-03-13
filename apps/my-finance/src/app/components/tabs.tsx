@@ -42,6 +42,7 @@ export const TabList = ({ className, ...props }: TabListProps) => {
       const newTabLeft = selectedTabRef.current.offsetLeft
       containerRef.current.style.setProperty('--width', `${newTabWidth}`)
       containerRef.current.style.setProperty('--left', `${newTabLeft}px`)
+      containerRef.current.style.setProperty('--radius', '0.4rem')
     }
   })
 
@@ -55,12 +56,13 @@ export const TabList = ({ className, ...props }: TabListProps) => {
         'list-none',
         'relative flex justify-between',
         'gap-x-4 sm:gap-x-6',
-        'px-3',
+        'px-1',
         'bg-content-base/30',
-        'rounded-xl',
-        'py-2 before:my-2',
+        'rounded-lg',
+        'shadow-sm',
+        'py-1 before:my-1',
         'before:bg-content-base/40',
-        'before:rounded-lg',
+        'before:shadow-inner',
         'before:content-[""]',
         'before:absolute',
         'before:z-0',
@@ -70,6 +72,7 @@ export const TabList = ({ className, ...props }: TabListProps) => {
         'before:origin-left',
         'before:scale-x-[var(--width,_0)]',
         'before:translate-x-[var(--left,_0)]',
+        'before:rounded-[calc(var(--radius,_0)/var(--width,_0))_/_var(--radius,_0)]',
         className,
       )}
       {...props}
@@ -87,21 +90,23 @@ export const Tab = ({ index, className, ...props }: TabProps) => {
   const { selectedIndex, onSelect, selectedTabRef } = useTabs()
 
   return (
-    <li ref={selectedIndex === index ? selectedTabRef : null} onClick={() => onSelect(index)} className={clsx('z-10', className)}>
-      <p
-        role="tab"
-        aria-selected={selectedIndex === index}
-        className={clsx(
-          'select-none',
-          'cursor-pointer',
-          'rounded-lg',
-          'transition-all ease-in-out',
-          'px-2 py-1 sm:px-6 sm:py-3',
-          'text-lg',
-          'text-content-secondary',
-        )}
-        {...props}
-      />
-    </li>
+    <li
+      role="tab"
+      aria-selected={selectedIndex === index}
+      ref={selectedIndex === index ? selectedTabRef : null}
+      onClick={() => onSelect(index)}
+      className={clsx(
+        'z-10',
+        'select-none',
+        'cursor-pointer',
+        'rounded-lg',
+        'transition-all ease-in-out',
+        'px-2 py-1 sm:px-6 sm:py-3',
+        'text-lg',
+        'text-content-secondary',
+        className,
+      )}
+      {...props}
+    ></li>
   )
 }

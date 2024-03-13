@@ -6,6 +6,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { z } from 'zod'
 
+import { Routes } from '@/routes'
+
 import { Spinner } from '@web-apps/ui'
 
 import { useAuth } from '@/hooks/auth'
@@ -42,7 +44,7 @@ export default function Page() {
     try {
       await login(username, password)
       if (qs.has('origin')) router.replace(String(qs.get('origin')))
-      else router.replace('/')
+      else router.replace(Routes.app.accounts.index)
     } catch (error) {
       if (error instanceof Error) toast.error(error.message)
     }
