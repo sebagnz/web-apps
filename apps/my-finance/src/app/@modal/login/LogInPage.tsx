@@ -12,7 +12,7 @@ import { Spinner } from '@web-apps/ui'
 
 import { useAuth } from '@/hooks/auth'
 
-import { Button } from '@/components/forms/button'
+import { Button } from '@/components/button'
 import { LabeledInput } from '@/components/forms/labeled-input'
 
 const errorMessages = {
@@ -68,11 +68,9 @@ export default function Page() {
         {errors.password?.message && <p className="text-error text-sm">{errors.password?.message}</p>}
       </div>
 
-      <Button type="submit" disabled={isFormLoading}>
-        <span className="flex items-center gap-x-2">
-          {isFormLoading ? <Spinner className="w-6" /> : null}
-          <span>{isFormLoading ? 'Logging in' : 'Log in'}</span>
-        </span>
+      <Button variant="fill" type="submit" disabled={isFormLoading} className="mx-auto flex justify-center items-center gap-x-2">
+        {isFormLoading ? <Spinner className="w-6" /> : null}
+        <span>{isFormLoading ? 'Logging in' : 'Log in'}</span>
       </Button>
     </form>
   )
