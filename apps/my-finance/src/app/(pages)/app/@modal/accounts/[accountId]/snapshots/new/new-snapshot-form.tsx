@@ -54,12 +54,15 @@ export default function NewSnapshotPage({ accountId }: NewSnapshotPageProps) {
     <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
       <h2 className="text-center text-2xl my-4">Create snapshot</h2>
 
-      <input
-        className="fi-input w-full text-center rounded-md px-4 py-2"
-        type="date"
-        defaultValue={new Date().toISOString().substring(0, 10)}
-        {...register('date', { valueAsDate: true })}
-      />
+      <div className="space-y-4">
+        <input
+          className="fi-input w-full text-center rounded-md px-4 py-2"
+          type="date"
+          defaultValue={new Date().toISOString().substring(0, 10)}
+          {...register('date', { valueAsDate: true })}
+        />
+        {errors.date?.message && <p className="text-error text-sm">{errors.balance?.message}</p>}
+      </div>
 
       <div className="space-y-4">
         <LabeledInput>
