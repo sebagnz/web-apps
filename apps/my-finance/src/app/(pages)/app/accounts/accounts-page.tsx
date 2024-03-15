@@ -15,8 +15,6 @@ import '@/hooks/snapshots'
 
 import { TranslucentCard } from '@/components/translucent-card'
 
-import EmptyStateImg from '../../../../../public/empty-state.png'
-
 export default function AccountsPage() {
   const { accounts, error, isLoading, totalBalance, deleteAccount } = useAccounts()
 
