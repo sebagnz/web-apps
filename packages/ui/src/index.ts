@@ -14,3 +14,8 @@ export * from './icons/trash-can'
 export * from './icons/plus'
 export * from './icons/close'
 export * from './icons/arrows'
+
+/**
+ * Types
+ */
+export * from './metamorphic'
