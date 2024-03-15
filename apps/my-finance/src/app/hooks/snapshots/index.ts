@@ -13,4 +13,4 @@ if (process.env.NEXT_PUBLIC_STORAGE === 'local-storage') {
   snapshotsService = createSnapshotsService(createFirestoreSnapshotsRepository())
 }
 
-export const useAccounts = createUseSnapshots(snapshotsService)
+export const useSnapshots = createUseSnapshots(snapshotsService)

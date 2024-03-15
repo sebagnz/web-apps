@@ -4,7 +4,7 @@ export const SnapshotSchema = z.object({
   id: z.string(),
   accountId: z.string(),
   balance: z.number(),
-  date: z.date(),
+  date: z.coerce.date(),
 })
 
 export const SnapshotListSchema = z.array(SnapshotSchema)

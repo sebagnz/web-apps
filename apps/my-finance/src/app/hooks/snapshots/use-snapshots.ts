@@ -24,7 +24,11 @@ export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accou
     data: snapshots,
     error,
     isLoading: isLoadingSnapshots,
-  } = useSWR(user ? SNAPSHOTS_KEY : null, getSnapshots, { fallbackData: [], shouldRetryOnError: false, revalidateOnFocus: false })
+  } = useSWR(user ? SNAPSHOTS_KEY : null, getSnapshots, {
+    fallbackData: [],
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+  })
 
   useEffect(() => {
     if (error) toast.error(error.message)
@@ -32,7 +36,7 @@ export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accou
 
   const isLoading = useMemo(() => isLoadingUser || isLoadingSnapshots, [isLoadingUser, isLoadingSnapshots])
 
-  const createAccount = async (accountId: Snapshot['accountId'], balance: Snapshot['balance']) => {
+  const createSnapshot = async (accountId: Snapshot['accountId'], balance: Snapshot['balance']) => {
     const createAndRevalidateSnapshots = async () => {
       await snapshotsService.create({ accountId, balance })
       return getSnapshots()
@@ -41,7 +45,7 @@ export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accou
     return mutate(SNAPSHOTS_KEY, createAndRevalidateSnapshots)
   }
 
-  const updateAccount = async (snapshot: Snapshot) => {
+  const updateSnapshot = async (snapshot: Snapshot) => {
     const updateAndRevalidateSnapshots = async () => {
       await snapshotsService.update(snapshot)
       return getSnapshots()
@@ -53,7 +57,7 @@ export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accou
     })
   }
 
-  const deleteAccount = async (accountId: Snapshot['accountId'], snapshotId: Snapshot['id']) => {
+  const deleteSnapshot = async (accountId: Snapshot['accountId'], snapshotId: Snapshot['id']) => {
     const deleteAndRevalidateSnapshots = async () => {
       await snapshotsService.delete(accountId, snapshotId)
       return getSnapshots()
@@ -69,8 +73,8 @@ export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accou
     snapshots,
     error,
     isLoading,
-    createAccount: useCallback(createAccount, [mutate, getSnapshots]),
-    updateAccount: useCallback(updateAccount, [mutate, snapshots, getSnapshots]),
-    deleteAccount: useCallback(deleteAccount, [mutate, snapshots, getSnapshots]),
+    createSnapshot: useCallback(createSnapshot, [mutate, getSnapshots]),
+    updateSnapshot: useCallback(updateSnapshot, [mutate, snapshots, getSnapshots]),
+    deleteSnapshot: useCallback(deleteSnapshot, [mutate, snapshots, getSnapshots]),
   }
 }

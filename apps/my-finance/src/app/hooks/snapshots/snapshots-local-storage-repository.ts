@@ -5,7 +5,7 @@ import { SnapshotListSchema, SnapshotsRepository } from '@/domain'
 const LOCALSTORAGE_NAMESPACE = 'my-finance'
 const LOCALSTORAGE_ACCOUNTS_KEY = `${LOCALSTORAGE_NAMESPACE}:snapshots`
 
-function delay(minMs: number = 2000, maxMs: number = 3000) {
+function delay(minMs: number = 200, maxMs: number = 600) {
   const delayMs = Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs
   return new Promise((res) => setTimeout(res, delayMs))
 }
