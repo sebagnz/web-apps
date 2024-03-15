@@ -17,8 +17,6 @@ type AccountsLayoutProps = {
   modal: React.ReactNode
 }
 
-const MODAL_VIEWS = [Routes.app.accounts.new, Routes.app.expenses.new]
-
 const TABS = [
   { id: 'accounts', label: 'Accounts', href: Routes.app.accounts.index },
   { id: 'expenses', label: 'Expenses', href: Routes.app.expenses.index },
@@ -50,7 +48,7 @@ export default function AccountsLayout({ children, modal }: AccountsLayoutProps)
         </TabList>
       </Tabs>
       <div className="mx-auto max-w-2xl">{children}</div>
-      <Modal onClickOutside={router.back} onClose={router.back} show={MODAL_VIEWS.includes(pathname)}>
+      <Modal onClickOutside={router.back} onClose={router.back} show={pathname.endsWith('/new')}>
         {modal}
       </Modal>
     </>

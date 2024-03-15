@@ -13,6 +13,7 @@ import { PlusIcon, Skeleton, TrashCanIcon } from '@web-apps/ui'
 import { useAccounts } from '@/hooks/accounts'
 import '@/hooks/snapshots'
 
+import { Button } from '@/components/button'
 import { TranslucentCard } from '@/components/translucent-card'
 
 export default function AccountsPage() {
@@ -58,7 +59,6 @@ export default function AccountsPage() {
     return (
       <div className="px-4 lg:px-0 mx-auto max-w-2xl">
         <div className="flex flex-col items-center gap-y-2 pb-2 px-2 text-content-secondary">
-          <Image src={EmptyStateImg} alt="Empty state" height={100} />
           <p className="text-center">You don&apos;t have any accounts yet.</p>
           <p className="text-center text-sm">
             <Link className="underline" href={Routes.app.accounts.new}>
@@ -72,13 +72,13 @@ export default function AccountsPage() {
   }
 
   return (
-    <div className="px-4 sm:py-4">
-      <p className="text-center">
-        <span className="block text-xl">Total balance</span>
-        <span className="block text-5xl font-medium">€ {totalBalance}</span>
-      </p>
+    <div className="px-4 sm:py-4 space-y-8">
+      <div className="text-center mt-3">
+        <p className="text-base text-content-secondary">Total balance</p>
+        <p className="text-4xl font-medium">€ {totalBalance}</p>
+      </div>
 
-      <div className="flex flex-col gap-y-2 mt-4 sm:mt-8">
+      <div className="flex flex-col gap-y-2 sm:mt-8">
         {accounts.map((account) => (
           <TranslucentCard key={account.id} className={clsx('flex justify-between items-center cursor-pointer')}>
             <Link className="flex flex-1 items-center gap-x-4" href={Routes.app.accounts.id(account.id)}>
@@ -95,21 +95,11 @@ export default function AccountsPage() {
         ))}
       </div>
 
-      <div className="w-fit mt-8 mx-auto">
-        <Link
-          className={clsx(
-            'inline-flex border',
-            'gap-x-2 p-2',
-            'rounded-md',
-            'border-control-accent text-control-accent-content',
-            'hover:font-medium hover:shadow-md',
-          )}
-          aria-label="Create new account"
-          href={Routes.app.accounts.new}
-        >
+      <div className="w-fit mx-auto">
+        <Button as={Link} href={Routes.app.accounts.new} variant="outline" className="inline-flex gap-x-2">
           <PlusIcon />
           New account
-        </Link>
+        </Button>
       </div>
     </div>
   )
