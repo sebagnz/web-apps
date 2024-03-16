@@ -56,14 +56,14 @@ export default function Page() {
       <div>
         <LabeledInput>
           <LabeledInput.Label htmlFor="username">Username</LabeledInput.Label>
-          <LabeledInput.Text autoCapitalize="off" id="username" {...register('username')} />
+          <LabeledInput.Input autoCapitalize="off" id="username" {...register('username')} />
         </LabeledInput>
         {errors.username?.message && <p className="text-error text-sm">{errors.username?.message}</p>}
       </div>
       <div>
         <LabeledInput>
           <LabeledInput.Label htmlFor="password">Password</LabeledInput.Label>
-          <LabeledInput.Text autoCapitalize="off" id="password" type="password" {...register('password')} />
+          <LabeledInput.Input autoCapitalize="off" id="password" type="password" {...register('password')} />
         </LabeledInput>
         {errors.password?.message && <p className="text-error text-sm">{errors.password?.message}</p>}
       </div>

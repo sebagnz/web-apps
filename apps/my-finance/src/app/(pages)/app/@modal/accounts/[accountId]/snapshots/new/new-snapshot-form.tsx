@@ -55,19 +55,22 @@ export default function NewSnapshotPage({ accountId }: NewSnapshotPageProps) {
       <h2 className="my-4 text-center text-2xl">Create snapshot</h2>
 
       <div>
-        <input
-          className="fi-input appearance-none w-full text-center rounded-md px-4 py-2"
-          type="date"
-          defaultValue={new Date().toISOString().substring(0, 10)}
-          {...register('date', { valueAsDate: true })}
-        />
-        {errors.date?.message && <p className="text-error text-sm">{errors.balance?.message}</p>}
+        <LabeledInput>
+          <LabeledInput.Label htmlFor="date">Date</LabeledInput.Label>
+          <LabeledInput.Input
+            id="date"
+            type="date"
+            defaultValue={new Date().toISOString().substring(0, 10)}
+            {...register('date', { valueAsDate: true })}
+          />
+        </LabeledInput>
+        {errors.date?.message && <p className="text-error text-sm">{errors.date?.message}</p>}
       </div>
 
       <div className="space-y-2">
         <LabeledInput>
           <LabeledInput.Label htmlFor="balance">Balance</LabeledInput.Label>
-          <LabeledInput.Text
+          <LabeledInput.Input
             id="balance"
             className="text-3xl"
             placeholder="100"

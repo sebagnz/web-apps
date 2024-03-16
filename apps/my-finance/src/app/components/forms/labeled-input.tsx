@@ -17,7 +17,7 @@ function Label(
 type TextRef = HTMLInputElement
 type TextProps = ComponentPropsWithoutRef<'input'>
 
-const Text = forwardRef<TextRef, TextProps>(function TextInput({ className, ...props }, ref) {
+const Input = forwardRef<TextRef, TextProps>(function TextInput({ className, ...props }, ref) {
   return <input className={clsx('fi-input', 'inline-block', 'py-3 pl-3 pr-2', 'flex flex-1', 'rounded-l-none', className)} {...props} ref={ref} />
 })
 
@@ -42,7 +42,7 @@ function Option(props: ComponentPropsWithoutRef<'option'>) {
 }
 
 LabeledInput.Label = Label
-LabeledInput.Text = Text
+LabeledInput.Input = Input
 LabeledInput.Select = Select
 LabeledInput.Option = Option
 

@@ -73,7 +73,7 @@ export default function Page() {
             </LabeledInput>
             <LabeledInput className="flex-1">
               <LabeledInput.Label htmlFor="name">Name</LabeledInput.Label>
-              <LabeledInput.Text id="name" autoComplete="off" placeholder="Name" {...register('name')} />
+              <LabeledInput.Input id="name" autoComplete="off" placeholder="Name" {...register('name')} />
             </LabeledInput>
           </div>
           {errors.name?.message && <p className="text-error text-sm">{errors.name?.message}</p>}
@@ -81,7 +81,7 @@ export default function Page() {
 
         <LabeledInput>
           <LabeledInput.Label htmlFor="balance">Balance</LabeledInput.Label>
-          <LabeledInput.Text
+          <LabeledInput.Input
             id="balance"
             className="text-3xl"
             placeholder="100"
