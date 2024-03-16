@@ -1,9 +1,7 @@
 'use client'
 
 import clsx from 'clsx'
-import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 
 import { Routes } from '@/routes'
@@ -16,7 +14,11 @@ import '@/hooks/snapshots'
 import { Button } from '@/components/button'
 import { TranslucentCard } from '@/components/translucent-card'
 
-export default function AccountsPage() {
+type AccountPageProps = {
+  className?: string
+}
+
+export default function AccountsPage({ className }: AccountPageProps) {
   const { accounts, error, isLoading, totalBalance, deleteAccount } = useAccounts()
 
   const handleDeleteAccountIntent = async (id: string) => {
@@ -35,17 +37,23 @@ export default function AccountsPage() {
     }
   }
 
-  if (error) return <p>{error.message}</p>
+  if (error) {
+    return (
+      <div className={className}>
+        <p>{error.message}</p>
+      </div>
+    )
+  }
 
   if (isLoading) {
     return (
-      <div className="px-4 lg:px-0 mx-auto max-w-2xl">
-        <div className="mt-4 flex flex-col items-center content-center gap-y-2">
+      <div className={className}>
+        <div className="flex flex-col items-center content-center gap-y-2">
           <Skeleton className="h-4 w-32" />
           <Skeleton className="h-12 w-48" />
         </div>
-        <div className="mt-8">
-          <Skeleton className="h-4 w-32" />
+        <div className="mt-4 flex flex-col items-center content-center">
+          <Skeleton className="h-12 w-32 rounded-3xl" />
         </div>
         <div className="mt-4 flex flex-col gap-y-2">
           <Skeleton className="h-24" />
@@ -57,28 +65,33 @@ export default function AccountsPage() {
 
   if (accounts.length === 0) {
     return (
-      <div className="px-4 lg:px-0 mx-auto max-w-2xl">
-        <div className="flex flex-col items-center gap-y-2 pb-2 px-2 text-content-secondary">
-          <p className="text-center">You don&apos;t have any accounts yet.</p>
-          <p className="text-center text-sm">
-            <Link className="underline" href={Routes.app.accounts.new}>
-              Create a new one
-            </Link>{' '}
-            to start tracking your savings.
-          </p>
+      <div className={clsx('text-center text-content-secondary', className)}>
+        <p>You don&apos;t have any accounts yet.</p>
+        <div className="mt-3 w-fit mx-auto">
+          <Button as={Link} href={Routes.app.accounts.new} variant="outline" className="flex items-center gap-x-2">
+            <PlusIcon />
+            New account
+          </Button>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="px-4 sm:py-4 space-y-8">
-      <div className="text-center mt-3">
+    <div className={className}>
+      <div className="mt-3 text-center">
         <p className="text-base text-content-secondary">Total balance</p>
         <p className="text-4xl font-medium">€ {totalBalance}</p>
       </div>
 
-      <div className="flex flex-col gap-y-2 sm:mt-8">
+      <div className="mt-6 w-fit mx-auto">
+        <Button as={Link} href={Routes.app.accounts.new} variant="outline" className="flex items-center gap-x-2">
+          <PlusIcon />
+          New account
+        </Button>
+      </div>
+
+      <div className="mt-3 flex flex-col gap-y-2 sm:mt-8">
         {accounts.map((account) => (
           <TranslucentCard key={account.id} className={clsx('flex justify-between items-center cursor-pointer')}>
             <Link className="flex flex-1 items-center gap-x-4" href={Routes.app.accounts.id(account.id)}>
@@ -93,13 +106,6 @@ export default function AccountsPage() {
             </button>
           </TranslucentCard>
         ))}
-      </div>
-
-      <div className="w-fit mx-auto">
-        <Button as={Link} href={Routes.app.accounts.new} variant="outline" className="inline-flex gap-x-2">
-          <PlusIcon />
-          New account
-        </Button>
       </div>
     </div>
   )

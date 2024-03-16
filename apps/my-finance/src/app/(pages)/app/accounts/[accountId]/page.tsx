@@ -12,5 +12,5 @@ type AccountPageWrapperProps = {
 }
 
 export default function AccountPageWrapper({ params }: AccountPageWrapperProps) {
-  return <AccountPage accountId={params.accountId} />
+  return <AccountPage accountId={params.accountId} className="max-sm:px-4 max-w-2xl" />
 }

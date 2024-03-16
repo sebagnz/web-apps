@@ -1,18 +1,5 @@
 import { getAuth } from 'firebase/auth'
-import {
-  Timestamp,
-  collection,
-  collectionGroup,
-  deleteDoc,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  serverTimestamp,
-  setDoc,
-  updateDoc,
-  where,
-} from 'firebase/firestore'
+import { Timestamp, collection, collectionGroup, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore'
 
 import { ACCOUNTS_FIRESTORE_COLLECTION_PATH, FirestoreConverer, SNAPSHOTS_FIRESTORE_COLLECTION_PATH, getFirestoreDB } from '@/hooks/firebase'
 
@@ -30,9 +17,8 @@ type DBSnapshot = Omit<Snapshot, 'id' | 'date'> & { userId: User['id']; date: Ti
 
 const createSnapshotsConverter = (userId: User['id']): FirestoreConverer<DBSnapshot, Snapshot> => ({
   toFirestore: (snapshot) => {
-    const { accountId, balance } = snapshot
-    const date = serverTimestamp() as Timestamp
-    return { accountId, balance, userId, date }
+    const { accountId, balance, date } = snapshot
+    return { accountId, balance, userId, date: Timestamp.fromDate(date) }
   },
   fromFirestore: (snapshot, options) => {
     const { date, ...rest } = snapshot.data(options)
@@ -53,9 +39,9 @@ export const createFirestoreSnapshotsRepository = (): SnapshotsRepository => {
       await setDoc(doc(snapshotsRef), snapshot)
     },
     update: async (snapshot) => {
-      const { balance } = snapshot
+      const { balance, date } = snapshot
       const snapshotRef = doc(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, snapshot.accountId, SNAPSHOTS_FIRESTORE_COLLECTION_PATH, snapshot.id)
-      await updateDoc(snapshotRef, { balance })
+      await updateDoc(snapshotRef, { balance, date: Timestamp.fromDate(date) })
     },
     delete: async (accountId, snapshotId) => {
       const snapshotRef = doc(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, accountId, SNAPSHOTS_FIRESTORE_COLLECTION_PATH, snapshotId)

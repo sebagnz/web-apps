@@ -7,4 +7,6 @@ export const metadata: Metadata = {
   description: 'Handle all your finance in one place',
 }
 
-export default AccountsPage
+export default function AccountsPageWrapper() {
+  return <AccountsPage className="max-sm:px-4 max-w-2xl" />
+}

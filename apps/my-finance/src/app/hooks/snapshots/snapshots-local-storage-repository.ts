@@ -17,19 +17,19 @@ export const createLocalStorageSnapshotsRepository = (): SnapshotsRepository => 
       const maybeSnapshotList = JSON.parse(localStorage.getItem(LOCALSTORAGE_ACCOUNTS_KEY) || '[]')
       const snapshotList = SnapshotListSchema.parse(maybeSnapshotList)
 
-      const newSnapshot = { ...snapshot, id, date: new Date() }
+      const newSnapshot = { ...snapshot, id }
       const newSnapshotList = snapshotList.concat(newSnapshot)
       localStorage.setItem(LOCALSTORAGE_ACCOUNTS_KEY, JSON.stringify(newSnapshotList))
 
       await delay()
     },
     update: async (snapshot) => {
-      const { balance } = snapshot
+      const { balance, date } = snapshot
 
       const maybeSnapshotList = JSON.parse(localStorage.getItem(LOCALSTORAGE_ACCOUNTS_KEY) || '[]')
       const snapshotList = SnapshotListSchema.parse(maybeSnapshotList)
 
-      const newSnapshotList = snapshotList.map((snap) => (snap.id === snapshot.id ? { ...snapshot, balance } : snap))
+      const newSnapshotList = snapshotList.map((snap) => (snap.id === snapshot.id ? { ...snapshot, balance, date } : snap))
       localStorage.setItem(LOCALSTORAGE_ACCOUNTS_KEY, JSON.stringify(newSnapshotList))
 
       await delay()

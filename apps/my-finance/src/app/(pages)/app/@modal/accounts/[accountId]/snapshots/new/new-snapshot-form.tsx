@@ -43,7 +43,7 @@ export default function NewSnapshotPage({ accountId }: NewSnapshotPageProps) {
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     try {
-      await createSnapshot(accountId, data.balance)
+      await createSnapshot(accountId, data.balance, data.date)
       router.push(Routes.app.accounts.id(accountId))
     } catch (error) {
       if (error instanceof Error) toast.error(error.message)
@@ -52,11 +52,11 @@ export default function NewSnapshotPage({ accountId }: NewSnapshotPageProps) {
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-      <h2 className="text-center text-2xl my-4">Create snapshot</h2>
+      <h2 className="my-4 text-center text-2xl">Create snapshot</h2>
 
-      <div className="space-y-4">
+      <div>
         <input
-          className="fi-input w-full text-center rounded-md px-4 py-2"
+          className="fi-input appearance-none w-full text-center rounded-md px-4 py-2"
           type="date"
           defaultValue={new Date().toISOString().substring(0, 10)}
           {...register('date', { valueAsDate: true })}
@@ -64,7 +64,7 @@ export default function NewSnapshotPage({ accountId }: NewSnapshotPageProps) {
         {errors.date?.message && <p className="text-error text-sm">{errors.balance?.message}</p>}
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-2">
         <LabeledInput>
           <LabeledInput.Label htmlFor="balance">Balance</LabeledInput.Label>
           <LabeledInput.Text

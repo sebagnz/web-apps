@@ -1,7 +1,7 @@
 import { Snapshot, SnapshotsRepository } from '@/domain'
 
 export interface SnapshotsService {
-  create: (snapshop: Omit<Snapshot, 'id' | 'date'>) => Promise<void>
+  create: (snapshop: Omit<Snapshot, 'id'>) => Promise<void>
   update: (snapshop: Snapshot) => Promise<void>
   delete: (accountId: Snapshot['accountId'], snapshotId: Snapshot['id']) => Promise<void>
   get: (accountId: Snapshot['accountId'], snapshotId: Snapshot['id']) => Promise<Snapshot | undefined>

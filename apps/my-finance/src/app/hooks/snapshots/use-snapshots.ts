@@ -36,9 +36,9 @@ export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accou
 
   const isLoading = useMemo(() => isLoadingUser || isLoadingSnapshots, [isLoadingUser, isLoadingSnapshots])
 
-  const createSnapshot = async (accountId: Snapshot['accountId'], balance: Snapshot['balance']) => {
+  const createSnapshot = async (accountId: Snapshot['accountId'], balance: Snapshot['balance'], date: Snapshot['date']) => {
     const createAndRevalidateSnapshots = async () => {
-      await snapshotsService.create({ accountId, balance })
+      await snapshotsService.create({ accountId, balance, date })
       return getSnapshots()
     }
 
