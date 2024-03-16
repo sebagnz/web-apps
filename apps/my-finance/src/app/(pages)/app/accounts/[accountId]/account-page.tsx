@@ -5,10 +5,11 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useMemo } from 'react'
+import { toast } from 'react-toastify'
 
 import { Routes } from '@/routes'
 
-import { PlusIcon, Skeleton } from '@web-apps/ui'
+import { PlusIcon, Skeleton, TrashCanIcon } from '@web-apps/ui'
 
 import { useAccounts } from '@/hooks/accounts'
 import { useSnapshots } from '@/hooks/snapshots'
@@ -29,9 +30,25 @@ type AccountPageProps = {
 export const AccountPage = ({ accountId, className }: AccountPageProps) => {
   const router = useRouter()
   const { accounts, isLoading: isLoadingAccount, error: accountsError } = useAccounts()
-  const { snapshots, isLoading: isLoadingSnapshots, error: snapshotsError } = useSnapshots([accountId])
+  const { snapshots, isLoading: isLoadingSnapshots, error: snapshotsError, deleteSnapshot } = useSnapshots([accountId])
 
   const account = useMemo(() => accounts.find((account) => account.id === accountId), [accounts, accountId])
+
+  const handleDeleteAccountIntent = async (id: string) => {
+    const snapshot = snapshots.find((account) => account.id === id)
+
+    if (!snapshot) return
+
+    const confirmIntent = window.confirm(`Are you sure you want to delete this snapshot?`)
+
+    if (!confirmIntent) return
+
+    try {
+      await deleteSnapshot(snapshot.accountId, snapshot.id)
+    } catch (error) {
+      if (error instanceof Error) toast.error(error.message)
+    }
+  }
 
   if (accountsError) {
     return (
@@ -119,6 +136,7 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
           <TR>
             <TH scope="col">Date</TH>
             <TH scope="col">Balance</TH>
+            <TH scope="col" />
           </TR>
         </THead>
         <TBody>
@@ -132,6 +150,11 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
                 })}
               </TH>
               <TD>€ {snapshot.balance}</TD>
+              <TD>
+                <button onClick={() => handleDeleteAccountIntent(snapshot.id)}>
+                  <TrashCanIcon className="w-4 h-4" />
+                </button>
+              </TD>
             </TR>
           ))}
         </TBody>
