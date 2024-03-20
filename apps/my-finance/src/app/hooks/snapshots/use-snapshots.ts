@@ -2,31 +2,26 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { toast } from 'react-toastify'
 import useSWR, { useSWRConfig } from 'swr'
 
+import { ACCOUNTS_CACHE_KEY } from '@/hooks/accounts'
+import { useAuth } from '@/hooks/auth'
+
 import { Snapshot } from '@/domain'
 
 import { SnapshotsService } from '@/services'
 
-import { useAuth } from '../auth'
-
-const SNAPSHOTS_KEY = 'snapshots'
+export const SNAPSHOTS_CACHE_KEY = 'snapshots'
 
 export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accountIds: Array<Snapshot['id']>) => {
   const { mutate } = useSWRConfig()
 
   const { user, isLoading: isLoadingUser } = useAuth()
 
-  const getSnapshots = useCallback(async () => {
-    if (!user) throw new Error('You must be logged in to fetch accounts')
-    return snapshotsService.getByAccounts(accountIds)
-  }, [user, accountIds])
-
   const {
     data: snapshots,
     error,
     isLoading: isLoadingSnapshots,
-  } = useSWR(user ? SNAPSHOTS_KEY : null, getSnapshots, {
+  } = useSWR(user ? SNAPSHOTS_CACHE_KEY : null, () => snapshotsService.getByAccounts(accountIds), {
     fallbackData: [],
-    shouldRetryOnError: false,
     revalidateOnFocus: false,
   })
 
@@ -37,35 +32,19 @@ export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accou
   const isLoading = useMemo(() => isLoadingUser || isLoadingSnapshots, [isLoadingUser, isLoadingSnapshots])
 
   const createSnapshot = async (accountId: Snapshot['accountId'], balance: Snapshot['balance'], date: Snapshot['date']) => {
-    const createAndRevalidateSnapshots = async () => {
-      await snapshotsService.create({ accountId, balance, date })
-      return getSnapshots()
-    }
-
-    return mutate(SNAPSHOTS_KEY, createAndRevalidateSnapshots)
+    await mutate(SNAPSHOTS_CACHE_KEY, snapshotsService.create({ accountId, balance, date }))
+    await mutate(ACCOUNTS_CACHE_KEY)
   }
 
   const updateSnapshot = async (snapshot: Snapshot) => {
-    const updateAndRevalidateSnapshots = async () => {
-      await snapshotsService.update(snapshot)
-      return getSnapshots()
-    }
-
-    return mutate(SNAPSHOTS_KEY, updateAndRevalidateSnapshots, {
+    return mutate(SNAPSHOTS_CACHE_KEY, snapshotsService.update(snapshot), {
       optimisticData: snapshots.map((snap) => (snap.id === snap.id ? snapshot : snap)),
-      rollbackOnError: true,
     })
   }
 
   const deleteSnapshot = async (accountId: Snapshot['accountId'], snapshotId: Snapshot['id']) => {
-    const deleteAndRevalidateSnapshots = async () => {
-      await snapshotsService.delete(accountId, snapshotId)
-      return getSnapshots()
-    }
-
-    return mutate(SNAPSHOTS_KEY, deleteAndRevalidateSnapshots, {
+    return mutate(SNAPSHOTS_CACHE_KEY, snapshotsService.delete(accountId, snapshotId), {
       optimisticData: snapshots.filter((snap) => snap.id !== snapshotId),
-      rollbackOnError: true,
     })
   }
 
@@ -73,8 +52,8 @@ export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accou
     snapshots,
     error,
     isLoading,
-    createSnapshot: useCallback(createSnapshot, [mutate, getSnapshots]),
-    updateSnapshot: useCallback(updateSnapshot, [mutate, snapshots, getSnapshots]),
-    deleteSnapshot: useCallback(deleteSnapshot, [mutate, snapshots, getSnapshots]),
+    createSnapshot: useCallback(createSnapshot, [mutate]),
+    updateSnapshot: useCallback(updateSnapshot, [mutate, snapshots]),
+    deleteSnapshot: useCallback(deleteSnapshot, [mutate, snapshots]),
   }
 }

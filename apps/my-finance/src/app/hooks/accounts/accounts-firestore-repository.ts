@@ -1,9 +1,11 @@
 import { getAuth } from 'firebase/auth'
 import { collection, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore'
 
-import { ACCOUNTS_FIRESTORE_COLLECTION_PATH, FirestoreConverer, getFirestoreDB } from '@/hooks/firebase'
+import { ACCOUNTS_FIRESTORE_COLLECTION_PATH, FirestoreTransactionManager, getFirestoreDB } from '@/hooks/firebase'
 
-import { Account, AccountSchema, AccountsRepository, User } from '@/domain'
+import { AccountsRepository } from '@/domain'
+
+import { createAccountsConverter } from './accounts-firestore-converter'
 
 const auth = getAuth()
 
@@ -13,14 +15,7 @@ const getUserId = () => {
   return userId
 }
 
-type DBAccount = Account & { userId: User['id'] }
-
-const createAccountsConverter = (userId: User['id']): FirestoreConverer<DBAccount, Account> => ({
-  toFirestore: (account) => ({ ...account, userId }),
-  fromFirestore: (snapshot, options) => AccountSchema.parse({ id: snapshot.id, ...snapshot.data(options) }),
-})
-
-export const createFirestoreAccountsRepository = (): AccountsRepository => {
+export const createFirestoreAccountsRepository = (transactionManager: FirestoreTransactionManager): AccountsRepository => {
   const db = getFirestoreDB()
 
   return {
@@ -28,24 +23,49 @@ export const createFirestoreAccountsRepository = (): AccountsRepository => {
       const userId = getUserId()
       const converter = createAccountsConverter(userId)
       const accountsRef = collection(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH)
-      await setDoc(doc(accountsRef).withConverter(converter), account)
+      const accountRef = doc(accountsRef).withConverter(converter)
+
+      if (transactionManager.transaction) {
+        transactionManager.transaction.set(accountRef, account)
+      } else {
+        await setDoc(accountRef, account)
+      }
+
+      return { id: accountRef.id, ...account }
     },
     update: async (account) => {
-      const { name, image } = account
+      const { name, image, balance } = account
       const accountRef = doc(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, account.id)
-      await updateDoc(accountRef, { name, image })
+
+      if (transactionManager.transaction) {
+        transactionManager.transaction.update(accountRef, { name, image, balance })
+      } else {
+        await updateDoc(accountRef, { name, image, balance })
+      }
     },
     delete: async (id) => {
       const accountRef = doc(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, id)
-      await deleteDoc(accountRef)
+
+      if (transactionManager.transaction) {
+        transactionManager.transaction.delete(accountRef)
+      } else {
+        await deleteDoc(accountRef)
+      }
     },
     get: async (id) => {
       const userId = getUserId()
       const converter = createAccountsConverter(userId)
-      const accountRef = doc(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, id)
-      const accountSnap = await getDoc(accountRef.withConverter(converter))
-      const account = accountSnap.data()
-      return account
+      const accountRef = doc(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, id).withConverter(converter)
+
+      if (transactionManager.transaction) {
+        const accountSnap = await transactionManager.transaction.get(accountRef)
+        const account = accountSnap.data()
+        return account
+      } else {
+        const accountSnap = await getDoc(accountRef)
+        const account = accountSnap.data()
+        return account
+      }
     },
     getByUser: async (userId) => {
       const converter = createAccountsConverter(userId)

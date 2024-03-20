@@ -1,7 +1,7 @@
 import { Account } from './account'
 
 export interface AccountsRepository {
-  create: (account: Omit<Account, 'id'>) => Promise<void>
+  create: (account: Omit<Account, 'id'>) => Promise<Account>
   update: (account: Account) => Promise<void>
   delete: (id: Account['id']) => Promise<void>
   get: (id: Account['id']) => Promise<Account | undefined>

@@ -1,9 +1,16 @@
 import { getAuth } from 'firebase/auth'
 import { Timestamp, collection, collectionGroup, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore'
 
-import { ACCOUNTS_FIRESTORE_COLLECTION_PATH, FirestoreConverer, SNAPSHOTS_FIRESTORE_COLLECTION_PATH, getFirestoreDB } from '@/hooks/firebase'
+import {
+  ACCOUNTS_FIRESTORE_COLLECTION_PATH,
+  FirestoreTransactionManager,
+  SNAPSHOTS_FIRESTORE_COLLECTION_PATH,
+  getFirestoreDB,
+} from '@/hooks/firebase'
 
-import { Snapshot, SnapshotSchema, SnapshotsRepository, User } from '@/domain'
+import { SnapshotsRepository } from '@/domain'
+
+import { createSnapshotsConverter } from './snapshots-firestore-converter'
 
 const auth = getAuth()
 
@@ -13,47 +20,57 @@ const getUserId = () => {
   return userId
 }
 
-type DBSnapshot = Omit<Snapshot, 'id' | 'date'> & { userId: User['id']; date: Timestamp }
-
-const createSnapshotsConverter = (userId: User['id']): FirestoreConverer<DBSnapshot, Snapshot> => ({
-  toFirestore: (snapshot) => {
-    const { accountId, balance, date } = snapshot
-    return { accountId, balance, userId, date: Timestamp.fromDate(date) }
-  },
-  fromFirestore: (snapshot, options) => {
-    const { date, ...rest } = snapshot.data(options)
-    return SnapshotSchema.parse({ id: snapshot.id, date: date.toDate(), ...rest })
-  },
-})
-
-export const createFirestoreSnapshotsRepository = (): SnapshotsRepository => {
+export const createFirestoreSnapshotsRepository = (transactionManager: FirestoreTransactionManager): SnapshotsRepository => {
   const db = getFirestoreDB()
 
   return {
     create: async (snapshot) => {
       const userId = getUserId()
       const converter = createSnapshotsConverter(userId)
-      const snapshotsRef = collection(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, snapshot.accountId, SNAPSHOTS_FIRESTORE_COLLECTION_PATH).withConverter(
-        converter,
-      )
-      await setDoc(doc(snapshotsRef), snapshot)
+      const snapshotsRef = collection(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, snapshot.accountId, SNAPSHOTS_FIRESTORE_COLLECTION_PATH)
+      const snapshotRef = doc(snapshotsRef).withConverter(converter)
+
+      if (transactionManager.transaction) {
+        transactionManager.transaction.set(snapshotRef, snapshot)
+      } else {
+        await setDoc(snapshotRef, snapshot)
+      }
     },
     update: async (snapshot) => {
       const { balance, date } = snapshot
       const snapshotRef = doc(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, snapshot.accountId, SNAPSHOTS_FIRESTORE_COLLECTION_PATH, snapshot.id)
-      await updateDoc(snapshotRef, { balance, date: Timestamp.fromDate(date) })
+
+      if (transactionManager.transaction) {
+        transactionManager.transaction.update(snapshotRef, { balance, date: Timestamp.fromDate(date) })
+      } else {
+        await updateDoc(snapshotRef, { balance, date: Timestamp.fromDate(date) })
+      }
     },
     delete: async (accountId, snapshotId) => {
       const snapshotRef = doc(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, accountId, SNAPSHOTS_FIRESTORE_COLLECTION_PATH, snapshotId)
-      await deleteDoc(snapshotRef)
+
+      if (transactionManager.transaction) {
+        transactionManager.transaction.delete(snapshotRef)
+      } else {
+        await deleteDoc(snapshotRef)
+      }
     },
     get: async (accountId, snapshotId) => {
       const userId = getUserId()
       const converter = createSnapshotsConverter(userId)
-      const snapshotRef = doc(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, accountId, SNAPSHOTS_FIRESTORE_COLLECTION_PATH, snapshotId)
-      const snapshotSnap = await getDoc(snapshotRef.withConverter(converter))
-      const snapshot = snapshotSnap.data()
-      return snapshot
+      const snapshotRef = doc(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, accountId, SNAPSHOTS_FIRESTORE_COLLECTION_PATH, snapshotId).withConverter(
+        converter,
+      )
+
+      if (transactionManager.transaction) {
+        const snapshotSnap = await transactionManager.transaction.get(snapshotRef)
+        const snapshot = snapshotSnap.data()
+        return snapshot
+      } else {
+        const snapshotSnap = await getDoc(snapshotRef)
+        const snapshot = snapshotSnap.data()
+        return snapshot
+      }
     },
     getByAccounts: async (accountIds) => {
       const userId = getUserId()

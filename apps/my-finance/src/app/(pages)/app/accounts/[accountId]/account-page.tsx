@@ -120,7 +120,7 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
       </p>
 
       <div className="mt-3 text-center">
-        <p className="text-base text-content-secondary">Current balance</p>
+        <p className="text-base text-content-secondary">Account balance</p>
         <p className="text-4xl font-medium">€ {account.balance}</p>
       </div>
 

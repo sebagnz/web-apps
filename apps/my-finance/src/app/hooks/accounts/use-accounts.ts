@@ -2,31 +2,25 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { toast } from 'react-toastify'
 import useSWR, { useSWRConfig } from 'swr'
 
+import { useAuth } from '@/hooks/auth'
+
 import { Account } from '@/domain'
 
 import { AccountsService } from '@/services'
 
-import { useAuth } from '../auth'
-
-const ACCOUNTS_KEY = 'accounts'
+export const ACCOUNTS_CACHE_KEY = 'accounts'
 
 export const createUseAccounts = (accountsService: AccountsService) => () => {
   const { mutate } = useSWRConfig()
 
   const { user, isLoading: isLoadingUser } = useAuth()
 
-  const getAccountsByUser = useCallback(async () => {
-    if (!user) throw new Error('You must be logged in to fetch accounts')
-    return accountsService.getByUser(user.id)
-  }, [user])
-
   const {
     data: accounts,
     error,
     isLoading: isLoadingAccounts,
-  } = useSWR(user ? ACCOUNTS_KEY : null, getAccountsByUser, {
+  } = useSWR(user ? ACCOUNTS_CACHE_KEY : null, () => accountsService.getByUser(user!.id), {
     fallbackData: [],
-    shouldRetryOnError: false,
     revalidateOnFocus: false,
   })
 
@@ -37,35 +31,18 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
   const isLoading = useMemo(() => isLoadingUser || isLoadingAccounts, [isLoadingUser, isLoadingAccounts])
 
   const createAccount = async (name: Account['name'], balance: Account['balance'], image: Account['image']) => {
-    const createAndRevalidateAccounts = async () => {
-      await accountsService.create({ name, balance, image })
-      return getAccountsByUser()
-    }
-
-    return mutate(ACCOUNTS_KEY, createAndRevalidateAccounts)
+    return mutate(ACCOUNTS_CACHE_KEY, accountsService.create({ name, balance, image }))
   }
 
   const updateAccount = async (account: Account) => {
-    const updateAndRevalidateAccounts = async () => {
-      await accountsService.update(account)
-      return getAccountsByUser()
-    }
-
-    return mutate(ACCOUNTS_KEY, updateAndRevalidateAccounts, {
+    return mutate(ACCOUNTS_CACHE_KEY, accountsService.update(account), {
       optimisticData: accounts.map((acc) => (acc.id === account.id ? account : acc)),
-      rollbackOnError: true,
     })
   }
 
   const deleteAccount = async (id: Account['id']) => {
-    const deleteAndRevalidateAccounts = async () => {
-      await accountsService.delete(id)
-      return getAccountsByUser()
-    }
-
-    return mutate(ACCOUNTS_KEY, deleteAndRevalidateAccounts, {
+    return mutate(ACCOUNTS_CACHE_KEY, accountsService.delete(id), {
       optimisticData: accounts.filter((account) => account.id !== id),
-      rollbackOnError: true,
     })
   }
 
@@ -78,8 +55,8 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
     error,
     isLoading,
     totalBalance,
-    createAccount: useCallback(createAccount, [mutate, getAccountsByUser]),
-    updateAccount: useCallback(updateAccount, [mutate, accounts, getAccountsByUser]),
-    deleteAccount: useCallback(deleteAccount, [mutate, accounts, getAccountsByUser]),
+    createAccount: useCallback(createAccount, [mutate]),
+    updateAccount: useCallback(updateAccount, [mutate, accounts]),
+    deleteAccount: useCallback(deleteAccount, [mutate, accounts]),
   }
 }

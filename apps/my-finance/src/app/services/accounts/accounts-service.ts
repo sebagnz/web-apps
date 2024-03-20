@@ -1,4 +1,6 @@
-import { Account, AccountsRepository, User } from '@/domain'
+import { Account, AccountsRepository, SnapshotsRepository, User } from '@/domain'
+
+import { TransactionManager } from '@/services'
 
 export interface AccountsService {
   create: (account: Omit<Account, 'id'>) => Promise<void>
@@ -8,22 +10,29 @@ export interface AccountsService {
   getByUser: (userId: User['id']) => Promise<Account[]>
 }
 
-export const createAccountsService = (repository: AccountsRepository): AccountsService => {
+export const createAccountsService = (
+  accountsRepository: AccountsRepository,
+  snapshotsRepository: SnapshotsRepository,
+  transactionManager: TransactionManager<any>,
+): AccountsService => {
   return {
     create: async (account) => {
-      return repository.create(account)
+      await transactionManager.runTransaction(async () => {
+        const newAccount = await accountsRepository.create(account)
+        await snapshotsRepository.create({ accountId: newAccount.id, balance: newAccount.balance, date: new Date() })
+      })
     },
     update: async (account) => {
-      return repository.update(account)
+      return accountsRepository.update(account)
     },
     delete: async (id) => {
-      return repository.delete(id)
+      return accountsRepository.delete(id)
     },
     get: async (id) => {
-      return repository.get(id)
+      return accountsRepository.get(id)
     },
     getByUser: async (userId) => {
-      return repository.getByUser(userId)
+      return accountsRepository.getByUser(userId)
     },
   }
 }

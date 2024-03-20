@@ -22,6 +22,8 @@ export const createLocalStorageAccountsRepository = (): AccountsRepository => {
       localStorage.setItem(LOCALSTORAGE_ACCOUNTS_KEY, JSON.stringify(newAccountList))
 
       await delay()
+
+      return newAccount
     },
     update: async (account) => {
       const maybeAccountList = JSON.parse(localStorage.getItem(LOCALSTORAGE_ACCOUNTS_KEY) || '[]')
