@@ -59,8 +59,8 @@ export default function NewSnapshotPage({ accountId }: NewSnapshotPageProps) {
           <LabeledInput.Label htmlFor="date">Date</LabeledInput.Label>
           <LabeledInput.Input
             id="date"
-            type="date"
-            defaultValue={new Date().toISOString().substring(0, 10)}
+            type="datetime-local"
+            defaultValue={new Date().toISOString().substring(0, 16)}
             {...register('date', { valueAsDate: true })}
           />
         </LabeledInput>

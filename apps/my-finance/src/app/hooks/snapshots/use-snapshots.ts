@@ -37,15 +37,17 @@ export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accou
   }
 
   const updateSnapshot = async (snapshot: Snapshot) => {
-    return mutate(SNAPSHOTS_CACHE_KEY, snapshotsService.update(snapshot), {
+    await mutate(SNAPSHOTS_CACHE_KEY, snapshotsService.update(snapshot), {
       optimisticData: snapshots.map((snap) => (snap.id === snap.id ? snapshot : snap)),
     })
+    await mutate(ACCOUNTS_CACHE_KEY)
   }
 
   const deleteSnapshot = async (accountId: Snapshot['accountId'], snapshotId: Snapshot['id']) => {
-    return mutate(SNAPSHOTS_CACHE_KEY, snapshotsService.delete(accountId, snapshotId), {
+    await mutate(SNAPSHOTS_CACHE_KEY, snapshotsService.delete(accountId, snapshotId), {
       optimisticData: snapshots.filter((snap) => snap.id !== snapshotId),
     })
+    await mutate(ACCOUNTS_CACHE_KEY)
   }
 
   return {

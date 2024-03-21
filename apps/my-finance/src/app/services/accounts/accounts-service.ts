@@ -25,8 +25,16 @@ export const createAccountsService = (
     update: async (account) => {
       return accountsRepository.update(account)
     },
-    delete: async (id) => {
-      return accountsRepository.delete(id)
+    delete: async (accountId) => {
+      await transactionManager.runTransaction(async () => {
+        const account = await accountsRepository.get(accountId)
+        if (!account) throw new Error('Account not found')
+
+        const snapshots = await snapshotsRepository.getByAccounts([accountId])
+        if (snapshots.length > 0) throw new Error('Accounts with snapshots cannot be deleted.')
+
+        await accountsRepository.delete(accountId)
+      })
     },
     get: async (id) => {
       return accountsRepository.get(id)
