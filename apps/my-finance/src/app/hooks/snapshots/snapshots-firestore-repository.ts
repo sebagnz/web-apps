@@ -1,5 +1,5 @@
 import { getAuth } from 'firebase/auth'
-import { Timestamp, collection, collectionGroup, deleteDoc, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore'
+import { Timestamp, collection, collectionGroup, deleteDoc, doc, getDoc, getDocs, orderBy, query, setDoc, updateDoc, where } from 'firebase/firestore'
 
 import {
   ACCOUNTS_FIRESTORE_COLLECTION_PATH,
@@ -77,7 +77,12 @@ export const createFirestoreSnapshotsRepository = (transactionManager: Firestore
       const converter = createSnapshotsConverter(userId)
       const snapshotsRef = collectionGroup(db, SNAPSHOTS_FIRESTORE_COLLECTION_PATH)
 
-      const q = query(snapshotsRef.withConverter(converter), where('userId', '==', userId), where('accountId', 'in', accountIds))
+      const q = query(
+        snapshotsRef.withConverter(converter),
+        where('userId', '==', userId),
+        where('accountId', 'in', accountIds),
+        orderBy('date', 'desc'),
+      )
 
       const snapshotsSnap = await getDocs(q)
       const snapshots = snapshotsSnap.docs.map((doc) => doc.data())
