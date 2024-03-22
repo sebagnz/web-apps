@@ -53,12 +53,12 @@ describe('AccountsService - Account creation', () => {
 
     try {
       await accountsService.create({ name: 'test', balance: 1000, image: '🤑' })
-    } catch (error) {
-      expect(error).toBe(error)
+    } catch (e) {
+      expect(e).toBe(error)
     }
 
     expect(accountCreateSpy).toHaveBeenCalledTimes(1)
-    expect(snapshotsRepository.create).not.toHaveBeenCalled()
+    expect(snapshotCreateSpy).not.toHaveBeenCalled()
   })
 })
 
@@ -88,8 +88,8 @@ describe('AccountsService - Account deletion', () => {
 
     try {
       await accountsService.delete('mock-account')
-    } catch (error) {
-      expect(error).toStrictEqual(expectedError)
+    } catch (e) {
+      expect(e).toStrictEqual(expectedError)
     }
 
     expect(accountGetSpy).toHaveBeenCalledTimes(1)
@@ -105,8 +105,8 @@ describe('AccountsService - Account deletion', () => {
 
     try {
       await accountsService.delete(account.id)
-    } catch (error) {
-      expect(error).toBe(error)
+    } catch (e) {
+      expect(e).toBe(error)
     }
 
     expect(accountGetSpy).toHaveBeenCalledTimes(1)
@@ -125,8 +125,8 @@ describe('AccountsService - Account deletion', () => {
 
     try {
       await accountsService.delete(account.id)
-    } catch (error) {
-      expect(error).toStrictEqual(expectedError)
+    } catch (e) {
+      expect(e).toStrictEqual(expectedError)
     }
 
     expect(accountGetSpy).toHaveBeenCalledTimes(1)
@@ -168,8 +168,8 @@ describe('AccountsService - Account update', () => {
 
     try {
       await accountsService.update(createMockAccount())
-    } catch (error) {
-      expect(error).toBe(error)
+    } catch (e) {
+      expect(e).toBe(error)
     }
 
     expect(accountUpdateSpy).toHaveBeenCalledTimes(1)
@@ -204,8 +204,8 @@ describe('AccountsService - Account get', () => {
 
     try {
       await accountsService.get('mock-account')
-    } catch (error) {
-      expect(error).toBe(error)
+    } catch (e) {
+      expect(e).toBe(error)
     }
 
     expect(accountGetSpy).toHaveBeenCalledTimes(1)
@@ -240,8 +240,8 @@ describe('AccountsService - Account getByUser', () => {
 
     try {
       await accountsService.getByUser('mock-user')
-    } catch (error) {
-      expect(error).toBe(error)
+    } catch (e) {
+      expect(e).toBe(error)
     }
 
     expect(accountsGetByUserSpy).toHaveBeenCalledTimes(1)

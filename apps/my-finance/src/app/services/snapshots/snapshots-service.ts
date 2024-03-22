@@ -26,7 +26,6 @@ export const createSnapshotsService = (
         if (snapshots.length === 0) {
           await accountsRepository.update({ ...account, balance: newSnapshot.balance })
         }
-
         if (snapshots.length > 0 && snapshots[0].date < newSnapshot.date) {
           await accountsRepository.update({ ...account, balance: newSnapshot.balance })
         }
