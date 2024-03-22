@@ -6,3 +6,8 @@ export interface TransactionManager<TTransaction> {
   runTransaction: (updateFn: (transaction: TTransaction, ...args: unknown[]) => Promise<unknown>) => Promise<unknown>
   transaction: TTransaction | null
 }
+
+export const createMockTransactionManager = (): TransactionManager<void> => {
+  const runTransaction = async (fn: () => Promise<any>) => fn()
+  return { runTransaction, transaction: null }
+}

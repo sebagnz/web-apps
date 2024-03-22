@@ -13,6 +13,6 @@ export const createMockAccountsRepository: () => AccountsRepository = () => {
     update: async (account) => {},
     delete: async (id) => {},
     get: async (id) => createMockAccount({ id }),
-    getByUser: async (userId) => [createMockAccount({ id: uuidv4() }), createMockAccount({ id: uuidv4() })],
+    getByUser: async (userId) => [],
   }
 }
