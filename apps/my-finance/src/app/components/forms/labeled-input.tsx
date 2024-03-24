@@ -27,10 +27,7 @@ type SelectProps = ComponentPropsWithoutRef<'select'>
 const Select = forwardRef<SelectRef, SelectProps>(function SelectInput({ className, ...props }, ref) {
   return (
     <select
-      className={clsx(
-        'fi-input flex-1 text-content-tertiery text-2xl pl-3 pr-5 py-2 min-w-[60px] border-r-transparent border-r-8 rounded-l-none',
-        className,
-      )}
+      className={clsx('fi-input flex-1 text-content-tertiery  pl-3 pr-5 py-2 min-w-[60px] border-r-transparent border-r-8 rounded-l-none', className)}
       {...props}
       ref={ref}
     />
