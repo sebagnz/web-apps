@@ -81,7 +81,7 @@ export default function AccountsPage({ className }: AccountPageProps) {
     <div className={className}>
       <div className="mt-3 text-center">
         <p className="text-base text-content-secondary">Total balance</p>
-        <p className="text-4xl font-medium">€ {totalBalance}</p>
+        <p className="text-4xl font-medium">€ {totalBalance.toLocaleString()}</p>
       </div>
 
       <div className="mt-6 w-fit mx-auto">
@@ -98,7 +98,7 @@ export default function AccountsPage({ className }: AccountPageProps) {
               <p className="text-5xl">{account.image}</p>
               <div>
                 <p className="text-xl">{account.name}</p>
-                <p>€ {account.balance}</p>
+                <p>€ {account.balance.toLocaleString()}</p>
               </div>
             </Link>
             <button aria-label={`Delete account ${account.name}`} onClick={() => handleDeleteAccountIntent(account.id)}>

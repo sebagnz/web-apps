@@ -11,7 +11,7 @@ import { SnapshotsService } from '@/services'
 
 export const SNAPSHOTS_CACHE_KEY = 'snapshots'
 
-export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accountIds: Array<Snapshot['id']>) => {
+export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accountIds: Array<Snapshot['accountId']>) => {
   const { mutate } = useSWRConfig()
 
   const { user, isLoading: isLoadingUser } = useAuth()
@@ -20,7 +20,7 @@ export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accou
     data: snapshots,
     error,
     isLoading: isLoadingSnapshots,
-  } = useSWR(user ? SNAPSHOTS_CACHE_KEY : null, () => snapshotsService.getByAccounts(accountIds), {
+  } = useSWR(user && accountIds.length ? [SNAPSHOTS_CACHE_KEY].concat(accountIds) : null, () => snapshotsService.getByAccounts(accountIds), {
     fallbackData: [],
     revalidateOnFocus: false,
   })

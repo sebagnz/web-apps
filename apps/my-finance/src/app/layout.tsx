@@ -47,9 +47,7 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
               </div>
             </BaseHeader>
           }
-          leftSidebar={<div className="h-full flex flex-col justify-center items-center"></div>}
           main={<main>{children}</main>}
-          rightSidebar={<div className="h-full flex flex-col justify-center items-center"></div>}
         />
         <Modal onClickOutside={goHome} onClose={goHome} show={MODAL_VIEWS.includes(pathname)}>
           {modal}

@@ -10,7 +10,7 @@ import { LabeledInput } from '@/components/forms/labeled-input'
 type SavingPageProps = { className?: string }
 
 const errorMessages = {
-  dateToDateFrom: 'the "From" date cannot be later than the "To" date',
+  dateToDateFrom: 'The "From" date cannot be later than the "To" date',
 }
 
 const FormInputSchema = z
@@ -49,30 +49,32 @@ export default function SavingsPage({ className }: SavingPageProps) {
     <div className={className}>
       <form className="mt-3 flex flex-col sm:flex-row justify-between gap-x-4 gap-y-2" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex justify-between gap-x-4 gap-y-2">
-          <LabeledInput className="grow">
+          <LabeledInput className="grow text-xs">
             <LabeledInput.Label htmlFor="dateFrom">From</LabeledInput.Label>
             <LabeledInput.Input
               id="dateFrom"
-              type="date"
-              defaultValue={defaultDateFrom.toISOString().substring(0, 10)}
+              type="month"
+              min="2020-01"
+              max={new Date().toISOString().substring(0, 7)}
+              defaultValue={defaultDateFrom.toISOString().substring(0, 7)}
               {...register('dateFrom', { valueAsDate: true, onBlur: handleSubmit(onSubmit) })}
             />
           </LabeledInput>
 
-          <LabeledInput className="grow">
+          <LabeledInput className="grow text-xs">
             <LabeledInput.Label htmlFor="dateTo">To</LabeledInput.Label>
             <LabeledInput.Input
               id="dateTo"
-              type="date"
-              defaultValue={defaultDateTo.toISOString().substring(0, 10)}
+              type="month"
+              min="2020-01"
+              max={new Date().toISOString().substring(0, 7)}
+              defaultValue={defaultDateTo.toISOString().substring(0, 7)}
               {...register('dateTo', { valueAsDate: true, onBlur: handleSubmit(onSubmit) })}
             />
           </LabeledInput>
         </div>
 
-        {errors.dateTo?.message && <p className="text-error text-sm">{errors.dateTo?.message}</p>}
-
-        <LabeledInput className="grow">
+        <LabeledInput className="grow text-xs">
           <LabeledInput.Label htmlFor="account">Account</LabeledInput.Label>
           <LabeledInput.Select id="account" {...register('account', { onChange: handleSubmit(onSubmit) })}>
             <LabeledInput.Option value={undefined}>All</LabeledInput.Option>
@@ -80,6 +82,8 @@ export default function SavingsPage({ className }: SavingPageProps) {
             <LabeledInput.Option value="Revolut">💰 Revolut</LabeledInput.Option>
           </LabeledInput.Select>
         </LabeledInput>
+
+        {errors.dateTo?.message && <p className="text-error text-sm mx-auto">{errors.dateTo?.message}</p>}
       </form>
     </div>
   )
