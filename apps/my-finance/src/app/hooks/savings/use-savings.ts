@@ -11,15 +11,12 @@ type BalancesByPeriod = Map<FinanceDataPoint['period'], FinanceDataPoint['balanc
 type SavingsByPeriod = Map<FinanceDataPoint['period'], FinanceDataPoint['balance']>
 
 export const useSavings = (accountIds: Array<Account['id']>, dateFrom: Date, dateTo: Date) => {
-  const { snapshots: descSnapshots } = useSnapshots(accountIds)
+  const { snapshots: allSnapshots } = useSnapshots(accountIds, { order: 'asc' })
 
-  const descSnapshotsFiltered = useMemo(
-    () => descSnapshots.filter((snapshot) => snapshot.date >= dateFrom && snapshot.date <= dateTo),
-    [descSnapshots, dateFrom, dateTo],
+  const snapshots = useMemo(
+    () => allSnapshots.filter((snapshot) => snapshot.date >= dateFrom && snapshot.date <= dateTo),
+    [allSnapshots, dateFrom, dateTo],
   )
-
-  // TODO: Make snapshots query sortable
-  const snapshots = useMemo(() => descSnapshotsFiltered.sort((l, r) => l.date.getTime() - r.date.getTime()), [descSnapshotsFiltered])
 
   const balancesByPeriod = useMemo(
     () =>

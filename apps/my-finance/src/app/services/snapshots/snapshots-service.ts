@@ -2,12 +2,14 @@ import { AccountsRepository, Snapshot, SnapshotsRepository } from '@/domain'
 
 import { TransactionManager } from '@/services'
 
+type GetByAccountOptions = { order?: 'asc' | 'desc' }
+
 export interface SnapshotsService {
   create: (snapshot: Omit<Snapshot, 'id'>) => Promise<void>
   update: (snapshot: Snapshot) => Promise<void>
   delete: (accountId: Snapshot['accountId'], snapshotId: Snapshot['id']) => Promise<void>
   get: (accountId: Snapshot['accountId'], snapshotId: Snapshot['id']) => Promise<Snapshot | undefined>
-  getByAccounts: (accountIds: Array<Snapshot['accountId']>) => Promise<Snapshot[]>
+  getByAccounts: (accountIds: Array<Snapshot['accountId']>, options?: GetByAccountOptions) => Promise<Snapshot[]>
 }
 
 export const createSnapshotsService = (
@@ -21,7 +23,7 @@ export const createSnapshotsService = (
         const account = await accountsRepository.get(newSnapshot.accountId)
         if (!account) throw new Error('Account not found')
 
-        const snapshots = await snapshotsRepository.getByAccounts([newSnapshot.accountId])
+        const snapshots = await snapshotsRepository.getByAccounts([newSnapshot.accountId], { order: 'desc' })
 
         if (snapshots.length === 0) {
           await accountsRepository.update({ ...account, balance: newSnapshot.balance })
@@ -41,7 +43,7 @@ export const createSnapshotsService = (
         const account = await accountsRepository.get(accountId)
         if (!account) throw new Error('Account not found')
 
-        const snapshots = await snapshotsRepository.getByAccounts([accountId])
+        const snapshots = await snapshotsRepository.getByAccounts([accountId], { order: 'desc' })
         if (!snapshots || snapshots.length === 0) throw new Error('Snapshots not found')
 
         const deleteIndex = snapshots.findIndex((snapshot) => snapshot.id === snapshotId)
@@ -62,8 +64,9 @@ export const createSnapshotsService = (
     get: async (accountId, id) => {
       return snapshotsRepository.get(accountId, id)
     },
-    getByAccounts: async (accountIds) => {
-      return snapshotsRepository.getByAccounts(accountIds)
+    getByAccounts: async (accountIds, options) => {
+      const order = options?.order || 'desc'
+      return snapshotsRepository.getByAccounts(accountIds, { order })
     },
   }
 }

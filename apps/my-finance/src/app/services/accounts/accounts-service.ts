@@ -30,7 +30,7 @@ export const createAccountsService = (
         const account = await accountsRepository.get(accountId)
         if (!account) throw new Error('Account not found')
 
-        const snapshots = await snapshotsRepository.getByAccounts([accountId])
+        const snapshots = await snapshotsRepository.getByAccounts([accountId], { order: 'desc' })
         if (snapshots.length > 0) throw new Error('Accounts with snapshots cannot be deleted.')
 
         await accountsRepository.delete(accountId)

@@ -72,7 +72,7 @@ export const createFirestoreSnapshotsRepository = (transactionManager: Firestore
         return snapshot
       }
     },
-    getByAccounts: async (accountIds) => {
+    getByAccounts: async (accountIds, options) => {
       const userId = getUserId()
       const converter = createSnapshotsConverter(userId)
       const snapshotsRef = collectionGroup(db, SNAPSHOTS_FIRESTORE_COLLECTION_PATH)
@@ -81,7 +81,7 @@ export const createFirestoreSnapshotsRepository = (transactionManager: Firestore
         snapshotsRef.withConverter(converter),
         where('userId', '==', userId),
         where('accountId', 'in', accountIds),
-        orderBy('date', 'desc'),
+        orderBy('date', options.order),
       )
 
       const snapshotsSnap = await getDocs(q)
