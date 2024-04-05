@@ -10,7 +10,6 @@ type BalancesByPeriod = Map<FinanceDataPoint['period'], FinanceDataPoint['balanc
 
 type SavingsByPeriod = Map<FinanceDataPoint['period'], FinanceDataPoint['balance']>
 
-// TODO: Test this
 export const useSavings = (accountIds: Array<Account['id']>, dateFrom: Date, dateTo: Date) => {
   const { snapshots: descSnapshots } = useSnapshots(accountIds)
 
