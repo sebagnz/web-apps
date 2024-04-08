@@ -38,6 +38,7 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
                 'pt-6 pb-12 px-4',
                 'justify-center items-center',
                 'bg-gradient-to-b from-base-accent to-base-accent/80 text-content-accent',
+                'shadow-md',
               )}
             >
               <div className="min-w-[100px] mr-auto"></div>

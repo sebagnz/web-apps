@@ -26,6 +26,16 @@
   }
 }
 
+@layer base {
+  h1 {
+    @apply text-3xl font-semibold;
+  }
+
+  h2 {
+    @apply text-2xl font-medium;
+  }
+}
+
 body {
   /* @apply bg-gradient-to-br from-base-primary to-base-secondary; */
   @apply bg-base-primary;

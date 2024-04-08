@@ -131,7 +131,7 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
         </Button>
       </div>
 
-      <Table className="mt-3 w-full">
+      <Table className="my-3 w-full">
         <THead>
           <TR>
             <TH scope="col">Date</TH>

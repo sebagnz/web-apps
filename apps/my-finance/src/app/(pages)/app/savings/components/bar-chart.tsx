@@ -1,3 +1,5 @@
+'use client'
+
 import { BarElement, CategoryScale, ChartData, Chart as ChartJS, ChartOptions, Legend, LinearScale, Title, Tooltip } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
 
@@ -30,7 +32,13 @@ const barOptions: BarChartOptions = {
       grid: { color: gridColor },
     },
     y: {
-      ticks: { callback: (value) => `€${value}` },
+      ticks: {
+        callback: (rawValue) => {
+          const value = parseFloat(rawValue.toString())
+          if (isNaN(value)) return rawValue
+          return `€ ${value / 1000}k`
+        },
+      },
       grid: { color: gridColor },
     },
   },
