@@ -9,6 +9,7 @@ export default defineConfig({
     alias: {
       '@/domain': path.resolve(__dirname, './src/app/domain'),
       '@/hooks': path.resolve(__dirname, './src/app/hooks'),
+      '@/utils': path.resolve(__dirname, './src/app/utils'),
     },
   },
 })

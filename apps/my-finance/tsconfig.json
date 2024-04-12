@@ -24,6 +24,7 @@
       "@/components/*": ["./src/app/components/*"],
       "@/domain": ["./src/app/domain/index"],
       "@/services": ["./src/app/services/index"],
+      "@/utils": ["./src/app/utils/index"],
       "@/routes": ["./src/app/routes"],
     }
   },

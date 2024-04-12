@@ -10,14 +10,20 @@ type BarChartData = ChartData<'bar', Array<DataPoint>, string>
 type BarChartOptions = ChartOptions<'bar'>
 
 const gridColor = 'rgba(200, 200, 200, .1)'
-const positiveBarColor = 'rgba(59, 7, 100, .8)'
+
+const positivePrimaryColor = 'rgba(59, 7, 100, .8)'
+const positiveSecondaryColor = 'rgba(59, 7, 100, .6)'
+
 const negativeBarColor = 'rgba(200, 7, 7, .8)'
 
 const barOptions: BarChartOptions = {
   responsive: true,
   elements: {
     bar: {
-      backgroundColor: (context) => (context?.parsed?.y < 0 ? negativeBarColor : positiveBarColor),
+      backgroundColor: (context) => {
+        if (context?.parsed?.y < 0) return negativeBarColor
+        return context?.datasetIndex % 2 === 0 ? positivePrimaryColor : positiveSecondaryColor
+      },
     },
   },
   datasets: {
@@ -30,8 +36,10 @@ const barOptions: BarChartOptions = {
   scales: {
     x: {
       grid: { color: gridColor },
+      stacked: true,
     },
     y: {
+      stacked: true,
       ticks: {
         callback: (rawValue) => {
           const value = parseFloat(rawValue.toString())
