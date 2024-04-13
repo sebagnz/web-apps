@@ -1,11 +1,13 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import clsx from 'clsx'
 import { useForm, useWatch } from 'react-hook-form'
 import { z } from 'zod'
 
 import { LabeledInput } from '@/components/forms/labeled-input'
 
+import { BalancesChart } from './components/balances-chart'
 import { SavingsChart } from './components/savings-chart'
 
 type SavingPageProps = { className?: string }
@@ -57,8 +59,8 @@ export default function SavingsPage({ className }: SavingPageProps) {
   const range = RANGE_FILTERS[rangeKey]
 
   return (
-    <div className={className}>
-      <form className="mt-3">
+    <div className={clsx('spacing-y-3', className)}>
+      <form>
         <LabeledInput className="w-fit mx-auto">
           <LabeledInput.Label htmlFor="range">Range</LabeledInput.Label>
           <LabeledInput.Select id="range" {...register('range')}>
@@ -70,8 +72,9 @@ export default function SavingsPage({ className }: SavingPageProps) {
           </LabeledInput.Select>
         </LabeledInput>
       </form>
-      <div className="mt-3 space-y-6">
+      <div className="space-y-10">
         <SavingsChart dateFrom={range.dateFrom} dateTo={range.dateTo} />
+        <BalancesChart dateFrom={range.dateFrom} dateTo={range.dateTo} />
       </div>
     </div>
   )
