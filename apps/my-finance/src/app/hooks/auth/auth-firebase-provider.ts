@@ -4,9 +4,7 @@ import { getFirebaseApp } from '@/hooks/firebase'
 
 import { AuthProvider } from '@/domain'
 
-import { createAuthService } from '@/services'
-
-const createAuthFirebaseProvider = (): AuthProvider => {
+export const createAuthFirebaseProvider = (): AuthProvider => {
   const firebaseApp = getFirebaseApp()
 
   const auth = getAuth()
@@ -37,5 +35,3 @@ const createAuthFirebaseProvider = (): AuthProvider => {
     },
   }
 }
-
-export const authFirebaseService = createAuthService(createAuthFirebaseProvider())
