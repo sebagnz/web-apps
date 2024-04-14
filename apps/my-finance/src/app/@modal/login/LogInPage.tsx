@@ -71,16 +71,16 @@ export default function Page() {
     <form className="space-y-3" onSubmit={handleSubmit(handleLoginWithEmail)}>
       <h2 className="my-4 text-center text-3xl">Log in</h2>
 
-      <div>
-        <LabeledInput className="mx-auto w-96 max-w-full">
+      <div className="mx-auto w-96 max-w-full">
+        <LabeledInput>
           <LabeledInput.Label htmlFor="username">Username</LabeledInput.Label>
           <LabeledInput.Input autoCapitalize="off" id="username" {...register('username')} />
         </LabeledInput>
         {errors.username?.message && <p className="text-error text-sm">{errors.username?.message}</p>}
       </div>
 
-      <div>
-        <LabeledInput className="mx-auto w-96 max-w-full">
+      <div className="mx-auto w-96 max-w-full">
+        <LabeledInput>
           <LabeledInput.Label htmlFor="password">Password</LabeledInput.Label>
           <LabeledInput.Input autoCapitalize="off" id="password" type="password" {...register('password')} />
         </LabeledInput>
@@ -97,7 +97,7 @@ export default function Page() {
           <p className="text-xs text-content-tertiary">Or</p>
         </Divider>
 
-        <LoginButton onClick={handleLoginWithGoogle}>
+        <LoginButton type="button" onClick={handleLoginWithGoogle}>
           <Image src={GoogleLogo} alt="Log in with Google" width={20} height={20} />
           <span>Log in with Google</span>
         </LoginButton>
