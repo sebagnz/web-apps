@@ -17,9 +17,13 @@ export const createUseAuth = (authService: AuthService) => () => {
     return mutate(USER_KEY, registerFn)
   }
 
-  const login = async (email: string, password: string) => {
-    const loginFn = async () => await authService.login(email, password)
+  const loginWithEmail = async (email: string, password: string) => {
+    const loginFn = async () => await authService.loginWithEmail(email, password)
     return mutate(USER_KEY, loginFn)
+  }
+
+  const loginWithGoogle = async () => {
+    return mutate(USER_KEY, authService.loginWithGoogle)
   }
 
   const logout = async () => {
@@ -29,7 +33,8 @@ export const createUseAuth = (authService: AuthService) => () => {
 
   return {
     register,
-    login,
+    loginWithEmail,
+    loginWithGoogle,
     logout,
     user,
     error,

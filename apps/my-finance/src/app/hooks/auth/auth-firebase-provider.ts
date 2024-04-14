@@ -1,4 +1,12 @@
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import {
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth'
 
 import { getFirebaseApp } from '@/hooks/firebase'
 
@@ -13,15 +21,18 @@ export const createAuthFirebaseProvider = (): AuthProvider => {
     register: async (email: string, password: string) => {
       await createUserWithEmailAndPassword(auth, email, password)
     },
-    login: async (email: string, password: string) => {
+    loginWithEmail: async (email: string, password: string) => {
       await signInWithEmailAndPassword(auth, email, password)
+    },
+    loginWithGoogle: async () => {
+      const provider = new GoogleAuthProvider()
+      await signInWithPopup(auth, provider)
     },
     logout: async () => {
       await signOut(auth)
     },
     getLoggerUser: async () => {
       await auth.authStateReady()
-
       if (!auth.currentUser) return null
       return { id: auth.currentUser.uid }
     },
