@@ -55,7 +55,7 @@ export const Modal = ({ show, className, onClickOutside, onClose, children }: Mo
               'bg-modal-base',
               'inline-block',
               'relative',
-              'top-[250px] left-1/2',
+              'top-[150px] md:top-[250px] left-1/2',
               '-translate-x-1/2',
               'max-md:min-w-[90vw] max-xl:min-w-[50vw] min-w-[35vw] max-w-[90vw]',
               'min-h-[400px] max-h-[90vh]',
