@@ -102,7 +102,7 @@ export default function AccountsPage({ className }: AccountPageProps) {
               </div>
             </Link>
             <button aria-label={`Delete account ${account.name}`} onClick={() => handleDeleteAccountIntent(account.id)}>
-              <TrashCanIcon hoverable className="text-content-tertiary" />
+              <TrashCanIcon className="text-content-tertiary hover:stroke-2" />
             </button>
           </TranslucentCard>
         ))}

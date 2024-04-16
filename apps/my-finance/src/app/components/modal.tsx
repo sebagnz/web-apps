@@ -36,7 +36,7 @@ export const Modal = ({ show, className, onClickOutside, onClose, children }: Mo
 
   const closeButton = onClose ? (
     <button className="absolute right-3 top-3" aria-label="Close" onClick={onClose}>
-      <CloseIcon hoverable />
+      <CloseIcon className="hover:stroke-2" />
     </button>
   ) : null
 

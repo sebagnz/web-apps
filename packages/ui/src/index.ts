@@ -15,6 +15,9 @@ export * from './icons/plus'
 export * from './icons/close'
 export * from './icons/arrows'
 export * from './icons/bars'
+export * from './icons/user'
+export * from './icons/chart-line-up'
+export * from './icons/chart-pie'
 
 /**
  * Types
