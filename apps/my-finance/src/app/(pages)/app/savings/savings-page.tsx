@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import { useForm, useWatch } from 'react-hook-form'
 import { z } from 'zod'
 
-import { LabeledInput } from '@/components/forms/labeled-input'
+import { LabeledInput } from '@/components/labeled-input'
 
 import { BalancesChart } from './components/balances-chart'
 import { SavingsChart } from './components/savings-chart'

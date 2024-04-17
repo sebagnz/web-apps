@@ -1,4 +1,7 @@
 export const Routes = {
+  home: {
+    index: '/',
+  },
   login: {
     index: '/login',
   },

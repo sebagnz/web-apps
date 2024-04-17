@@ -15,7 +15,7 @@ import { Spinner } from '@web-apps/ui'
 import { useAuth } from '@/hooks/auth'
 
 import { Button } from '@/components/button'
-import { LabeledInput } from '@/components/forms/labeled-input'
+import { LabeledInput } from '@/components/labeled-input'
 
 import GoogleLogo from '../../../../public/login/google.png'
 

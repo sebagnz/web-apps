@@ -8,9 +8,9 @@ import 'react-toastify/dist/ReactToastify.min.css'
 
 import { BaseHeader, BaseLayout } from '@web-apps/ui'
 
-import { AuthButton } from '@/components/auth/auth-button'
+import { Menu } from '@/components/menu'
+import { Modal } from '@/components/modal'
 
-import { Modal } from './components/modal'
 import './globals.css'
 
 const font = Ubuntu({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
@@ -43,16 +43,18 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
             >
               <div className="min-w-[100px] mr-auto"></div>
               <p className="text-xl font-medium">My Finances</p>
-              <div className="min-w-[100px] ml-auto">
-                <AuthButton className="ml-auto text-content-accent" />
+              <div className="ml-auto relative min-w-[100px] flex items-center justify-end">
+                <Menu />
               </div>
             </BaseHeader>
           }
           main={<main>{children}</main>}
         />
+
         <Modal onClickOutside={goHome} onClose={goHome} show={MODAL_VIEWS.includes(pathname)}>
           {modal}
         </Modal>
+
         <ToastContainer position="bottom-center" autoClose={4000} closeOnClick />
       </body>
     </html>

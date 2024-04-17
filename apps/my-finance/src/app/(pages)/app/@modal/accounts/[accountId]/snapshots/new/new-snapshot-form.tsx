@@ -13,7 +13,7 @@ import { Spinner } from '@web-apps/ui'
 import { useSnapshots } from '@/hooks/snapshots'
 
 import { Button } from '@/components/button'
-import { LabeledInput } from '@/components/forms/labeled-input'
+import { LabeledInput } from '@/components/labeled-input'
 
 const errorMessages = {
   dateRequired: 'Please, introduce a date for your new snapshot',

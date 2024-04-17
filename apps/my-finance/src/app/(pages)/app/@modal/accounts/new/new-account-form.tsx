@@ -14,7 +14,7 @@ import { Spinner } from '@web-apps/ui'
 import { useAccounts } from '@/hooks/accounts'
 
 import { Button } from '@/components/button'
-import { LabeledInput } from '@/components/forms/labeled-input'
+import { LabeledInput } from '@/components/labeled-input'
 
 const errorMessages = {
   nameRequired: 'Please, introduce a name for your new account',
