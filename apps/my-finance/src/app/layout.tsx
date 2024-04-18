@@ -35,15 +35,15 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
           header={
             <BaseHeader
               className={clsx(
-                'pt-6 pb-12 px-4',
+                'pt-6 pb-10 px-4',
                 'justify-center items-center',
                 'bg-gradient-to-b from-base-accent to-base-accent/80 text-content-accent',
                 'shadow-md',
               )}
             >
-              <div className="min-w-[100px] mr-auto"></div>
+              <div className="flex-1"></div>
               <p className="text-xl font-medium">My Finances</p>
-              <div className="ml-auto relative min-w-[100px] flex items-center justify-end">
+              <div className="flex-1 relative flex items-center justify-end">
                 <Menu />
               </div>
             </BaseHeader>

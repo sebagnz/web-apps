@@ -24,7 +24,7 @@ export const getFirestoreDB = () => {
   return firestoreDB
 }
 
-export type FirestoreConverer<TDB, TDomain> = {
+export type FirestoreMapper<TDB, TDomain> = {
   toFirestore: (data: TDomain) => TDB
   fromFirestore: (snapshot: QueryDocumentSnapshot, options: any) => TDomain
 }

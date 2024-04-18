@@ -1,58 +1,60 @@
+import clsx from 'clsx'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { ComponentPropsWithoutRef, useRef } from 'react'
 
 import { Routes } from '@/routes'
 
-import { ArrowLeftToBracketIcon, ArrowRightToBracketIcon, ChartLineUpIcon, ChartPieIcon, UserIcon } from '@web-apps/ui'
+import { ArrowLeftToBracketIcon, ArrowRightToBracketIcon, BarsIcon, ChartLineUpIcon, ChartPieIcon, CloseIcon, UserIcon } from '@web-apps/ui'
 
 import { useAuth } from '@/hooks/auth'
 
 import { Authenticated, Unauthenticated } from '@/components/auth'
-import { MenuButton, Nav, NavButton, NavCloseButton, NavContainer, NavGroup, NavItem, NavLink, NavMenuDivider, useNavMenu } from '@/components/nav'
+import { Nav, NavButton, NavContainer, NavGroup, NavItem, NavLink, NavMenuDivider, useNavMenu } from '@/components/nav'
+
+import avatarPlaceholder from '../../../public/avatar-placeholder.png'
 
 export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) => {
   const menuAnchorRef = useRef<HTMLDivElement | null>(null)
 
-  const { logout } = useAuth()
+  const { user, logout } = useAuth()
   const { push } = useRouter()
   const { isMenuExpanded, closeMenu, toggleMenu } = useNavMenu({ ref: menuAnchorRef })
 
-  const handleLogout = () => {
-    closeMenu()
-    logout()
-  }
-
-  const handleLogin = () => {
-    closeMenu()
-    push(Routes.login.index)
-  }
-
   return (
-    <div ref={menuAnchorRef} className={className} {...rest}>
-      <MenuButton onClick={toggleMenu} />
+    <div ref={menuAnchorRef} className={clsx('min-h-[36px]', className)} {...rest}>
+      <Authenticated>
+        <AvatarImage onClick={toggleMenu} src={user?.avatarURL || avatarPlaceholder} width={36} height={36} />
+      </Authenticated>
+
+      <Unauthenticated>
+        <BarsIcon onClick={toggleMenu} className="w-[32px] h-[32px]" />
+      </Unauthenticated>
 
       <NavContainer expanded={isMenuExpanded}>
-        <div className="flex items-center justify-end">
-          <NavCloseButton onClick={closeMenu} />
-        </div>
+        <CloseButton onClick={closeMenu} className="ml-auto w-[32px] h-[32px]" />
+
+        <UserInfo />
+
+        <NavMenuDivider />
 
         <Nav>
           <NavGroup>
             <NavItem onClick={closeMenu}>
               <NavLink href={Routes.app.accounts.index}>
-                <UserIcon className="text-base-accent w-[20px]" /> Accounts
+                <AccontsIcon /> Accounts
               </NavLink>
             </NavItem>
 
             <NavItem onClick={closeMenu}>
               <NavLink href={Routes.app.expenses.index}>
-                <ChartPieIcon className="text-base-accent w-[20px]" /> Expenses
+                <ExpensesIcon /> Expenses
               </NavLink>
             </NavItem>
 
             <NavItem onClick={closeMenu}>
               <NavLink href={Routes.app.savings.index}>
-                <ChartLineUpIcon className="text-base-accent w-[20px] stroke-2" /> Savings
+                <SavingsIcon /> Savings
               </NavLink>
             </NavItem>
           </NavGroup>
@@ -62,16 +64,14 @@ export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =>
           <NavGroup>
             <NavItem onClick={closeMenu}>
               <Authenticated>
-                <NavButton onClick={handleLogout}>
-                  <ArrowRightToBracketIcon className="text-base-accent w-[20px] stroke-2" />
-                  Log out
+                <NavButton onClick={logout}>
+                  <LogoutIcon /> Log out
                 </NavButton>
               </Authenticated>
 
               <Unauthenticated>
-                <NavButton onClick={handleLogin}>
-                  <ArrowLeftToBracketIcon className="text-base-accent w-[20px] stroke-2" />
-                  Log in
+                <NavButton onClick={() => push(Routes.login.index)}>
+                  <LoginIcon /> Log in
                 </NavButton>
               </Unauthenticated>
             </NavItem>
@@ -81,3 +81,37 @@ export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =>
     </div>
   )
 }
+
+const AvatarImage = ({ className, ...rest }: Omit<ComponentPropsWithoutRef<typeof Image>, 'alt'>) => (
+  <Image alt="User avatar" className={clsx('rounded-full border-2 border-content-accent', className)} {...rest} />
+)
+
+const CloseButton = ({ className, ...rest }: ComponentPropsWithoutRef<typeof CloseIcon>) => (
+  <CloseIcon
+    className={clsx('sm:hidden', 'rounded-md', 'text-base-accent active:bg-control-accent/10 hover:bg-control-accent/10', className)}
+    {...rest}
+  />
+)
+
+const UserInfo = () => {
+  const { user } = useAuth()
+
+  if (!user?.name && !user?.email) return null
+
+  return (
+    <div>
+      {user?.name && <p className="text-lg font-medium">{user.name}</p>}
+      {user?.email && <p className="text-sm font-light">{user.email}</p>}
+    </div>
+  )
+}
+
+const AccontsIcon = () => <UserIcon className="text-base-accent w-[20px] stroke-2" />
+
+const ExpensesIcon = () => <ChartPieIcon className="text-base-accent w-[20px] stroke-2" />
+
+const SavingsIcon = () => <ChartLineUpIcon className="text-base-accent w-[20px] stroke-2" />
+
+const LogoutIcon = () => <ArrowRightToBracketIcon className="text-base-accent w-[20px] stroke-2" />
+
+const LoginIcon = () => <ArrowLeftToBracketIcon className="text-base-accent w-[20px] stroke-2" />

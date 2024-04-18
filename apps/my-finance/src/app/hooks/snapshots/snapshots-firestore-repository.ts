@@ -10,7 +10,7 @@ import {
 
 import { SnapshotsRepository } from '@/domain'
 
-import { createSnapshotsConverter } from './snapshots-firestore-converter'
+import { createSnapshotsMapper } from './snapshots-firestore-mapper'
 
 const auth = getAuth()
 
@@ -26,7 +26,7 @@ export const createFirestoreSnapshotsRepository = (transactionManager: Firestore
   return {
     create: async (snapshot) => {
       const userId = getUserId()
-      const converter = createSnapshotsConverter(userId)
+      const converter = createSnapshotsMapper(userId)
       const snapshotsRef = collection(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, snapshot.accountId, SNAPSHOTS_FIRESTORE_COLLECTION_PATH)
       const snapshotRef = doc(snapshotsRef).withConverter(converter)
 
@@ -57,7 +57,7 @@ export const createFirestoreSnapshotsRepository = (transactionManager: Firestore
     },
     get: async (accountId, snapshotId) => {
       const userId = getUserId()
-      const converter = createSnapshotsConverter(userId)
+      const converter = createSnapshotsMapper(userId)
       const snapshotRef = doc(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, accountId, SNAPSHOTS_FIRESTORE_COLLECTION_PATH, snapshotId).withConverter(
         converter,
       )
@@ -74,7 +74,7 @@ export const createFirestoreSnapshotsRepository = (transactionManager: Firestore
     },
     getByAccounts: async (accountIds, options) => {
       const userId = getUserId()
-      const converter = createSnapshotsConverter(userId)
+      const converter = createSnapshotsMapper(userId)
       const snapshotsRef = collectionGroup(db, SNAPSHOTS_FIRESTORE_COLLECTION_PATH)
 
       const q = query(

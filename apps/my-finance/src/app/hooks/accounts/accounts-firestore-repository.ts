@@ -5,7 +5,7 @@ import { ACCOUNTS_FIRESTORE_COLLECTION_PATH, FirestoreTransactionManager, getFir
 
 import { AccountsRepository } from '@/domain'
 
-import { createAccountsConverter } from './accounts-firestore-converter'
+import { createAccountsMapper } from './accounts-firestore-mapper'
 
 const auth = getAuth()
 
@@ -21,7 +21,7 @@ export const createFirestoreAccountsRepository = (transactionManager: FirestoreT
   return {
     create: async (account) => {
       const userId = getUserId()
-      const converter = createAccountsConverter(userId)
+      const converter = createAccountsMapper(userId)
       const accountsRef = collection(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH)
       const accountRef = doc(accountsRef).withConverter(converter)
 
@@ -54,7 +54,7 @@ export const createFirestoreAccountsRepository = (transactionManager: FirestoreT
     },
     get: async (id) => {
       const userId = getUserId()
-      const converter = createAccountsConverter(userId)
+      const converter = createAccountsMapper(userId)
       const accountRef = doc(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, id).withConverter(converter)
 
       if (transactionManager.transaction) {
@@ -68,7 +68,7 @@ export const createFirestoreAccountsRepository = (transactionManager: FirestoreT
       }
     },
     getByUser: async (userId) => {
-      const converter = createAccountsConverter(userId)
+      const converter = createAccountsMapper(userId)
       const accountsRef = collection(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH)
 
       const q = query(accountsRef.withConverter(converter), where('userId', '==', userId))

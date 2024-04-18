@@ -12,6 +12,10 @@ import { getFirebaseApp } from '@/hooks/firebase'
 
 import { AuthProvider } from '@/domain'
 
+import { createUserMapper } from './auth-firebase-mapper'
+
+const userMapper = createUserMapper()
+
 export const createAuthFirebaseProvider = (): AuthProvider => {
   const firebaseApp = getFirebaseApp()
 
@@ -34,12 +38,13 @@ export const createAuthFirebaseProvider = (): AuthProvider => {
     getLoggerUser: async () => {
       await auth.authStateReady()
       if (!auth.currentUser) return null
-      return { id: auth.currentUser.uid }
+      const user = userMapper.toDomain(auth.currentUser)
+      return user
     },
     onAuthStateChanged: (callback) => {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (!user) callback(null)
-        else callback({ id: user.uid })
+        else callback(userMapper.toDomain(user))
       })
 
       return unsubscribe
