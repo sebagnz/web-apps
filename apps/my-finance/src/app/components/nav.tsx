@@ -5,6 +5,9 @@ import { ComponentPropsWithoutRef, RefObject, useEffect, useState } from 'react'
 type NavContainerProps = { expanded: boolean }
 
 export const NavContainer = ({ expanded, className, ...rest }: ComponentPropsWithoutRef<'div'> & NavContainerProps) => {
+  const collapseTransition = { '[clip-path:_circle(0px_at_top_right)]': !expanded }
+  const expandTransition = { '[clip-path:_circle(150%_at_top_right)]': expanded }
+
   return (
     <div
       className={clsx(
@@ -14,10 +17,8 @@ export const NavContainer = ({ expanded, className, ...rest }: ComponentPropsWit
         'bg-base-primary/50 backdrop-blur-md',
         'text-content-secondary',
         'shadow-xl shadow-modal-overlay',
-        className,
         'transition-[clip-path] duration-300 ease-out',
-        { '[clip-path:_circle(0px_at_top_right)]': !expanded },
-        { '[clip-path:_circle(150%_at_top_right)]': expanded },
+        [collapseTransition, expandTransition, className],
       )}
       {...rest}
     />
