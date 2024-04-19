@@ -39,7 +39,7 @@ export default function AccountsLayout({ children, modal }: AccountsLayoutProps)
   return (
     <>
       <Tabs selectedIndex={selectedIndex} onSelect={onSelect}>
-        <TabList className="mx-auto -translate-y-1/3 bg-base-primary/50 backdrop-blur-md border border-base-accent/10">
+        <TabList className="mx-auto -translate-y-1/3 bg-accent-muted/30 backdrop-blur-md">
           {TABS.map((tab, i) => (
             <Tab key={tab.id} index={i}>
               <Link href={tab.href}>{tab.label}</Link>

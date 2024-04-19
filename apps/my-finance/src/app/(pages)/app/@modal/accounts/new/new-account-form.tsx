@@ -83,7 +83,6 @@ export default function Page() {
           <LabeledInput.Label htmlFor="balance">Balance</LabeledInput.Label>
           <LabeledInput.Input
             id="balance"
-            className="text-3xl"
             placeholder="100"
             autoComplete="off"
             type="number"

@@ -5,16 +5,19 @@ import { Bar } from 'react-chartjs-2'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
+const cssVar = (name: string) => {
+  if (typeof document === 'undefined') return
+  return getComputedStyle(document.documentElement).getPropertyValue(name)
+}
+
 type DataPoint = { x: string; y: number }
 type BarChartData = ChartData<'bar', Array<DataPoint>, string>
 type BarChartOptions = ChartOptions<'bar'>
 
-const gridColor = 'rgba(200, 200, 200, .1)'
-
-const positivePrimaryColor = 'rgba(59, 7, 100, .8)'
-const positiveSecondaryColor = 'rgba(59, 7, 100, .6)'
-
-const negativeBarColor = 'rgba(200, 7, 7, .8)'
+const gridColor = () => `rgb(${cssVar('--color-accent-100')})`
+const positivePrimaryColor = () => `rgb(${cssVar('--color-accent-500')})`
+const positiveSecondaryColor = () => `rgb(${cssVar('--color-accent-300')})`
+const negativeBarColor = `rgb(${cssVar('--color-error-500')})`
 
 const isDataPoint = (data: any): data is DataPoint => data.x && data.y
 
@@ -24,7 +27,7 @@ const barOptions: BarChartOptions = {
     bar: {
       backgroundColor: (context) => {
         if (context?.parsed?.y < 0) return negativeBarColor
-        return context?.datasetIndex % 2 === 0 ? positivePrimaryColor : positiveSecondaryColor
+        return context?.datasetIndex % 2 === 0 ? positivePrimaryColor() : positiveSecondaryColor()
       },
     },
   },
@@ -77,5 +80,5 @@ const barOptions: BarChartOptions = {
 type BarChartProps = { datasets: BarChartData['datasets'] }
 
 export const BarChart = ({ datasets }: BarChartProps) => {
-  return <Bar options={barOptions} data={{ datasets }} />
+  return <Bar className="" options={barOptions} data={{ datasets }} />
 }

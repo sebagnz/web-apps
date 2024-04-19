@@ -18,10 +18,10 @@ export const Button: Metamorphic<'button', ButtonProps> = (props) => {
       className={clsx(
         'py-2 px-4',
         'rounded-full',
-        'text-sm',
-        'hover:font-medium hover:shadow-md',
-        { 'bg-control-accent text-content-accent': isFill },
-        { 'border border-control-accent text-control-accent-content': isOutline },
+        'transition-shadow duration-300',
+        'text-sm shadow-md hover:shadow-lg',
+        { 'bg-accent text-inverted': isFill },
+        { 'bg-accent-muted text-accent': isOutline },
         { '': isInline },
         className,
       )}

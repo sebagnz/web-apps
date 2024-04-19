@@ -43,7 +43,7 @@ export const Modal = ({ show, className, onClickOutside, onClose, children }: Mo
   return (
     <Transition nodeRef={nodeRef} in={show} timeout={duration} unmountOnExit>
       {(state) => (
-        <div className="absolute inset-0 bg-modal-overlay backdrop-blur-sm" onClick={onClickOutside}>
+        <div className="absolute inset-0 bg-inverted/30 backdrop-blur-sm" onClick={onClickOutside}>
           <div
             ref={nodeRef}
             style={{
@@ -52,7 +52,7 @@ export const Modal = ({ show, className, onClickOutside, onClose, children }: Mo
             }}
             onClick={(e) => e.stopPropagation()}
             className={clsx(
-              'bg-modal-base',
+              'bg-base/80',
               'inline-block',
               'relative',
               'top-[150px] md:top-[250px] left-1/2',

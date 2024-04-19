@@ -68,18 +68,18 @@ export default function Page() {
   }
 
   return (
-    <form className="space-y-3" onSubmit={handleSubmit(handleLoginWithEmail)}>
+    <form className="space-y-3 max-w-[350px] mx-auto" onSubmit={handleSubmit(handleLoginWithEmail)}>
       <h2 className="my-4 text-center text-3xl">Log in</h2>
 
-      <div className="mx-auto w-96 max-w-full">
+      <div className="mx-auto">
         <LabeledInput>
-          <LabeledInput.Label htmlFor="username">Username</LabeledInput.Label>
+          <LabeledInput.Label htmlFor="username">Email</LabeledInput.Label>
           <LabeledInput.Input autoCapitalize="off" id="username" {...register('username')} />
         </LabeledInput>
         {errors.username?.message && <p className="text-error text-sm">{errors.username?.message}</p>}
       </div>
 
-      <div className="mx-auto w-96 max-w-full">
+      <div className="mx-auto">
         <LabeledInput>
           <LabeledInput.Label htmlFor="password">Password</LabeledInput.Label>
           <LabeledInput.Input autoCapitalize="off" id="password" type="password" {...register('password')} />

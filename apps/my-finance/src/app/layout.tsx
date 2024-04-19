@@ -30,19 +30,14 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
 
   return (
     <html lang="en">
-      <body className={font.className}>
+      <body className={clsx('bg-base text-base', font.className)}>
         <BaseLayout
           header={
             <BaseHeader
-              className={clsx(
-                'pt-6 pb-10 px-4',
-                'justify-center items-center',
-                'bg-gradient-to-b from-base-accent to-base-accent/80 text-content-accent',
-                'shadow-md',
-              )}
+              className={clsx('pt-6 pb-10 px-4', 'justify-center items-center', 'bg-gradient-to-b from-accent-900 to-accent-900/80', 'shadow-md')}
             >
               <div className="flex-1"></div>
-              <p className="text-xl font-medium">My Finances</p>
+              <p className="text-xl text-inverted font-medium">My Finances</p>
               <div className="flex-1 relative flex items-center justify-end">
                 <Menu />
               </div>
@@ -55,7 +50,7 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
           {modal}
         </Modal>
 
-        <ToastContainer position="bottom-center" autoClose={4000} closeOnClick />
+        <ToastContainer position="bottom-center" autoClose={4000} pauseOnHover closeOnClick />
       </body>
     </html>
   )

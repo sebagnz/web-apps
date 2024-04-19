@@ -29,7 +29,7 @@ export const SavingsChart = ({ dateFrom, dateTo }: SavingsChartProps) => {
         <p className="text-4xl font-medium">€ {totalSavings.toLocaleString()}</p>
       </div>
       <div>
-        <p className="">Savings by ponth</p>
+        <p>Savings by ponth</p>
         <BarChart datasets={[{ label, data }]} />
       </div>
     </div>

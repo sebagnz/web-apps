@@ -1,54 +1,63 @@
-const colors = require('tailwindcss/colors')
 const ui = require('@web-apps/ui/tailwind')
+
+const withOpacity = (varName) => `rgb(var(${varName}) / <alpha-value>)`
 
 module.exports = {
   presets: [ui],
   // `ui.content` includes a path to the components that are using tailwind in @web-apps/ui
-  content: ui.content.concat(['./src/app/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}']),
+  content: ui.content.concat(['./src/**/*.{js,ts,jsx,tsx}']),
   plugins: [],
   theme: {
-    extend: {
-      transitionProperty: {
-        height: 'height',
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      white: '#fff',
+      black: '#000',
+      accent: {
+        100: withOpacity('--color-accent-100'),
+        300: withOpacity('--color-accent-300'),
+        500: withOpacity('--color-accent-500'),
+        700: withOpacity('--color-accent-700'),
+        900: withOpacity('--color-accent-900'),
       },
-      colors: {
-        error: colors.red[500],
-        base: {
-          primary: colors.slate[100],
-          secondary: colors.slate[400],
-          accent: colors.purple[950],
-        },
-        content: {
-          primary: colors.gray[800],
-          secondary: colors.gray[700],
-          tertiary: colors.gray[500],
-          accent: colors.gray[200],
-        },
-        modal: {
-          base: 'rgba(255, 255, 255, .7)',
-          overlay: 'rgba(100, 116, 139, .5)',
-        },
-        control: {
-          base: colors.zinc[100],
-          content: colors.zinc[700],
-          focus: colors.zinc[50],
-          accent: colors.purple[800],
-          'accent-content': colors.purple[800],
-        },
-        input: {
-          base: colors.zinc[100],
-          content: colors.zinc[700],
-          focus: colors.zinc[50],
-          accent: colors.purple[800],
-          'accent-content': colors.purple[800],
-        },
+      error: {
+        100: withOpacity('--color-error-100'),
+        300: withOpacity('--color-error-300'),
+        500: withOpacity('--color-error-500'),
+        700: withOpacity('--color-error-700'),
+        900: withOpacity('--color-error-900'),
       },
-      keyframes: {
-        fade: { from: { opacity: 0 }, to: { opacity: 1 } },
+      neutral: {
+        100: withOpacity('--color-neutral-100'),
+        300: withOpacity('--color-neutral-300'),
+        500: withOpacity('--color-neutral-500'),
+        700: withOpacity('--color-neutral-700'),
+        900: withOpacity('--color-neutral-900'),
       },
-      animation: {
-        'fade-in': 'fade 1s ease-in-out forwards',
-      },
+    },
+    textColor: {
+      base: withOpacity('--color-text-base'),
+      muted: withOpacity('--color-text-muted'),
+      accent: withOpacity('--color-text-accent'),
+      error: withOpacity('--color-text-error'),
+      inverted: withOpacity('--color-text-inverted'),
+    },
+    backgroundColor: {
+      base: withOpacity('--color-background-base'),
+      muted: withOpacity('--color-background-muted'),
+      accent: withOpacity('--color-background-accent'),
+      'accent-muted': withOpacity('--color-background-accent-muted'),
+      error: withOpacity('--color-background-error'),
+      inverted: withOpacity('--color-background-inverted'),
+      overlay: withOpacity('--color-background-overlay'),
+    },
+    boxShadowColor: {
+      base: withOpacity('--color-shadow-base'),
+    },
+    borderColor: {
+      transparent: 'transparent',
+      base: withOpacity('--color-border-base'),
+      accent: withOpacity('--color-border-accent'),
     },
   },
 }

@@ -65,7 +65,7 @@ export default function AccountsPage({ className }: AccountPageProps) {
 
   if (accounts.length === 0) {
     return (
-      <div className={clsx('text-center text-content-secondary', className)}>
+      <div className={clsx('text-center', className)}>
         <p>You don&apos;t have any accounts yet.</p>
         <div className="mt-3 w-fit mx-auto">
           <Button as={Link} href={Routes.app.accounts.new} variant="outline" className="flex items-center gap-x-2">
@@ -80,7 +80,7 @@ export default function AccountsPage({ className }: AccountPageProps) {
   return (
     <div className={className}>
       <div className="mt-3 text-center">
-        <p className="text-base text-content-secondary">Total balance</p>
+        <p className="text-base">Total balance</p>
         <p className="text-4xl font-medium">€ {totalBalance.toLocaleString()}</p>
       </div>
 
@@ -98,11 +98,11 @@ export default function AccountsPage({ className }: AccountPageProps) {
               <p className="text-5xl">{account.image}</p>
               <div>
                 <p className="text-xl">{account.name}</p>
-                <p>€ {account.balance.toLocaleString()}</p>
+                <p className="text-muted">€ {account.balance.toLocaleString()}</p>
               </div>
             </Link>
             <button aria-label={`Delete account ${account.name}`} onClick={() => handleDeleteAccountIntent(account.id)}>
-              <TrashCanIcon className="text-content-tertiary hover:stroke-2" />
+              <TrashCanIcon className="text-muted hover:text-base" />
             </button>
           </TranslucentCard>
         ))}

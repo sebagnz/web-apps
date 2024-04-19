@@ -97,7 +97,7 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
 
   if (snapshots.length === 0) {
     return (
-      <div className={clsx('text-center text-content-secondary', className)}>
+      <div className={clsx('text-center', className)}>
         <p>You didn&apos;t create any snapshots yet.</p>
         <div className="mt-3 w-fit mx-auto">
           <Button as={Link} href={Routes.app.accounts.snapshots.new(account.id)} variant="outline" className="flex items-center gap-x-2">
@@ -112,15 +112,15 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
   return (
     <div className={className}>
       <p className="first-letter:flex items-center gap-x-1 text-sm">
-        <Link className="text-control-accent-content hover:underline" href={Routes.app.accounts.index}>
+        <Link className="hover:underline" href={Routes.app.accounts.index}>
           Accounts
         </Link>
         <span> / </span>
-        <span>{account.name}</span>
+        <span className="text-muted">{account.name}</span>
       </p>
 
       <div className="mt-3 text-center">
-        <p className="text-base text-content-secondary">Account balance</p>
+        <p>Account balance</p>
         <p className="text-4xl font-medium">€ {account.balance}</p>
       </div>
 
@@ -149,10 +149,10 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
                   day: 'numeric',
                 })}
               </TH>
-              <TD>€ {snapshot.balance}</TD>
+              <TD>€ {snapshot.balance.toLocaleString()}</TD>
               <TD>
                 <button onClick={() => handleDeleteAccountIntent(snapshot.id)}>
-                  <TrashCanIcon className="w-4 h-4" />
+                  <TrashCanIcon className="w-4 h-4 text-muted hover:text-base" />
                 </button>
               </TD>
             </TR>

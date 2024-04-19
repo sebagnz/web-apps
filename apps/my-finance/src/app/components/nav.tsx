@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import Link from 'next/link'
 import { ComponentPropsWithoutRef, RefObject, useEffect, useState } from 'react'
 
 type NavContainerProps = { expanded: boolean }
@@ -14,9 +13,8 @@ export const NavContainer = ({ expanded, className, ...rest }: ComponentPropsWit
         'fixed z-40 top-0 right-0 max-sm:bottom-0 max-sm:left-1/4',
         'sm:absolute sm:top-[calc(100%_+_10px)] sm:rounded-xl',
         'p-6 sm:p-4',
-        'bg-base-primary/50 backdrop-blur-md',
-        'text-content-secondary',
-        'shadow-xl shadow-modal-overlay',
+        'bg-base/50 backdrop-blur-md',
+        'shadow-md shadow-base',
         'transition-[clip-path] duration-300 ease-out',
         [collapseTransition, expandTransition, className],
       )}
@@ -34,41 +32,31 @@ export const NavGroup = ({ className, ...rest }: ComponentPropsWithoutRef<'ul'>)
 }
 
 export const NavItem = ({ className, ...rest }: ComponentPropsWithoutRef<'li'>) => {
-  return (
-    <li className={clsx('text-lg font-normal', 'rounded-md p-2', 'active:bg-control-accent/10 hover:bg-control-accent/10', className)} {...rest} />
-  )
+  return <li className={clsx('text-lg font-normal', 'rounded-md p-2', 'active:bg-accent-muted hover:bg-accent-muted', className)} {...rest} />
 }
 
-export const NavMenuDivider = ({ className, ...rest }: ComponentPropsWithoutRef<'hr'>) => {
-  return <hr className={clsx('my-2 h-[1px]', 'border-0', 'bg-base-accent/50 shadow-sm', className)} {...rest} />
+export const NavDivider = ({ className, ...rest }: ComponentPropsWithoutRef<'hr'>) => {
+  return <hr className={clsx('my-2', 'h-[1px]', 'border-0', 'bg-accent shadow-sm', className)} {...rest} />
 }
 
-export const NavLink = ({ className, ...rest }: ComponentPropsWithoutRef<typeof Link>) => {
-  return <Link className={clsx('flex items-center gap-x-2 text-lg font-normal', className)} {...rest} />
-}
-
-export const NavButton = ({ className, ...rest }: ComponentPropsWithoutRef<'button'>) => {
-  return <button className={clsx('flex items-center gap-x-2 text-lg font-normal', className)} {...rest} />
-}
-
-export const useNavMenu = ({ ref }: { ref: RefObject<HTMLElement | null> }) => {
+export const useNav = ({ ref }: { ref: RefObject<HTMLElement | null> }) => {
   const [state, setState] = useState<'EXPANDED' | 'COLLAPSED'>('COLLAPSED')
 
-  const isMenuExpanded = state === 'EXPANDED'
+  const isExpanded = state === 'EXPANDED'
 
-  const isMenuCollapsed = state === 'COLLAPSED'
+  const isCollapsed = state === 'COLLAPSED'
 
-  const toggleMenu = () => setState(state === 'EXPANDED' ? 'COLLAPSED' : 'EXPANDED')
+  const toggle = () => setState(isExpanded ? 'COLLAPSED' : 'EXPANDED')
 
-  const closeMenu = () => setState('COLLAPSED')
+  const close = () => setState('COLLAPSED')
 
-  const openMenu = () => setState('EXPANDED')
+  const open = () => setState('EXPANDED')
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
-      if (ref.current === null) return
-      if (ref.current.contains(event.target as HTMLElement)) return
-      closeMenu()
+      const target = event.target as HTMLElement
+      if (ref.current?.contains(target)) return
+      close()
     }
 
     document.addEventListener('mousedown', handleClick)
@@ -76,5 +64,5 @@ export const useNavMenu = ({ ref }: { ref: RefObject<HTMLElement | null> }) => {
     return () => document.removeEventListener('mousedown', handleClick)
   }, [ref])
 
-  return { state, isMenuExpanded, isMenuCollapsed, toggleMenu, closeMenu, openMenu }
+  return { state, isExpanded, isCollapsed, toggle, close, open }
 }

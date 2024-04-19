@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { ComponentPropsWithoutRef, ReactNode, forwardRef } from 'react'
 
 function LabeledInput({ className, ...props }: { className?: string; children: ReactNode }) {
-  return <div className={clsx('relative', 'flex', 'border rounded-md overflow-hidden', 'focus-within:ring-1', className)} {...props} />
+  return <div className={clsx('flex overflow-hidden', 'border border-base rounded-md', 'focus-within:ring-1', className)} {...props} />
 }
 
 function Label(
@@ -11,14 +11,14 @@ function Label(
     children: NonNullable<ComponentPropsWithoutRef<'label'>['children']>
   },
 ) {
-  return <label className={clsx('fi-input', 'inline-block', 'py-3 pl-2 pr-3', 'flex items-center')} {...props} />
+  return <label className={clsx('py-3 px-2', 'bg-base')} {...props} />
 }
 
 type TextRef = HTMLInputElement
 type TextProps = ComponentPropsWithoutRef<'input'>
 
 const Input = forwardRef<TextRef, TextProps>(function TextInput({ className, ...props }, ref) {
-  return <input className={clsx('fi-input', 'inline-block', 'py-3 pl-3 pr-2', 'flex flex-1', 'rounded-l-none', className)} {...props} ref={ref} />
+  return <input className={clsx('flex-1', 'py-3 px-2', 'rounded-l-none', 'bg-base', className)} {...props} ref={ref} />
 })
 
 type SelectRef = HTMLSelectElement
@@ -27,7 +27,7 @@ type SelectProps = ComponentPropsWithoutRef<'select'>
 const Select = forwardRef<SelectRef, SelectProps>(function SelectInput({ className, ...props }, ref) {
   return (
     <select
-      className={clsx('fi-input flex-1 text-content-tertiery  pl-3 pr-5 py-2 min-w-[60px] border-r-transparent border-r-8 rounded-l-none', className)}
+      className={clsx('flex-1', 'pl-3 pr-5 py-2', 'border-r-8 border-r-transparent rounded-l-none focus:outline-none', 'bg-base', className)}
       {...props}
       ref={ref}
     />

@@ -60,7 +60,7 @@ export const TabList = ({ className, ...props }: TabListProps) => {
         'rounded-lg',
         'shadow-sm',
         'py-1 before:my-1',
-        'before:bg-base-primary/40',
+        'before:bg-base/40',
         'before:shadow-inner',
         'before:content-[""]',
         'before:absolute',

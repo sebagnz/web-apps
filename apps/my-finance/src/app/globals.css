@@ -3,26 +3,44 @@
 @tailwind utilities;
 
 @layer base {
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-  }
-  input:focus-visible {
-    outline: none;
-  }
-}
+  :root {
+    --color-accent-100: 241 232 255;
+    --color-accent-300: 174 129 233;
+    --color-accent-500: 110 40 200;
+    --color-accent-700: 85 20 167;
+    --color-accent-900: 60 5 130;
 
-@layer components {
-  .fi-input {
-    @apply bg-input-base text-input-content;
-    @apply focus:bg-input-focus focus:outline-none;
-    @apply active:bg-input-focus;
+    --color-error-100: 255 236 229;
+    --color-error-300: 231 158 132;
+    --color-error-500: 210 75 30;
+    --color-error-700: 181 59 18;
+    --color-error-900: 145 42 7;
+
+    --color-neutral-100: 245 245 245;
+    --color-neutral-300: 212 212 212;
+    --color-neutral-500: 115 115 115;
+    --color-neutral-700: 64 64 64;
+    --color-neutral-900: 23 23 23;
   }
 
-  .fi-control {
-    @apply bg-control-base text-control-content;
-    @apply focus:bg-control-focus focus:outline-none;
-    @apply hover:bg-control-focus;
+  :root {
+    --color-text-base: var(--color-neutral-900);
+    --color-text-muted: var(--color-neutral-500);
+    --color-text-accent: var(--color-accent-700);
+    --color-text-error: var(--color-error-900);
+    --color-text-inverted: var(--color-neutral-100);
+
+    --color-background-base: var(--color-neutral-100);
+    --color-background-muted: var(--color-neutral-300);
+    --color-background-accent: var(--color-accent-500);
+    --color-background-accent-muted: var(--color-accent-100);
+    --color-background-error: var(--color-error-300);
+    --color-background-inverted: var(--color-neutral-900);
+
+    --color-border-base: var(--color-accent-100);
+    --color-border-accent: var(--color-accent-500);
+
+    --color-shadow-base: var(--color-neutral-300);
   }
 }
 
@@ -36,24 +54,19 @@
   }
 }
 
-body {
-  /* @apply bg-gradient-to-br from-base-primary to-base-secondary; */
-  @apply bg-base-primary;
-  @apply text-content-primary;
-}
-
-body.loading * {
-  transition: none !important;
-}
-
 *,
 *:before,
 *:after {
   box-sizing: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
-* {
-  -webkit-tap-highlight-color: transparent;
+html,
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-x: none;
 }
 
 html {
@@ -68,10 +81,11 @@ body {
   margin: 0;
 }
 
-html,
-body {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overscroll-behavior-x: none;
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+input:focus-visible {
+  outline: none;
 }
