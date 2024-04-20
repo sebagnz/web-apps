@@ -14,6 +14,7 @@ module.exports = {
       white: '#fff',
       black: '#000',
       accent: {
+        DEFAULT: withOpacity('--color-accent-500'),
         100: withOpacity('--color-accent-100'),
         300: withOpacity('--color-accent-300'),
         500: withOpacity('--color-accent-500'),
@@ -21,6 +22,7 @@ module.exports = {
         900: withOpacity('--color-accent-900'),
       },
       error: {
+        DEFAULT: withOpacity('--color-error-500'),
         100: withOpacity('--color-error-100'),
         300: withOpacity('--color-error-300'),
         500: withOpacity('--color-error-500'),
@@ -28,6 +30,7 @@ module.exports = {
         900: withOpacity('--color-error-900'),
       },
       neutral: {
+        DEFAULT: withOpacity('--color-neutral-500'),
         100: withOpacity('--color-neutral-100'),
         300: withOpacity('--color-neutral-300'),
         500: withOpacity('--color-neutral-500'),

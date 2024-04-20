@@ -1,7 +1,7 @@
 'use client'
 
-import clsx from 'clsx'
 import { ReactNode, createContext, useContext, useLayoutEffect, useRef } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 const TabsContext = createContext<{
   selectedIndex: number
@@ -52,7 +52,7 @@ const TabList = ({ className, ...props }: TabListProps) => {
     <ul
       ref={containerRef}
       role="tablist"
-      className={clsx(
+      className={twMerge(
         'isolate',
         'w-fit',
         'list-none',
@@ -96,7 +96,7 @@ const Tab = ({ index, className, ...props }: TabProps) => {
       aria-selected={selectedIndex === index}
       ref={selectedIndex === index ? selectedTabRef : null}
       onClick={() => onSelect(index)}
-      className={clsx(
+      className={twMerge(
         'z-10',
         'select-none',
         'cursor-pointer',

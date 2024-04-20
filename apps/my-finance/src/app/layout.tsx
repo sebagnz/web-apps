@@ -1,10 +1,10 @@
 'use client'
 
-import clsx from 'clsx'
 import { Ubuntu } from 'next/font/google'
 import { usePathname, useRouter } from 'next/navigation'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
+import { twMerge } from 'tailwind-merge'
 
 import { BaseHeader, BaseLayout } from '@web-apps/ui'
 
@@ -30,11 +30,11 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
 
   return (
     <html lang="en">
-      <body className={clsx('bg-base text-base', font.className)}>
+      <body className={twMerge('bg-base text-base', font.className)}>
         <BaseLayout
           header={
             <BaseHeader
-              className={clsx('pt-6 pb-10 px-4', 'justify-center items-center', 'bg-gradient-to-b from-accent-900 to-accent-900/80', 'shadow-md')}
+              className={twMerge('pt-6 pb-10 px-4', 'justify-center items-center', 'bg-gradient-to-b from-accent-900 to-accent-900/80', 'shadow-md')}
             >
               <div className="flex-1"></div>
               <p className="text-xl text-inverted font-medium">My Finances</p>

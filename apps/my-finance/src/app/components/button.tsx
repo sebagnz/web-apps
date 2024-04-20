@@ -1,5 +1,5 @@
-import clsx from 'clsx'
 import { ComponentPropsWithoutRef } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 import { Metamorphic, Button as UIButton } from '@web-apps/ui'
 
@@ -7,5 +7,5 @@ export const Button: Metamorphic<typeof UIButton, ComponentPropsWithoutRef<typeo
   className,
   ...rest
 }: ComponentPropsWithoutRef<typeof UIButton>) => {
-  return <UIButton className={clsx('rounded-full', className)} {...rest} />
+  return <UIButton className={twMerge('rounded-full', className)} {...rest} />
 }

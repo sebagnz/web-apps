@@ -1,8 +1,8 @@
-import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ComponentPropsWithoutRef, useRef } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 import { Routes } from '@/routes'
 
@@ -24,7 +24,7 @@ export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =>
   const { isExpanded, close, toggle } = useNav({ ref: menuAnchorRef })
 
   return (
-    <div ref={menuAnchorRef} className={clsx('min-h-[36px]', className)} {...rest}>
+    <div ref={menuAnchorRef} className={twMerge('min-h-[36px]', className)} {...rest}>
       <Authenticated>
         <AvatarImage onClick={toggle} src={user?.avatarURL || avatarPlaceholder} width={36} height={36} />
       </Authenticated>
@@ -85,19 +85,22 @@ export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =>
 }
 
 const NavLink = ({ className, ...rest }: ComponentPropsWithoutRef<typeof Link>) => {
-  return <Link className={clsx('flex items-center gap-x-2', className)} {...rest} />
+  return <Link className={twMerge('flex items-center gap-x-2', className)} {...rest} />
 }
 
 const NavButton = ({ className, ...rest }: ComponentPropsWithoutRef<'button'>) => {
-  return <button className={clsx('flex items-center gap-x-2', className)} {...rest} />
+  return <button className={twMerge('flex items-center gap-x-2', className)} {...rest} />
 }
 
 const AvatarImage = ({ className, ...rest }: Omit<ComponentPropsWithoutRef<typeof Image>, 'alt'>) => (
-  <Image alt="User avatar" className={clsx('rounded-full border-2 border-white cursor-pointer', className)} {...rest} />
+  <Image alt="User avatar" className={twMerge('rounded-full border-2 border-white cursor-pointer', className)} {...rest} />
 )
 
 const CloseButton = ({ className, ...rest }: ComponentPropsWithoutRef<typeof CloseIcon>) => (
-  <CloseIcon className={clsx('sm:hidden', 'rounded-md', 'text-accent active:bg-control-accent/10 hover:bg-control-accent/10', className)} {...rest} />
+  <CloseIcon
+    className={twMerge('sm:hidden', 'rounded-md', 'text-accent active:bg-control-accent/10 hover:bg-control-accent/10', className)}
+    {...rest}
+  />
 )
 
 const UserInfo = () => {

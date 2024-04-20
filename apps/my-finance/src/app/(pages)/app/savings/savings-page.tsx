@@ -1,8 +1,8 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import clsx from 'clsx'
 import { useForm, useWatch } from 'react-hook-form'
+import { twMerge } from 'tailwind-merge'
 import { z } from 'zod'
 
 import { LabeledInput } from '@/components/labeled-input'
@@ -59,7 +59,7 @@ export default function SavingsPage({ className }: SavingPageProps) {
   const range = RANGE_FILTERS[rangeKey]
 
   return (
-    <div className={clsx('spacing-y-3', className)}>
+    <div className={twMerge('spacing-y-3', className)}>
       <form>
         <LabeledInput className="w-fit mx-auto">
           <LabeledInput.Label htmlFor="range">Range</LabeledInput.Label>

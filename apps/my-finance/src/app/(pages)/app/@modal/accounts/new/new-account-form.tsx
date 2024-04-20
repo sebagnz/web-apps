@@ -1,10 +1,10 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
+import { twJoin } from 'tailwind-merge'
 import { z } from 'zod'
 
 import { Routes } from '@/routes'
@@ -57,7 +57,7 @@ export default function Page() {
 
       <div className="space-y-4">
         <div>
-          <div className={clsx('flex', 'flex-col max-md:gap-y-4', 'md:flex-row md:gap-x-4')}>
+          <div className={twJoin('flex', 'flex-col max-md:gap-y-4', 'md:flex-row md:gap-x-4')}>
             <LabeledInput className="max-md:flex-1">
               <LabeledInput.Label htmlFor="image">Image</LabeledInput.Label>
               <LabeledInput.Select id="image" {...register('image')}>

@@ -1,44 +1,40 @@
 'use client'
 
-import clsx from 'clsx'
 import { ComponentPropsWithoutRef, RefObject, useEffect, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 type NavContainerProps = { expanded: boolean }
 
-const NavContainer = ({ expanded, className, ...rest }: ComponentPropsWithoutRef<'div'> & NavContainerProps) => {
-  const collapseTransition = { '[clip-path:_circle(0px_at_top_right)]': !expanded }
-  const expandTransition = { '[clip-path:_circle(150%_at_top_right)]': expanded }
-
-  return (
-    <div
-      className={clsx(
-        'fixed z-40 top-0 right-0 max-sm:bottom-0 max-sm:left-1/4',
-        'sm:absolute sm:top-[calc(100%_+_10px)] sm:rounded-xl',
-        'p-6 sm:p-4',
-        'bg-base/50 backdrop-blur-md',
-        'shadow-md shadow-base',
-        'transition-[clip-path] duration-300 ease-out',
-        [collapseTransition, expandTransition, className],
-      )}
-      {...rest}
-    />
-  )
-}
+const NavContainer = ({ expanded, className, ...rest }: ComponentPropsWithoutRef<'div'> & NavContainerProps) => (
+  <div
+    className={twMerge(
+      'fixed z-40 top-0 right-0 max-sm:bottom-0 max-sm:left-1/4',
+      'sm:absolute sm:top-[calc(100%_+_10px)] sm:rounded-xl',
+      'p-6 sm:p-4',
+      'bg-base/50 backdrop-blur-md',
+      'shadow-md shadow-base',
+      'transition-[clip-path] duration-300 ease-out',
+      expanded ? '[clip-path:_circle(150%_at_top_right)]' : '[clip-path:_circle(0px_at_top_right)]',
+      className,
+    )}
+    {...rest}
+  />
+)
 
 const Nav = ({ className, ...rest }: ComponentPropsWithoutRef<'nav'>) => {
   return <nav className={className} {...rest} />
 }
 
 const NavGroup = ({ className, ...rest }: ComponentPropsWithoutRef<'ul'>) => {
-  return <ul className={clsx('space-y-2', className)} {...rest} />
+  return <ul className={twMerge('space-y-2', className)} {...rest} />
 }
 
 const NavItem = ({ className, ...rest }: ComponentPropsWithoutRef<'li'>) => {
-  return <li className={clsx('text-lg font-normal', 'rounded-md p-2', 'active:bg-accent-muted hover:bg-accent-muted', className)} {...rest} />
+  return <li className={twMerge('text-lg font-normal', 'rounded-md p-2', 'active:bg-accent-muted hover:bg-accent-muted', className)} {...rest} />
 }
 
 const NavDivider = ({ className, ...rest }: ComponentPropsWithoutRef<'hr'>) => {
-  return <hr className={clsx('my-2', 'h-[1px]', 'border-0', 'bg-accent shadow-sm', className)} {...rest} />
+  return <hr className={twMerge('my-2', 'h-[1px]', 'border-0', 'bg-accent shadow-sm', className)} {...rest} />
 }
 
 const useNav = ({ ref }: { ref: RefObject<HTMLElement | null> }) => {

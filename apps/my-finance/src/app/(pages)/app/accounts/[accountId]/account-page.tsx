@@ -1,11 +1,11 @@
 'use client'
 
-import clsx from 'clsx'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useMemo } from 'react'
 import { toast } from 'react-toastify'
+import { twMerge } from 'tailwind-merge'
 
 import { Routes } from '@/routes'
 
@@ -98,7 +98,7 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
 
   if (snapshots.length === 0) {
     return (
-      <div className={clsx('text-center', className)}>
+      <div className={twMerge('text-center', className)}>
         <p>You didn&apos;t create any snapshots yet.</p>
         <div className="mt-3 w-fit mx-auto">
           <Button as={Link} href={Routes.app.accounts.snapshots.new(account.id)} variant="outline" className="flex items-center gap-x-2">

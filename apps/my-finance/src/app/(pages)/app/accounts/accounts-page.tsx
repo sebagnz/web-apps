@@ -1,8 +1,8 @@
 'use client'
 
-import clsx from 'clsx'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
+import { twJoin, twMerge } from 'tailwind-merge'
 
 import { Routes } from '@/routes'
 
@@ -65,7 +65,7 @@ export default function AccountsPage({ className }: AccountPageProps) {
 
   if (accounts.length === 0) {
     return (
-      <div className={clsx('text-center', className)}>
+      <div className={twMerge('text-center', className)}>
         <p>You don&apos;t have any accounts yet.</p>
         <div className="mt-3 w-fit mx-auto">
           <Button as={Link} href={Routes.app.accounts.new} variant="outline" className="flex items-center gap-x-2">
@@ -93,7 +93,7 @@ export default function AccountsPage({ className }: AccountPageProps) {
 
       <div className="mt-3 flex flex-col gap-y-2 sm:mt-8">
         {accounts.map((account) => (
-          <Card key={account.id} className={clsx('flex justify-between items-center cursor-pointer')}>
+          <Card key={account.id} className={twJoin('flex justify-between items-center cursor-pointer')}>
             <Link className="flex flex-1 items-center gap-x-4" href={Routes.app.accounts.id(account.id)}>
               <p className="text-5xl">{account.image}</p>
               <div>

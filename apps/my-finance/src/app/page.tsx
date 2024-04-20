@@ -1,7 +1,7 @@
-import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ComponentPropsWithoutRef } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 import accountImg from '../../public/landing/account.png'
 import snapshotsImg from '../../public/landing/snapshots.png'
@@ -74,7 +74,13 @@ const ResponsiveContainer = ({
   ...rest
 }: ComponentPropsWithoutRef<'div'> & { rowReverse?: boolean; colReverse?: boolean }) => (
   <div
-    className={clsx('flex flex-col sm:flex-row', { 'flex-col-reverse': colReverse, 'sm:flex-row-reverse': rowReverse }, 'gap-x-8 gap-y-4', className)}
+    className={twMerge(
+      'flex flex-col sm:flex-row',
+      colReverse && 'flex-col-reverse',
+      rowReverse && 'sm:flex-row-reverse',
+      'gap-x-8 gap-y-4',
+      className,
+    )}
     {...rest}
   />
 )

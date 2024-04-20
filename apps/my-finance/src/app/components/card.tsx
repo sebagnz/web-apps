@@ -1,10 +1,10 @@
-import clsx from 'clsx'
 import { ComponentPropsWithoutRef } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export const Card = ({ className, children }: ComponentPropsWithoutRef<'div'>) => {
   return (
     <div
-      className={clsx(
+      className={twMerge(
         'backdrop-blur-sm',
         'bg-accent-muted/20 backdrop-blur-sm',
         'border border-base rounded-2xl',

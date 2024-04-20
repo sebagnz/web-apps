@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
 import { Metamorphic } from '../metamorphic'
 
@@ -11,17 +11,16 @@ export const Button: Metamorphic<'button', ButtonProps> = (props) => {
 
   const isFill = variant === 'fill'
   const isOutline = variant === 'outline'
-  const isInline = variant === 'inline'
 
   return (
     <Component
-      className={clsx(
+      className={twMerge(
         'py-2 px-4',
-        'transition-shadow duration-300',
+        'rounded-md',
         'text-sm shadow-md hover:shadow-lg',
-        { 'bg-accent text-inverted': isFill },
-        { 'bg-accent-muted text-accent': isOutline },
-        { '': isInline },
+        'transition-shadow duration-300',
+        isFill && 'bg-accent text-inverted',
+        isOutline && 'bg-accent-muted text-accent',
         className,
       )}
       {...rest}

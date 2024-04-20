@@ -1,5 +1,5 @@
-import clsx from 'clsx'
 import { ComponentPropsWithRef, ComponentPropsWithoutRef, forwardRef } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 import { CloseIcon } from '../icons/close'
 
@@ -29,7 +29,7 @@ const Body = forwardRef<ModalRef, ModalProps>(function Modal({ className, onClos
       <div
         ref={ref}
         onClick={handleClick}
-        className={clsx(
+        className={twMerge(
           'bg-base/80',
           'inline-block',
           'relative',
