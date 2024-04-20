@@ -30,4 +30,4 @@ const TD = ({ className, ...props }: ComponentPropsWithoutRef<'td'>) => {
   return <td className={clsx('px-5 py-3', className)} {...props} />
 }
 
-export { Table, THead, TBody, TR, TH, TD }
+export const UITable = { Table, THead, TBody, TR, TH, TD }

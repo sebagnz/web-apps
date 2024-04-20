@@ -9,13 +9,12 @@ import { toast } from 'react-toastify'
 
 import { Routes } from '@/routes'
 
-import { PlusIcon, Skeleton, TrashCanIcon } from '@web-apps/ui'
+import { PlusIcon, Skeleton, TrashCanIcon, UITable } from '@web-apps/ui'
 
 import { useAccounts } from '@/hooks/accounts'
 import { useSnapshots } from '@/hooks/snapshots'
 
 import { Button } from '@/components/button'
-import { TBody, TD, TH, THead, TR, Table } from '@/components/table'
 
 export const metadata: Metadata = {
   title: 'My Finance | Account details',
@@ -26,6 +25,8 @@ type AccountPageProps = {
   accountId: string
   className?: string
 }
+
+const { TBody, TD, TH, THead, TR, Table } = UITable
 
 export const AccountPage = ({ accountId, className }: AccountPageProps) => {
   const router = useRouter()
