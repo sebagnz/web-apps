@@ -6,5 +6,5 @@ export const metadata: Metadata = {
 }
 
 export default function ExpensesPage() {
-  return <div>Expenses Page</div>
+  return <div></div>
 }

@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 }
 
 export default function SavingsPageWrapper() {
-  return <SavingsPage className="max-sm:px-4" />
+  return <SavingsPage className="max-sm:px-4 pb-4 max-w-2xl" />
 }

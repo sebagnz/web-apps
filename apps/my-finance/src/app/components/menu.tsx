@@ -38,8 +38,6 @@ export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =>
 
         <UserInfo />
 
-        <NavDivider />
-
         <Nav>
           <NavGroup>
             <NavItem onClick={close}>
@@ -109,10 +107,13 @@ const UserInfo = () => {
   if (!user?.name && !user?.email) return null
 
   return (
-    <div>
-      {user?.name && <p className="text-lg font-medium">{user.name}</p>}
-      {user?.email && <p className="text-sm font-light">{user.email}</p>}
-    </div>
+    <>
+      <div>
+        {user?.name && <p className="text-lg font-medium">{user.name}</p>}
+        {user?.email && <p className="text-sm font-light">{user.email}</p>}
+      </div>
+      <NavDivider />
+    </>
   )
 }
 
