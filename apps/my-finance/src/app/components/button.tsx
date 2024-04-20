@@ -1,8 +1,11 @@
 import clsx from 'clsx'
 import { ComponentPropsWithoutRef } from 'react'
 
-import { Button as UIButton } from '@web-apps/ui'
+import { Metamorphic, Button as UIButton } from '@web-apps/ui'
 
-export const Button = ({ className, ...rest }: ComponentPropsWithoutRef<typeof UIButton>) => {
+export const Button: Metamorphic<typeof UIButton, ComponentPropsWithoutRef<typeof UIButton>> = ({
+  className,
+  ...rest
+}: ComponentPropsWithoutRef<typeof UIButton>) => {
   return <UIButton className={clsx('rounded-full', className)} {...rest} />
 }
