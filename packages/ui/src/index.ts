@@ -6,6 +6,7 @@ export * from './headers/base'
 export * from './layouts/base'
 export * from './spinner'
 export * from './skeleton'
+export * from './modal'
 
 /**
  * Icons
