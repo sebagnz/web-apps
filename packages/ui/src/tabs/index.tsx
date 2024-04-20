@@ -1,3 +1,5 @@
+'use client'
+
 import clsx from 'clsx'
 import { ReactNode, createContext, useContext, useLayoutEffect, useRef } from 'react'
 
@@ -21,7 +23,7 @@ type TabsProps = {
   children: ReactNode
 }
 
-export const Tabs = ({ selectedIndex, onSelect, ...props }: TabsProps) => {
+const Tabs = ({ selectedIndex, onSelect, ...props }: TabsProps) => {
   const containerRef = useRef<HTMLUListElement | null>(null)
   const selectedTabRef = useRef<HTMLLIElement | null>(null)
 
@@ -33,7 +35,7 @@ type TabListProps = {
   children: ReactNode
 }
 
-export const TabList = ({ className, ...props }: TabListProps) => {
+const TabList = ({ className, ...props }: TabListProps) => {
   const { containerRef, selectedTabRef } = useTabs()
 
   useLayoutEffect(() => {
@@ -85,7 +87,7 @@ type TabProps = {
   children: ReactNode
 }
 
-export const Tab = ({ index, className, ...props }: TabProps) => {
+const Tab = ({ index, className, ...props }: TabProps) => {
   const { selectedIndex, onSelect, selectedTabRef } = useTabs()
 
   return (
@@ -109,3 +111,5 @@ export const Tab = ({ index, className, ...props }: TabProps) => {
     ></li>
   )
 }
+
+export const UITabs = { Tabs, TabList, Tab }

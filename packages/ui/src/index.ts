@@ -10,6 +10,7 @@ export * from './modal'
 export * from './table'
 export * from './button'
 export * from './nav'
+export * from './tabs'
 
 /**
  * Icons

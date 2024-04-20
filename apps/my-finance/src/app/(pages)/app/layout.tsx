@@ -1,16 +1,16 @@
 'use client'
 
-import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { Routes } from '@/routes'
 
+import { UITabs } from '@web-apps/ui'
+
 import { useRedirectToLogin } from '@/hooks/auth/use-redirect-to-login'
 
 import { Modal } from '@/components/modal'
-import { Tab, TabList, Tabs } from '@/components/tabs'
 
 type AccountsLayoutProps = {
   children: React.ReactNode
@@ -22,6 +22,8 @@ const TABS = [
   { id: 'expenses', label: 'Expenses', href: Routes.app.expenses.index },
   { id: 'savings', label: 'Savings', href: Routes.app.savings.index },
 ]
+
+const { Tab, TabList, Tabs } = UITabs
 
 export default function AccountsLayout({ children, modal }: AccountsLayoutProps) {
   const router = useRouter()
