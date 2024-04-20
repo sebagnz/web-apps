@@ -8,6 +8,7 @@ export * from './spinner'
 export * from './skeleton'
 export * from './modal'
 export * from './table'
+export * from './button'
 
 /**
  * Icons
