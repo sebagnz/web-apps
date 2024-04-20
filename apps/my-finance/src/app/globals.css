@@ -40,7 +40,7 @@
     --color-border-base: var(--color-accent-100);
     --color-border-accent: var(--color-accent-500);
 
-    --color-shadow-base: var(--color-neutral-300);
+    --color-shadow-base: var(--color-neutral-500);
   }
 }
 

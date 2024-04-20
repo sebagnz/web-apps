@@ -1,9 +1,11 @@
+'use client'
+
 import clsx from 'clsx'
 import { ComponentPropsWithoutRef, RefObject, useEffect, useState } from 'react'
 
 type NavContainerProps = { expanded: boolean }
 
-export const NavContainer = ({ expanded, className, ...rest }: ComponentPropsWithoutRef<'div'> & NavContainerProps) => {
+const NavContainer = ({ expanded, className, ...rest }: ComponentPropsWithoutRef<'div'> & NavContainerProps) => {
   const collapseTransition = { '[clip-path:_circle(0px_at_top_right)]': !expanded }
   const expandTransition = { '[clip-path:_circle(150%_at_top_right)]': expanded }
 
@@ -23,23 +25,23 @@ export const NavContainer = ({ expanded, className, ...rest }: ComponentPropsWit
   )
 }
 
-export const Nav = ({ className, ...rest }: ComponentPropsWithoutRef<'nav'>) => {
+const Nav = ({ className, ...rest }: ComponentPropsWithoutRef<'nav'>) => {
   return <nav className={className} {...rest} />
 }
 
-export const NavGroup = ({ className, ...rest }: ComponentPropsWithoutRef<'ul'>) => {
+const NavGroup = ({ className, ...rest }: ComponentPropsWithoutRef<'ul'>) => {
   return <ul className={clsx('space-y-2', className)} {...rest} />
 }
 
-export const NavItem = ({ className, ...rest }: ComponentPropsWithoutRef<'li'>) => {
+const NavItem = ({ className, ...rest }: ComponentPropsWithoutRef<'li'>) => {
   return <li className={clsx('text-lg font-normal', 'rounded-md p-2', 'active:bg-accent-muted hover:bg-accent-muted', className)} {...rest} />
 }
 
-export const NavDivider = ({ className, ...rest }: ComponentPropsWithoutRef<'hr'>) => {
+const NavDivider = ({ className, ...rest }: ComponentPropsWithoutRef<'hr'>) => {
   return <hr className={clsx('my-2', 'h-[1px]', 'border-0', 'bg-accent shadow-sm', className)} {...rest} />
 }
 
-export const useNav = ({ ref }: { ref: RefObject<HTMLElement | null> }) => {
+const useNav = ({ ref }: { ref: RefObject<HTMLElement | null> }) => {
   const [state, setState] = useState<'EXPANDED' | 'COLLAPSED'>('COLLAPSED')
 
   const isExpanded = state === 'EXPANDED'
@@ -66,3 +68,5 @@ export const useNav = ({ ref }: { ref: RefObject<HTMLElement | null> }) => {
 
   return { state, isExpanded, isCollapsed, toggle, close, open }
 }
+
+export const UINav = { NavContainer, Nav, NavGroup, NavItem, NavDivider, useNav }

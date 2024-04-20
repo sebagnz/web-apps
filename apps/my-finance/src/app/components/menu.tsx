@@ -6,14 +6,15 @@ import { ComponentPropsWithoutRef, useRef } from 'react'
 
 import { Routes } from '@/routes'
 
-import { ArrowLeftToBracketIcon, ArrowRightToBracketIcon, BarsIcon, ChartLineUpIcon, ChartPieIcon, CloseIcon, UserIcon } from '@web-apps/ui'
+import { ArrowLeftToBracketIcon, ArrowRightToBracketIcon, BarsIcon, ChartLineUpIcon, ChartPieIcon, CloseIcon, UINav, UserIcon } from '@web-apps/ui'
 
 import { useAuth } from '@/hooks/auth'
 
 import { Authenticated, Unauthenticated } from '@/components/auth'
-import { Nav, NavContainer, NavDivider, NavGroup, NavItem, useNav } from '@/components/nav'
 
 import avatarPlaceholder from '../../../public/avatar-placeholder.png'
+
+export const { Nav, NavContainer, NavDivider, NavGroup, NavItem, useNav } = UINav
 
 export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) => {
   const menuAnchorRef = useRef<HTMLDivElement | null>(null)
