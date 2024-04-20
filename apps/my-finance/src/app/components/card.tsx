@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { ComponentPropsWithoutRef } from 'react'
 
-export const TranslucentCard = ({ className, children }: ComponentPropsWithoutRef<'div'>) => {
+export const Card = ({ className, children }: ComponentPropsWithoutRef<'div'>) => {
   return (
     <div
       className={clsx(
