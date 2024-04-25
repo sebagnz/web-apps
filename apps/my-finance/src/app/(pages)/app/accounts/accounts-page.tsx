@@ -10,18 +10,22 @@ import { PlusIcon, Skeleton, TrashCanIcon } from '@web-apps/ui'
 
 import { useAccounts } from '@/hooks/accounts'
 import '@/hooks/snapshots'
+import { usePrefetchSnapshots } from '@/hooks/snapshots'
+
+import { Account } from '@/domain'
 
 import { Button } from '@/components/button'
-import { Card } from '@/components/card'
+import { BlurryCard } from '@/components/card'
 
-type AccountPageProps = {
-  className?: string
-}
+type AccountPageProps = { className?: string }
 
 export default function AccountsPage({ className }: AccountPageProps) {
   const { accounts, error, isLoading, totalBalance, deleteAccount } = useAccounts()
+  const { prefetchSnapshots } = usePrefetchSnapshots()
 
-  const handleDeleteAccountIntent = async (id: string) => {
+  const handleAccountHover = (id: Account['id']) => () => prefetchSnapshots([id])
+
+  const handleDeleteAccountIntent = async (id: Account['id']) => {
     const account = accounts.find((account) => account.id === id)
 
     if (!account) return
@@ -93,7 +97,11 @@ export default function AccountsPage({ className }: AccountPageProps) {
 
       <div className="mt-3 flex flex-col gap-y-2 sm:mt-8">
         {accounts.map((account) => (
-          <Card key={account.id} className={twJoin('flex justify-between items-center cursor-pointer')}>
+          <BlurryCard
+            key={account.id}
+            className={twJoin('flex justify-between items-center cursor-pointer')}
+            onMouseOver={handleAccountHover(account.id)}
+          >
             <Link className="flex flex-1 items-center gap-x-4" href={Routes.app.accounts.id(account.id)}>
               <p className="text-5xl">{account.image}</p>
               <div>
@@ -104,7 +112,7 @@ export default function AccountsPage({ className }: AccountPageProps) {
             <button aria-label={`Delete account ${account.name}`} onClick={() => handleDeleteAccountIntent(account.id)}>
               <TrashCanIcon className="text-muted hover:text-base" />
             </button>
-          </Card>
+          </BlurryCard>
         ))}
       </div>
     </div>

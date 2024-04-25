@@ -7,7 +7,7 @@ import { SnapshotsService, createSnapshotsService } from '@/services'
 
 import { createFirestoreSnapshotsRepository } from './snapshots-firestore-repository'
 import { createLocalStorageSnapshotsRepository } from './snapshots-local-storage-repository'
-import { createUseSnapshots } from './use-snapshots'
+import { createUsePrefetchSnapshots, createUseSnapshots } from './use-snapshots'
 
 let snapshotsService: SnapshotsService
 
@@ -24,5 +24,7 @@ if (process.env.NEXT_PUBLIC_STORAGE === 'local-storage') {
 }
 
 export const useSnapshots = createUseSnapshots(snapshotsService)
+
+export const usePrefetchSnapshots = createUsePrefetchSnapshots(snapshotsService)
 
 export { SNAPSHOTS_CACHE_KEY } from './use-snapshots'
