@@ -43,6 +43,7 @@ export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accou
   } = useSWR(CACHE_KEY, () => snapshotsService.getByAccounts(accountIds, { order }), {
     fallbackData: [],
     revalidateOnFocus: false,
+    dedupingInterval: 1000 * 60,
   })
 
   useEffect(() => {

@@ -22,6 +22,7 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
   } = useSWR(user ? ACCOUNTS_CACHE_KEY : null, () => accountsService.getByUser(user!.id), {
     fallbackData: [],
     revalidateOnFocus: false,
+    dedupingInterval: 1000 * 60,
   })
 
   useEffect(() => {
