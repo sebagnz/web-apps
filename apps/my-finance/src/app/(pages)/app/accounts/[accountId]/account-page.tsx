@@ -15,6 +15,7 @@ import { useAccounts } from '@/hooks/accounts'
 import { useSnapshots } from '@/hooks/snapshots'
 
 import { Button } from '@/components/button'
+import { TransitionLink } from '@/components/transition-link'
 
 export const metadata: Metadata = {
   title: 'My Finance | Account details',
@@ -113,9 +114,9 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
   return (
     <div className={className}>
       <p className="first-letter:flex items-center gap-x-1 text-sm">
-        <Link className="hover:underline" href={Routes.app.accounts.index}>
+        <TransitionLink className="hover:underline" href={Routes.app.accounts.index}>
           Accounts
-        </Link>
+        </TransitionLink>
         <span> / </span>
         <span className="text-muted">{account.name}</span>
       </p>

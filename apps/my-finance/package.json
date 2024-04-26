@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^14.2.2",
+    "@types/dom-view-transitions": "^1.0.4",
     "@types/node": "20.5.1",
     "@types/react": "^18.2.58",
     "@types/react-dom": "18.2.19",

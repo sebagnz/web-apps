@@ -89,3 +89,33 @@ input[type='number']::-webkit-outer-spin-button {
 input:focus-visible {
   outline: none;
 }
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+#transition-root {
+  view-transition-name: page;
+}
+
+::view-transition-old(page) {
+  animation: 350ms ease-in forwards fade-out;
+}
+
+::view-transition-new(page) {
+  animation: 350ms ease-in forwards fade-in;
+}

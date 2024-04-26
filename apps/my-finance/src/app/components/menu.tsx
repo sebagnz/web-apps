@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { ComponentPropsWithoutRef, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -13,6 +12,7 @@ import { useAuth } from '@/hooks/auth'
 import { Authenticated, Unauthenticated } from '@/components/auth'
 
 import avatarPlaceholder from '../../../public/avatar-placeholder.png'
+import { TransitionLink } from './transition-link'
 
 export const { Nav, NavContainer, NavDivider, NavGroup, NavItem, useNav } = UINav
 
@@ -82,8 +82,8 @@ export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =>
   )
 }
 
-const NavLink = ({ className, ...rest }: ComponentPropsWithoutRef<typeof Link>) => {
-  return <Link className={twMerge('flex items-center gap-x-2', className)} {...rest} />
+const NavLink = ({ className, ...rest }: ComponentPropsWithoutRef<typeof TransitionLink>) => {
+  return <TransitionLink className={twMerge('flex items-center gap-x-2', className)} {...rest} />
 }
 
 const NavButton = ({ className, ...rest }: ComponentPropsWithoutRef<'button'>) => {

@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -11,6 +10,7 @@ import { UITabs } from '@web-apps/ui'
 import { useRedirectToLogin } from '@/hooks/auth/use-redirect-to-login'
 
 import { Modal } from '@/components/modal'
+import { TransitionLink } from '@/components/transition-link'
 
 type AccountsLayoutProps = {
   children: React.ReactNode
@@ -44,12 +44,14 @@ export default function AccountsLayout({ children, modal }: AccountsLayoutProps)
         <TabList className="mx-auto -translate-y-1/3 bg-accent-muted/30 backdrop-blur-md">
           {TABS.map((tab, i) => (
             <Tab key={tab.id} index={i}>
-              <Link href={tab.href}>{tab.label}</Link>
+              <TransitionLink href={tab.href}>{tab.label}</TransitionLink>
             </Tab>
           ))}
         </TabList>
       </Tabs>
-      <div className="mx-auto max-w-2xl">{children}</div>
+      <div className="mx-auto max-w-2xl" id="transition-root">
+        {children}
+      </div>
       <Modal onClickOutside={router.back} onClose={router.back} show={pathname.endsWith('/new')}>
         {modal}
       </Modal>

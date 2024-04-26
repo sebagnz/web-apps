@@ -16,6 +16,7 @@ import { Account } from '@/domain'
 
 import { Button } from '@/components/button'
 import { BlurryCard } from '@/components/card'
+import { TransitionLink } from '@/components/transition-link'
 
 type AccountPageProps = { className?: string }
 
@@ -102,13 +103,13 @@ export default function AccountsPage({ className }: AccountPageProps) {
             className={twJoin('flex justify-between items-center cursor-pointer')}
             onMouseOver={handleAccountHover(account.id)}
           >
-            <Link className="flex flex-1 items-center gap-x-4" href={Routes.app.accounts.id(account.id)}>
+            <TransitionLink className="flex flex-1 items-center gap-x-4" href={Routes.app.accounts.id(account.id)}>
               <p className="text-5xl">{account.image}</p>
               <div>
                 <p className="text-xl">{account.name}</p>
                 <p className="text-muted">€ {account.balance.toLocaleString()}</p>
               </div>
-            </Link>
+            </TransitionLink>
             <button aria-label={`Delete account ${account.name}`} onClick={() => handleDeleteAccountIntent(account.id)}>
               <TrashCanIcon className="text-muted hover:text-base" />
             </button>
