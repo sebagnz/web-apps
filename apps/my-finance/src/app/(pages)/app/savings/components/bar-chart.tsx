@@ -80,5 +80,5 @@ const barOptions: BarChartOptions = {
 type BarChartProps = { datasets: BarChartData['datasets'] }
 
 export const BarChart = ({ datasets }: BarChartProps) => {
-  return <Bar className="" options={barOptions} data={{ datasets }} />
+  return <Bar options={barOptions} data={{ datasets }} />
 }

@@ -1,20 +1,24 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { ComponentPropsWithoutRef } from 'react'
 import { twMerge } from 'tailwind-merge'
+
+import { Routes } from '@/routes'
+
+import { ArrowRight } from '@web-apps/ui'
+
+import { Button } from '@/components/button'
+import { TransitionLink } from '@/components/transition-link'
 
 import accountImg from '../../public/landing/account.png'
 import snapshotsImg from '../../public/landing/snapshots.png'
 import { BarChart } from './(pages)/app/savings/components/bar-chart'
-import { Button } from './components/button'
-import { Routes } from './routes'
 
 export default function LandingPage() {
   return (
-    <div className="mx-auto max-w-4xl p-4 mt-6 space-y-14">
+    <div className="mx-auto max-w-4xl p-4 my-6 space-y-14">
       <h2 className="text-center">💸 Ever wondered how much you saved last month?</h2>
 
-      <div className="text-center sm:px-10 space-y-4">
+      <div className="text-center mx-auto sm:w-5/6 space-y-4">
         <p className="font-medium">
           <i>Or maybe last year?</i>
         </p>
@@ -28,7 +32,7 @@ export default function LandingPage() {
       </div>
 
       <div className="text-center">
-        <Button as={Link} href={Routes.app.accounts.index} variant="fill" className="inline-block px-16 py-4 font-medium shadow-lg hover:shadow-lg">
+        <Button as={TransitionLink} href={Routes.app.accounts.index} variant="fill" className="inline-block px-16 py-4 font-medium">
           Launch App
         </Button>
       </div>
@@ -57,11 +61,39 @@ export default function LandingPage() {
           <Image src={snapshotsImg} width={400} alt="Balances" className="object-contain mx-auto max-w-full sm:max-w-xl" />
         </ResponsiveContainer>
 
-        <h2 className="text-center">🚀 Watch your savings blast off</h2>
+        <div className="space-y-10">
+          <h2 className="text-center">🚀 Watch your savings blast off</h2>
 
-        <div className="mx-auto max-w-full sm:max-w-xl">
-          <SampleSavingsChart />
+          <div className="mx-auto sm:w-5/6 text-center">
+            <p>
+              Track how your savings progress over time and gain access to the tools you need to make better financial decisions and achieve your
+              savings goals.
+            </p>
+          </div>
+
+          <div>
+            <div className="mx-auto max-h-72 aspect-video">
+              <SampleSavingsChart />
+            </div>
+          </div>
+
+          <div className="mx-auto sm:w-5/6 text-center">
+            <p>Compare your accounts and see how they are performing over time, make better financial decisions and achieve your savings goals.</p>
+          </div>
+
+          <div>
+            <div className="mx-auto max-h-72 aspect-video">
+              <SampleBalancesChart />
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div className="text-center">
+        <Button as={TransitionLink} href={Routes.app.accounts.index} variant="outline" className="inline-flex gap-x-3 px-8 py-4 font-medium">
+          Get control of my finances
+          <ArrowRight className="stroke-2"></ArrowRight>
+        </Button>
       </div>
     </div>
   )
@@ -106,4 +138,50 @@ const SampleSavingsChart = () => {
   const data = Array.from(savingsByPeriod).map(([period, balance]) => ({ x: period, y: balance }))
 
   return <BarChart datasets={[{ label, data }]} />
+}
+
+const SampleBalancesChart = () => {
+  const bankOfSpainSample = {
+    label: 'Bank of Spain',
+    data: [
+      { x: 'Sep 23', y: 0 },
+      { x: 'Oct 23', y: 0 },
+      { x: 'Nov 23', y: 0 },
+      { x: 'Dec 23', y: 0 },
+      { x: 'Jan 24', y: 0 },
+      { x: 'Feb 24', y: 7500 },
+      { x: 'Mar 24', y: 9500 },
+      { x: 'Apr 24', y: 10000 },
+    ],
+  }
+
+  const santanderSample = {
+    label: 'Santander',
+    data: [
+      { x: 'Sep 23', y: 5000 },
+      { x: 'Oct 23', y: 7000 },
+      { x: 'Nov 23', y: 11000 },
+      { x: 'Dec 23', y: 10000 },
+      { x: 'Jan 24', y: 8000 },
+      { x: 'Feb 24', y: 9000 },
+      { x: 'Mar 24', y: 10000 },
+      { x: 'Apr 24', y: 10000 },
+    ],
+  }
+
+  const cashSample = {
+    label: 'Cash',
+    data: [
+      { x: 'Sep 23', y: 0 },
+      { x: 'Oct 23', y: 0 },
+      { x: 'Nov 23', y: 3000 },
+      { x: 'Dec 23', y: 2000 },
+      { x: 'Jan 24', y: 3000 },
+      { x: 'Feb 24', y: 4000 },
+      { x: 'Mar 24', y: 5000 },
+      { x: 'Apr 24', y: 5000 },
+    ],
+  }
+
+  return <BarChart datasets={[bankOfSpainSample, santanderSample, cashSample]} />
 }
