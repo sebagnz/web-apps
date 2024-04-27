@@ -5,6 +5,11 @@ import { useForm, useWatch } from 'react-hook-form'
 import { twMerge } from 'tailwind-merge'
 import { z } from 'zod'
 
+import { Skeleton } from '@web-apps/ui'
+
+import { useAccounts } from '@/hooks/accounts'
+import { useSnapshots } from '@/hooks/snapshots'
+
 import { LabeledInput } from '@/components/labeled-input'
 
 import { BalancesChart } from './components/balances-chart'
@@ -48,6 +53,10 @@ const FormInputSchema = z.object({
 type FormInput = z.infer<typeof FormInputSchema>
 
 export default function SavingsPage({ className }: SavingPageProps) {
+  const { error: accountsError, isLoading: isLoadingAccounts, accounts } = useAccounts()
+  const accountIds = accounts.map(({ id }) => id)
+  const { error: snapshotsError, isLoading: isLoadingSnapshots } = useSnapshots(accountIds, { order: 'asc' })
+
   const { register, control } = useForm<FormInput>({
     resolver: zodResolver(FormInputSchema),
     mode: 'onChange',
@@ -58,8 +67,44 @@ export default function SavingsPage({ className }: SavingPageProps) {
 
   const range = RANGE_FILTERS[rangeKey]
 
+  if (accountsError || snapshotsError) {
+    return (
+      <div className={twMerge('spacing-y-3', className)}>
+        {accountsError && <p>{accountsError.message}</p>}
+        {snapshotsError && <p>{snapshotsError.message}</p>}
+      </div>
+    )
+  }
+
+  if (isLoadingAccounts || isLoadingSnapshots) {
+    return (
+      <div className={twMerge('space-y-8', className)}>
+        {/* Select */}
+        <Skeleton className="h-12 w-48 mx-auto" />
+
+        {/* Total savings */}
+        <div className="space-y-1 w-fit mx-auto">
+          <Skeleton className="h-4 w-32 mx-auto" />
+          <Skeleton className="h-12 w-48" />
+        </div>
+
+        {/* Charts */}
+        <div className="space-y-10">
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-32 mx-auto" />
+            <Skeleton className="w-full aspect-video" />
+          </div>
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-32 mx-auto" />
+            <Skeleton className="w-full aspect-video" />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className={twMerge('spacing-y-3', className)}>
+    <div className={twMerge('space-y-3', className)}>
       <form>
         <LabeledInput className="w-fit mx-auto">
           <LabeledInput.Label htmlFor="range">Range</LabeledInput.Label>
