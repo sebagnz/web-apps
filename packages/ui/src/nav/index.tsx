@@ -30,7 +30,9 @@ const NavGroup = ({ className, ...rest }: ComponentPropsWithoutRef<'ul'>) => {
 }
 
 const NavItem = ({ className, ...rest }: ComponentPropsWithoutRef<'li'>) => {
-  return <li className={twMerge('text-lg font-normal', 'rounded-md p-2', 'active:bg-accent-muted hover:bg-accent-muted', className)} {...rest} />
+  return (
+    <li className={twMerge('text-lg font-normal leading-3', 'rounded-md p-2', 'active:bg-accent-muted hover:bg-accent-muted', className)} {...rest} />
+  )
 }
 
 const NavDivider = ({ className, ...rest }: ComponentPropsWithoutRef<'hr'>) => {
