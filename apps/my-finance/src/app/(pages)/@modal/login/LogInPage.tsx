@@ -17,7 +17,7 @@ import { useAuth } from '@/hooks/auth'
 import { Button } from '@/components/button'
 import { LabeledInput } from '@/components/labeled-input'
 
-import GoogleLogo from '../../../../public/login/google.png'
+import GoogleLogo from '../../../../../public/login/google.png'
 
 const errorMessages = {
   usernameRequired: 'Please, introduce a username',

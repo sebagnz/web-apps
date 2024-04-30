@@ -11,7 +11,7 @@ import { BaseHeader, BaseLayout } from '@web-apps/ui'
 import { Menu } from '@/components/menu'
 import { Modal } from '@/components/modal'
 
-import './globals.css'
+import '../globals.css'
 
 const font = Ubuntu({ subsets: ['latin'], weight: ['300', '400', '500', '700'] })
 

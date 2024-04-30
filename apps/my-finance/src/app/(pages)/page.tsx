@@ -9,9 +9,9 @@ import { ArrowRight } from '@web-apps/ui'
 import { Button } from '@/components/button'
 import { TransitionLink } from '@/components/transition-link'
 
-import accountImg from '../../public/landing/account.png'
-import snapshotsImg from '../../public/landing/snapshots.png'
-import { BarChart } from './(pages)/app/savings/components/bar-chart'
+import accountImg from '../../../public/landing/account.png'
+import snapshotsImg from '../../../public/landing/snapshots.png'
+import { BarChart } from './app/savings/components/bar-chart'
 
 export default function LandingPage() {
   return (
