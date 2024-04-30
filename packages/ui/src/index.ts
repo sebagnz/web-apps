@@ -1,16 +1,18 @@
 /**
  * Components
  */
+export * from './button'
 export * from './footers/base'
 export * from './headers/base'
 export * from './layouts/base'
-export * from './spinner'
-export * from './skeleton'
 export * from './modal'
-export * from './table'
-export * from './button'
 export * from './nav'
+export * from './skeleton'
+export * from './spinner'
+export * from './switch'
+export * from './table'
 export * from './tabs'
+export * from './toggle'
 
 /**
  * Icons
