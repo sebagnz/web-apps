@@ -5,14 +5,25 @@ import { twMerge } from 'tailwind-merge'
 
 import { Routes } from '@/routes'
 
-import { ArrowLeftToBracketIcon, ArrowRightToBracketIcon, BarsIcon, ChartLineUpIcon, ChartPieIcon, CloseIcon, UINav, UserIcon } from '@web-apps/ui'
+import {
+  ArrowLeftToBracketIcon,
+  ArrowRightToBracketIcon,
+  BarsIcon,
+  ChartLineUpIcon,
+  ChartPieIcon,
+  CloseIcon,
+  Switch,
+  UINav,
+  UserIcon,
+} from '@web-apps/ui'
 
 import { useAuth } from '@/hooks/auth'
 
 import { Authenticated, Unauthenticated } from '@/components/auth'
+import { HideBalancesSwitch } from '@/components/hide-balance-switch'
+import { TransitionLink } from '@/components/transition-link'
 
 import avatarPlaceholder from '../../../public/avatar-placeholder.png'
-import { TransitionLink } from './transition-link'
 
 export const { Nav, NavContainer, NavDivider, NavGroup, NavItem, useNav } = UINav
 
@@ -58,6 +69,16 @@ export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =>
               </NavLink>
             </NavItem>
           </NavGroup>
+
+          <Authenticated>
+            <NavDivider />
+
+            <NavGroup>
+              <NavItem>
+                <HideBalancesSwitch />
+              </NavItem>
+            </NavGroup>
+          </Authenticated>
 
           <NavDivider />
 
