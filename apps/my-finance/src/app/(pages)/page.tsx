@@ -47,7 +47,7 @@ export default function LandingPage() {
               a glance.
             </p>
           </div>
-          <Image src={accountImg} width={400} alt="Accounts" className="object-contain mx-auto max-w-full sm:max-w-xl" />
+          <Image priority src={accountImg} width={400} alt="Accounts" className="object-contain mx-auto max-w-full sm:max-w-xl" />
         </ResponsiveContainer>
 
         <ResponsiveContainer rowReverse>
@@ -58,7 +58,7 @@ export default function LandingPage() {
               decisions.
             </p>
           </div>
-          <Image src={snapshotsImg} width={400} alt="Balances" className="object-contain mx-auto max-w-full sm:max-w-xl" />
+          <Image priority src={snapshotsImg} width={400} alt="Balances" className="object-contain mx-auto max-w-full sm:max-w-xl" />
         </ResponsiveContainer>
 
         <div className="space-y-10">
