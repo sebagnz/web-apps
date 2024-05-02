@@ -28,7 +28,8 @@ export const createUseAuth = (authService: AuthService) => () => {
 
   const logout = async () => {
     const logoutFn = async () => await authService.logout()
-    return mutate(USER_KEY, logoutFn)
+    // Logout and clear all cache
+    mutate(() => true, logoutFn)
   }
 
   return {
