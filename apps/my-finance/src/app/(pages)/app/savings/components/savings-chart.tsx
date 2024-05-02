@@ -3,6 +3,8 @@ import { getShortDate } from '@/utils'
 import { useAccounts } from '@/hooks/accounts'
 import { useSavings } from '@/hooks/savings'
 
+import { Balance } from '@/components/balance'
+
 import { BarChart } from './bar-chart'
 
 type ChartDataPoint = { x: string; y: number }
@@ -26,7 +28,7 @@ export const SavingsChart = ({ dateFrom, dateTo }: SavingsChartProps) => {
     <div className="mt-6 space-y-6 text-center text-content-secondary text-base">
       <div>
         <p>Total Savings</p>
-        <p className="text-4xl font-medium">€ {totalSavings.toLocaleString()}</p>
+        <Balance className="text-4xl font-medium">{totalSavings}</Balance>
       </div>
       <div>
         <p>Savings by ponth</p>

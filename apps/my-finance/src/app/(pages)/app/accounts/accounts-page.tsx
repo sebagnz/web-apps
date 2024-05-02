@@ -14,6 +14,7 @@ import { usePrefetchSnapshots } from '@/hooks/snapshots'
 
 import { Account } from '@/domain'
 
+import { Balance } from '@/components/balance'
 import { Button } from '@/components/button'
 import { BlurryCard } from '@/components/card'
 import { TransitionLink } from '@/components/transition-link'
@@ -86,7 +87,7 @@ export default function AccountsPage({ className }: AccountPageProps) {
     <div className={className}>
       <div className="mt-3 text-center">
         <p className="text-base">Total balance</p>
-        <p className="text-4xl font-medium">€ {totalBalance.toLocaleString()}</p>
+        <Balance className="text-4xl font-medium">{totalBalance}</Balance>
       </div>
 
       <div className="mt-6 w-fit mx-auto">
@@ -107,7 +108,7 @@ export default function AccountsPage({ className }: AccountPageProps) {
               <p className="text-5xl">{account.image}</p>
               <div>
                 <p className="text-xl">{account.name}</p>
-                <p className="text-muted">€ {account.balance.toLocaleString()}</p>
+                <Balance className="text-muted">{account.balance}</Balance>
               </div>
             </TransitionLink>
             <button aria-label={`Delete account ${account.name}`} onClick={() => handleDeleteAccountIntent(account.id)}>

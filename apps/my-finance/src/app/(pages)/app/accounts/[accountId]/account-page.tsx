@@ -14,6 +14,7 @@ import { PlusIcon, Skeleton, TrashCanIcon, UITable } from '@web-apps/ui'
 import { useAccounts } from '@/hooks/accounts'
 import { useSnapshots } from '@/hooks/snapshots'
 
+import { Balance } from '@/components/balance'
 import { Button } from '@/components/button'
 import { TransitionLink } from '@/components/transition-link'
 
@@ -123,7 +124,7 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
 
       <div className="mt-3 text-center">
         <p>Account balance</p>
-        <p className="text-4xl font-medium">€ {account.balance}</p>
+        <Balance className="text-4xl font-medium">{account.balance}</Balance>
       </div>
 
       <div className="mt-6 w-fit mx-auto">
@@ -151,7 +152,9 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
                   day: 'numeric',
                 })}
               </TH>
-              <TD>€ {snapshot.balance.toLocaleString()}</TD>
+              <TD>
+                <Balance>{snapshot.balance}</Balance>
+              </TD>
               <TD>
                 <button onClick={() => handleDeleteAccountIntent(snapshot.id)}>
                   <TrashCanIcon className="w-4 h-4 text-muted hover:text-base" />
