@@ -1,5 +1,6 @@
 'use client'
 
+import { formatBalance } from '@/utils'
 import { BarElement, CategoryScale, ChartData, Chart as ChartJS, ChartOptions, Legend, LinearScale, Title, Tooltip } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
 
@@ -47,13 +48,15 @@ const barOptions: BarChartOptions = {
           const datasets = context.chart.data.datasets
           const dataIndex = context.dataIndex
 
-          const total = datasets.reduce((acc, dataset) => {
+          const value = datasets.reduce((acc, dataset) => {
             const data = dataset.data[dataIndex]
             if (!isDataPoint(data)) return acc
             return acc + data.y
           }, 0)
 
-          return `Total: €${total?.toLocaleString()}`
+          const formattedTotal = formatBalance({ value })
+
+          return `Total: ${formattedTotal}`
         },
       },
     },
@@ -69,7 +72,7 @@ const barOptions: BarChartOptions = {
         callback: (rawValue) => {
           const value = parseFloat(rawValue.toString())
           if (isNaN(value)) return rawValue
-          return `€ ${value / 1000}k`
+          return formatBalance({ value, precision: 1, scale: 'k' })
         },
       },
       grid: { color: gridColor },
