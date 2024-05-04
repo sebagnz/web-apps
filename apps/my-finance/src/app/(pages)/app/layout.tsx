@@ -19,7 +19,8 @@ type AccountsLayoutProps = {
 
 const TABS = [
   { id: 'accounts', label: 'Accounts', href: Routes.app.accounts.index },
-  { id: 'expenses', label: 'Expenses', href: Routes.app.expenses.index },
+  // Coming soon...
+  // { id: 'expenses', label: 'Expenses', href: Routes.app.expenses.index },
   { id: 'savings', label: 'Savings', href: Routes.app.savings.index },
 ]
 

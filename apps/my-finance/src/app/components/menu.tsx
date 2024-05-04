@@ -5,17 +5,7 @@ import { twMerge } from 'tailwind-merge'
 
 import { Routes } from '@/routes'
 
-import {
-  ArrowLeftToBracketIcon,
-  ArrowRightToBracketIcon,
-  BarsIcon,
-  ChartLineUpIcon,
-  ChartPieIcon,
-  CloseIcon,
-  Switch,
-  UINav,
-  UserIcon,
-} from '@web-apps/ui'
+import { ArrowLeftToBracketIcon, ArrowRightToBracketIcon, BarsIcon, ChartLineUpIcon, ChartPieIcon, CloseIcon, UINav, UserIcon } from '@web-apps/ui'
 
 import { useAuth } from '@/hooks/auth'
 
