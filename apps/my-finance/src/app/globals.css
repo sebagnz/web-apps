@@ -24,8 +24,6 @@
   }
 
   :root {
-    accent-color: var(--color-accent-500);
-
     --color-text-base: var(--color-neutral-900);
     --color-text-muted: var(--color-neutral-500);
     --color-text-accent: var(--color-accent-700);
