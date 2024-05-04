@@ -24,6 +24,8 @@
   }
 
   :root {
+    accent-color: var(--color-accent-500);
+
     --color-text-base: var(--color-neutral-900);
     --color-text-muted: var(--color-neutral-500);
     --color-text-accent: var(--color-accent-700);
@@ -45,12 +47,20 @@
 }
 
 @layer base {
+  :root {
+    @apply accent-accent-500;
+  }
   h1 {
     @apply text-3xl font-semibold;
   }
 
   h2 {
     @apply text-2xl font-medium;
+  }
+
+  input,
+  textarea {
+    @apply caret-accent-500;
   }
 }
 
