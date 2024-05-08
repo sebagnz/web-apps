@@ -4,11 +4,11 @@
 
 @layer base {
   :root {
-    --color-accent-100: 241 232 255;
-    --color-accent-300: 174 129 233;
-    --color-accent-500: 110 40 200;
-    --color-accent-700: 85 20 167;
-    --color-accent-900: 60 5 130;
+    --color-accent-100: 226 232 234;
+    --color-accent-300: 113 183 209;
+    --color-accent-500: 29 80 100;
+    --color-accent-700: 10 57 74;
+    --color-accent-900: 2 35 48;
 
     --color-error-100: 255 236 229;
     --color-error-300: 231 158 132;
