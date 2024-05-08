@@ -35,9 +35,7 @@ export const Balance = ({ currency, scale, precision, children, ...rest }: Balan
 
   if (!preferences) return null
 
-  const textContent = formatBalance({ currency, scale, precision, value: children })
-
-  if (!textContent) return null
+  const textContent = preferences.hideBalances ? '••••••' : formatBalance({ currency, scale, precision, value: children })
 
   return (
     <SwitchTransition>
