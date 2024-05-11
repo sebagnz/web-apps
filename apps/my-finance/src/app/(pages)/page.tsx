@@ -43,8 +43,8 @@ export default function LandingPage() {
             <h2>⚙️ Set up your accounts</h2>
             <p>Add as many accounts as you need, from savings and checking to cash holdings.</p>
             <p>
-              You can also customize your accounts with unique names and emojis to easily identify them. And know at avery moment all your balances at
-              a glance.
+                You can also customize your accounts with unique names and emojis to easily identify them. And know at avery moment all your balances
+                at a glance.
             </p>
           </div>
           <Image priority src={accountImg} width={400} alt="Accounts" className="object-contain mx-auto max-w-full sm:max-w-xl" />
@@ -65,10 +65,7 @@ export default function LandingPage() {
           <h2 className="text-center">🚀 Watch your savings blast off</h2>
 
           <div className="mx-auto sm:w-5/6 text-center">
-            <p>
-              Track how your savings progress over time and gain access to the tools you need to make better financial decisions and achieve your
-              savings goals.
-            </p>
+            <p>Track your savings over time and make better financial decisions.</p>
           </div>
 
           <div>
@@ -78,7 +75,7 @@ export default function LandingPage() {
           </div>
 
           <div className="mx-auto sm:w-5/6 text-center">
-            <p>Compare your accounts and see how they are performing over time, make better financial decisions and achieve your savings goals.</p>
+            <p>Compare your accounts and achieve your savings goals.</p>
           </div>
 
           <div>
