@@ -1,6 +1,6 @@
 import { PreferencesRepository, PreferencesSchema } from '@/domain'
 
-const LOCALSTORAGE_NAMESPACE = 'my-finance'
+const LOCALSTORAGE_NAMESPACE = 'fingarden'
 const LOCALSTORAGE_PREFERENCES_KEY = `${LOCALSTORAGE_NAMESPACE}:preferences`
 
 export const createLocalStoragePreferencesRepository = (): PreferencesRepository => {

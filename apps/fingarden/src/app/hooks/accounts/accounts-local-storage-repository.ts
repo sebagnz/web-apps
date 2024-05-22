@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { AccountListSchema, AccountsRepository } from '@/domain'
 
-const LOCALSTORAGE_NAMESPACE = 'my-finance'
+const LOCALSTORAGE_NAMESPACE = 'fingarden'
 const LOCALSTORAGE_ACCOUNTS_KEY = `${LOCALSTORAGE_NAMESPACE}:accounts`
 
 function delay(minMs: number = 200, maxMs: number = 600) {

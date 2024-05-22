@@ -1,7 +1,7 @@
 {
   "name": "@web-apps/ui",
   "version": "0.0.1",
-  "repository": "https://github.com/sebastiangon11/my-finance.git",
+  "repository": "https://github.com/sebagnz/web-apps.git",
   "license": "MIT",
   "private": true,
   "scripts": {
