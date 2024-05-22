@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 import NewSnapshotPage from './new-snapshot-form'
 
-export const metadata: Metadata = { title: 'My Finance | Create account' }
+export const metadata: Metadata = { title: 'FinGarden | Create account' }
 
 type NewSnapshotPageWrapperProps = {
   params: { accountId: string }

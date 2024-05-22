@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import { AccountPage } from './account-page'
 
 export const metadata: Metadata = {
-  title: 'My Finance | Account details',
+  title: 'FinGarden | Account details',
   description: 'Handle all your finance in one place',
 }
 

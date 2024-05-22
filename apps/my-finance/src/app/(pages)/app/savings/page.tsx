@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import SavingsPage from './savings-page'
 
 export const metadata: Metadata = {
-  title: 'My Finance | Savings',
+  title: 'FinGarden | Savings',
   description: 'Handle all your finance in one place',
 }
 

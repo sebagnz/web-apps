@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'My Finance | Expenses',
+  title: 'FinGarden | Expenses',
   description: 'Handle all your finance in one place',
 }
 
