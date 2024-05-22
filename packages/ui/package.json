@@ -43,6 +43,7 @@
   "devDependencies": {
     "@types/react": "latest",
     "eslint": "^8.11.0",
+    "tailwindcss-border-image": "^1.1.2",
     "typescript": "4.8.4"
   }
 }

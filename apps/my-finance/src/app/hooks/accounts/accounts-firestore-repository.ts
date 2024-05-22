@@ -7,9 +7,8 @@ import { AccountsRepository } from '@/domain'
 
 import { createAccountsMapper } from './accounts-firestore-mapper'
 
-const auth = getAuth()
-
 const getUserId = () => {
+  const auth = getAuth()
   const userId = auth.currentUser?.uid
   if (!userId) throw new Error('User not authenticated')
   return userId

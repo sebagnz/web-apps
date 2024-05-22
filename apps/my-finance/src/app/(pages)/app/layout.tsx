@@ -5,10 +5,12 @@ import { useEffect, useState } from 'react'
 
 import { Routes } from '@/routes'
 
+import { BaseLayout } from '@web-apps/ui'
 import { UITabs } from '@web-apps/ui'
 
 import { useRedirectToLogin } from '@/hooks/auth/use-redirect-to-login'
 
+import { Header } from '@/components/header'
 import { Modal } from '@/components/modal'
 import { TransitionLink } from '@/components/transition-link'
 
@@ -19,8 +21,6 @@ type AccountsLayoutProps = {
 
 const TABS = [
   { id: 'accounts', label: 'Accounts', href: Routes.app.accounts.index },
-  // Coming soon...
-  // { id: 'expenses', label: 'Expenses', href: Routes.app.expenses.index },
   { id: 'savings', label: 'Savings', href: Routes.app.savings.index },
 ]
 
@@ -40,22 +40,27 @@ export default function AccountsLayout({ children, modal }: AccountsLayoutProps)
   useRedirectToLogin()
 
   return (
-    <>
-      <Tabs selectedIndex={selectedIndex} onSelect={onSelect}>
-        <TabList className="mx-auto -translate-y-1/3 bg-accent-muted/30 backdrop-blur-md">
-          {TABS.map((tab, i) => (
-            <Tab key={tab.id} index={i}>
-              <TransitionLink href={tab.href}>{tab.label}</TransitionLink>
-            </Tab>
-          ))}
-        </TabList>
-      </Tabs>
-      <div className="mx-auto max-w-2xl" id="transition-root">
-        {children}
-      </div>
-      <Modal onClickOutside={router.back} onClose={router.back} show={pathname.endsWith('/new')}>
-        {modal}
-      </Modal>
-    </>
+    <BaseLayout
+      header={<Header />}
+      main={
+        <main>
+          <Tabs selectedIndex={selectedIndex} onSelect={onSelect}>
+            <TabList className="mx-auto -translate-y-1/3 bg-accent-muted/30 backdrop-blur-md">
+              {TABS.map((tab, i) => (
+                <Tab key={tab.id} index={i}>
+                  <TransitionLink href={tab.href}>{tab.label}</TransitionLink>
+                </Tab>
+              ))}
+            </TabList>
+          </Tabs>
+          <div className="mx-auto max-w-2xl" id="transition-root">
+            {children}
+          </div>
+          <Modal onClickOutside={router.back} onClose={router.back} show={pathname.endsWith('/new')}>
+            {modal}
+          </Modal>
+        </main>
+      }
+    />
   )
 }

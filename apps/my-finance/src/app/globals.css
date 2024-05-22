@@ -35,7 +35,7 @@
     --color-background-accent: var(--color-accent-500);
     --color-background-accent-muted: var(--color-accent-100);
     --color-background-error: var(--color-error-300);
-    --color-background-inverted: var(--color-neutral-900);
+    --color-background-inverted: var(--color-neutral-700);
 
     --color-border-base: var(--color-accent-100);
     --color-border-accent: var(--color-accent-500);
@@ -46,10 +46,11 @@
 
 @layer base {
   :root {
+    @apply lg:text-lg;
     @apply accent-accent-500;
   }
   h1 {
-    @apply text-3xl font-semibold;
+    @apply text-3xl lg:text-5xl font-semibold;
   }
 
   h2 {
@@ -59,6 +60,30 @@
   input,
   textarea {
     @apply caret-accent-500;
+  }
+}
+
+@layer utilities {
+  .slant {
+    --angle: 3deg;
+    --angle-tan: tan(var(--angle));
+
+    margin-block: calc(100% * var(--angle-tan));
+    clip-path: polygon(var(--p0), var(--p1), var(--p2), var(--p3));
+  }
+
+  .slant-l {
+    --p0: -100vw calc(var(--angle-tan) * 100vw);
+    --p1: 100vw calc(var(--angle-tan) * -100vw);
+    --p2: calc(100% + 100vw) calc(100% - var(--angle-tan) * 100vw);
+    --p3: calc(100% - 100vw) calc(100% + var(--angle-tan) * 100vw);
+  }
+
+  .slant-r {
+    --p0: -100vw calc(100% - var(--angle-tan) * 100vw);
+    --p1: 100vw calc(100% + var(--angle-tan) * 100vw);
+    --p2: calc(100% + 100vw) calc(var(--angle-tan) * 100vw);
+    --p3: calc(100% - 100vw) calc(var(--angle-tan) * -100vw);
   }
 }
 

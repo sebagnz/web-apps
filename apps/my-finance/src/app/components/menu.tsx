@@ -48,12 +48,6 @@ export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =>
             </NavItem>
 
             <NavItem onClick={close}>
-              <NavLink href={Routes.app.expenses.index}>
-                <ExpensesIcon /> Expenses
-              </NavLink>
-            </NavItem>
-
-            <NavItem onClick={close}>
               <NavLink href={Routes.app.savings.index}>
                 <SavingsIcon /> Savings
               </NavLink>

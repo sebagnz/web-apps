@@ -12,9 +12,8 @@ import { SnapshotsRepository } from '@/domain'
 
 import { createSnapshotsMapper } from './snapshots-firestore-mapper'
 
-const auth = getAuth()
-
 const getUserId = () => {
+  const auth = getAuth()
   const userId = auth.currentUser?.uid
   if (!userId) throw new Error('User not authenticated')
   return userId

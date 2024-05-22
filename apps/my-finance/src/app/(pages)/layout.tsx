@@ -6,9 +6,6 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
 import { twMerge } from 'tailwind-merge'
 
-import { BaseHeader, BaseLayout } from '@web-apps/ui'
-
-import { Menu } from '@/components/menu'
 import { Modal } from '@/components/modal'
 
 import '../globals.css'
@@ -31,20 +28,7 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={twMerge('bg-base text-base', font.className)}>
-        <BaseLayout
-          header={
-            <BaseHeader
-              className={twMerge('pt-6 pb-10 px-4', 'justify-center items-center', 'bg-gradient-to-b from-accent-900 to-accent-900/80', 'shadow-md')}
-            >
-              <div className="flex-1"></div>
-              <p className="text-xl text-inverted font-medium">My Finances</p>
-              <div className="flex-1 relative flex items-center justify-end">
-                <Menu />
-              </div>
-            </BaseHeader>
-          }
-          main={<main>{children}</main>}
-        />
+        {children}
 
         <Modal onClickOutside={goHome} onClose={goHome} show={MODAL_VIEWS.includes(pathname)}>
           {modal}
