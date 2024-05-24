@@ -89,7 +89,7 @@ export default function SavingsPage({ className }: SavingPageProps) {
         </div>
 
         {/* Charts */}
-        <div className="space-y-10">
+        <div className="space-y-10 max-w-2xl mx-auto">
           <div className="space-y-2">
             <Skeleton className="h-4 w-32 mx-auto" />
             <Skeleton className="w-full aspect-video" />
@@ -117,7 +117,7 @@ export default function SavingsPage({ className }: SavingPageProps) {
           </LabeledInput.Select>
         </LabeledInput>
       </form>
-      <div className="space-y-10">
+      <div className="space-y-10 max-w-2xl mx-auto">
         <SavingsChart dateFrom={range.dateFrom} dateTo={range.dateTo} />
         <BalancesChart dateFrom={range.dateFrom} dateTo={range.dateTo} />
       </div>

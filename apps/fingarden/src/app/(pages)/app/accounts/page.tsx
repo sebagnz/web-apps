@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 
+import { Page } from '@/components/page'
+
 import AccountsPage from './accounts-page'
 
 export const metadata: Metadata = {
@@ -8,5 +10,9 @@ export const metadata: Metadata = {
 }
 
 export default function AccountsPageWrapper() {
-  return <AccountsPage className="max-sm:px-4 pb-4 max-w-2xl" />
+  return (
+    <Page variant="app">
+      <AccountsPage />
+    </Page>
+  )
 }

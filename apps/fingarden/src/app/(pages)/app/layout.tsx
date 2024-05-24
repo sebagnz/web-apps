@@ -53,9 +53,7 @@ export default function AccountsLayout({ children, modal }: AccountsLayoutProps)
               ))}
             </TabList>
           </Tabs>
-          <div className="mx-auto max-w-2xl" id="transition-root">
-            {children}
-          </div>
+          <div id="transition-root">{children}</div>
           <Modal onClickOutside={router.back} onClose={router.back} show={pathname.endsWith('/new')}>
             {modal}
           </Modal>

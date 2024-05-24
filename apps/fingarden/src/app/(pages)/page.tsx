@@ -8,6 +8,7 @@ import { ArrowRight } from '@web-apps/ui'
 
 import { Button } from '@/components/button'
 import { Highlight } from '@/components/highlight'
+import { Page } from '@/components/page'
 import { TransitionLink } from '@/components/transition-link'
 
 import accountImg from '../../../public/landing/account.png'
@@ -16,7 +17,7 @@ import { BarChart } from './app/savings/components/bar-chart'
 
 export default function LandingPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-14 my-6 space-y-14">
+    <Page variant="landing" className="space-y-14">
       <h1 className="text-center">
         Level up your savings <br />
         by
@@ -97,7 +98,7 @@ export default function LandingPage() {
           <ArrowRight className="stroke-2"></ArrowRight>
         </Button>
       </div>
-    </div>
+    </Page>
   )
 }
 
