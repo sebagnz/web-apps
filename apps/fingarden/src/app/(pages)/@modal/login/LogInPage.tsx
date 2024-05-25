@@ -10,7 +10,7 @@ import { z } from 'zod'
 
 import { Routes } from '@/routes'
 
-import { Spinner } from '@web-apps/ui'
+import { Skeleton, Spinner } from '@web-apps/ui'
 
 import { useAuth } from '@/hooks/auth'
 

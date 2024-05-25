@@ -8,7 +8,7 @@ import { ArrowRight } from '@web-apps/ui'
 
 import { Button } from '@/components/button'
 import { Highlight } from '@/components/highlight'
-import { Page } from '@/components/page'
+import { Page } from '@/components/page-component'
 import { TransitionLink } from '@/components/transition-link'
 
 import accountImg from '../../../public/landing/account.png'

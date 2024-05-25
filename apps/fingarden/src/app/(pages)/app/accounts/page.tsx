@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { Page } from '@/components/page'
+import { Page } from '@/components/page-component'
 
 import AccountsPage from './accounts-page'
 
