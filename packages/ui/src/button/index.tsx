@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge'
 import { Metamorphic } from '../metamorphic'
 
 type ButtonProps = {
-  variant?: 'fill' | 'outline' | 'inline'
+  variant?: 'fill' | 'outline'
 }
 
 export const Button: Metamorphic<'button', ButtonProps> = (props) => {

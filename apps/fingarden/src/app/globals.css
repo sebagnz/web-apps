@@ -16,8 +16,8 @@
     --color-error-700: 181 59 18;
     --color-error-900: 145 42 7;
 
-    --color-neutral-100: 245 245 245;
-    --color-neutral-300: 212 212 212;
+    --color-neutral-100: 255 255 255;
+    --color-neutral-300: 242 242 242;
     --color-neutral-500: 115 115 115;
     --color-neutral-700: 64 64 64;
     --color-neutral-900: 23 23 23;
@@ -40,7 +40,7 @@
     --color-border-base: var(--color-accent-100);
     --color-border-accent: var(--color-accent-500);
 
-    --color-shadow-base: var(--color-neutral-500);
+    --color-shadow-base: var(--color-neutral-300);
   }
 }
 

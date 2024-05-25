@@ -27,7 +27,7 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
 
   return (
     <html lang="en">
-      <body className={twMerge('bg-base text-base', font.className)}>
+      <body className={twMerge('bg-muted text-base', font.className)}>
         {children}
 
         <Modal onClickOutside={goHome} onClose={goHome} show={MODAL_VIEWS.includes(pathname)}>

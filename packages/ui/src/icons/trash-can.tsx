@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge'
 type Props = ComponentPropsWithoutRef<'svg'>
 
 export const TrashCanIcon = ({ className, ...rest }: Props) => (
-  <svg className={twMerge('w-[24px] h-[24px]', 'stroke-1', className)} fill="none" viewBox="0 0 24 24" {...rest}>
+  <svg className={twMerge('size-6', 'stroke-1', className)} fill="none" viewBox="0 0 24 24" {...rest}>
     <path
       stroke="currentColor"
       strokeLinecap="round"

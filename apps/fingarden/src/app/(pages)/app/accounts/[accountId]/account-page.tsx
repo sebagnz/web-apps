@@ -14,6 +14,8 @@ import { PlusIcon, Skeleton, TrashCanIcon, UITable } from '@web-apps/ui'
 import { useAccounts } from '@/hooks/accounts'
 import { useSnapshots } from '@/hooks/snapshots'
 
+import { Account } from '@/domain'
+
 import { Balance } from '@/components/balance'
 import { Button } from '@/components/button'
 import { TransitionLink } from '@/components/transition-link'
@@ -32,12 +34,12 @@ const { TBody, TD, TH, THead, TR, Table } = UITable
 
 export const AccountPage = ({ accountId, className }: AccountPageProps) => {
   const router = useRouter()
-  const { accounts, isLoading: isLoadingAccount, error: accountsError } = useAccounts()
+  const { accounts, isLoading: isLoadingAccount, error: accountsError, deleteAccount } = useAccounts()
   const { snapshots, isLoading: isLoadingSnapshots, error: snapshotsError, deleteSnapshot } = useSnapshots([accountId])
 
   const account = useMemo(() => accounts.find((account) => account.id === accountId), [accounts, accountId])
 
-  const handleDeleteAccountIntent = async (id: string) => {
+  const handleDeleteSnapshotIntent = async (id: string) => {
     const snapshot = snapshots.find((account) => account.id === id)
 
     if (!snapshot) return
@@ -48,6 +50,23 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
 
     try {
       await deleteSnapshot(snapshot.accountId, snapshot.id)
+    } catch (error) {
+      if (error instanceof Error) toast.error(error.message)
+    }
+  }
+
+  const handleDeleteAccountIntent = async (id: Account['id']) => {
+    const account = accounts.find((account) => account.id === id)
+
+    if (!account) return
+
+    const confirmIntent = window.confirm(`Are you sure you want to delete ${account.name} account?`)
+
+    if (!confirmIntent) return
+
+    try {
+      await deleteAccount(id)
+      router.push(Routes.app.accounts.index)
     } catch (error) {
       if (error instanceof Error) toast.error(error.message)
     }
@@ -100,14 +119,18 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
 
   if (snapshots.length === 0) {
     return (
-      <div className={twMerge('text-center', className)}>
-        <p>You didn&apos;t create any snapshots yet.</p>
-        <div className="mt-3 w-fit mx-auto">
-          <Button as={Link} href={Routes.app.accounts.snapshots.new(account.id)} variant="outline" className="flex items-center gap-x-2">
-            <PlusIcon />
-            Add snapshot
-          </Button>
-        </div>
+      <div className={twMerge('flex flex-col gap-y-5', className)}>
+        <p className="w-fit mx-auto text-muted">This account doesn't have any snapshots</p>
+        <Button as={Link} href={Routes.app.accounts.snapshots.new(account.id)} variant="fill" className="flex items-center gap-x-1 w-fit mx-auto">
+          Add snapshot
+        </Button>
+        <p className="w-fit mx-auto text-sm text-muted">
+          Or{' '}
+          <button className="underline" onClick={() => handleDeleteAccountIntent(accountId)}>
+            delete
+          </button>{' '}
+          account
+        </p>
       </div>
     )
   }
@@ -156,7 +179,7 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
                 <Balance>{snapshot.balance}</Balance>
               </TD>
               <TD>
-                <button onClick={() => handleDeleteAccountIntent(snapshot.id)}>
+                <button onClick={() => handleDeleteSnapshotIntent(snapshot.id)}>
                   <TrashCanIcon className="w-4 h-4 text-muted hover:text-base" />
                 </button>
               </TD>
