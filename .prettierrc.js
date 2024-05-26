@@ -4,7 +4,17 @@ module.exports = {
   trailingComma: 'all',
   printWidth: 150,
   plugins: ['@trivago/prettier-plugin-sort-imports'],
-  importOrder: ['<THIRD_PARTY_MODULES>', '^@/routes', '^@web-apps/(.*)$', '^@/hooks(.*)$', '^@/domain', '^@/services', '^@/components(.*)$', '^[./]'],
+  importOrder: [
+    '<THIRD_PARTY_MODULES>',
+    '^@/routes',
+    '^@web-apps/(.*)$',
+    '^@/hooks(.*)$',
+    '^@/domain',
+    '^@/services',
+    '^@/components(.*)$',
+    '^@/pages(.*)$',
+    '^[./]',
+  ],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
 }

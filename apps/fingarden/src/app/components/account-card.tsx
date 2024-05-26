@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { ComponentPropsWithoutRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
@@ -37,7 +38,7 @@ type AddAccountCardProps = CardProps
 
 export const AddAccountCard = ({ className, ...rest }: AddAccountCardProps) => {
   return (
-    <TransitionLink href={Routes.app.accounts.new}>
+    <Link href={Routes.app.accounts.new}>
       <Card className={twMerge('bg-muted text-center text-muted hover:text-base', 'hover:shadow-md shadow-base', className)} {...rest}>
         <div className="h-full flex flex-col items-center justify-center gap-y-1">
           <button>
@@ -46,6 +47,6 @@ export const AddAccountCard = ({ className, ...rest }: AddAccountCardProps) => {
           <p>New account</p>
         </div>
       </Card>
-    </TransitionLink>
+    </Link>
   )
 }

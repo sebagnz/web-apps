@@ -1,0 +1,22 @@
+import { Metadata } from 'next'
+
+import { Page } from '@/components/page-component'
+
+import { AccountPage } from '@/pages/account'
+
+export const metadata: Metadata = {
+  title: 'FinGarden | Account details',
+  description: 'Handle all your finance in one place',
+}
+
+type AccountPageWrapperProps = {
+  params: { accountId: string }
+}
+
+export default function AccountPageWrapper({ params }: AccountPageWrapperProps) {
+  return (
+    <Page variant="app">
+      <AccountPage accountId={params.accountId} />
+    </Page>
+  )
+}

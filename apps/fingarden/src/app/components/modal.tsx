@@ -1,12 +1,12 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { CSSProperties, useRef } from 'react'
 import { Transition, TransitionStatus } from 'react-transition-group'
 
 import { Modal as UIModal } from '@web-apps/ui'
 
 type ModalProps = {
-  show: boolean
   onClickOutside?: () => void
   onClose?: () => void
   children: React.ReactNode
@@ -29,11 +29,24 @@ const transitionStyles: Record<TransitionStatus, CSSProperties> = {
   unmounted: { scale: 0, opacity: 0 },
 }
 
-export const Modal = ({ show, onClickOutside, onClose, children }: ModalProps) => {
+export const Modal = (props: ModalProps) => {
+  const router = useRouter()
+
   const nodeRef = useRef(null)
 
+  const goBackOrGoHome = () => {
+    if (window.history.length > 1) {
+      router.back()
+    } else {
+      router.push('/')
+    }
+  }
+
+  const onClickOutside = props.onClickOutside || goBackOrGoHome
+  const onClose = props.onClose || goBackOrGoHome
+
   return (
-    <Transition nodeRef={nodeRef} in={show} timeout={duration} unmountOnExit>
+    <Transition nodeRef={nodeRef} appear in timeout={duration}>
       {(state) => (
         <UIModal.Overlay onClick={onClickOutside}>
           <UIModal.Body
@@ -44,7 +57,7 @@ export const Modal = ({ show, onClickOutside, onClose, children }: ModalProps) =
               ...transitionStyles[state],
             }}
           >
-            {children}
+            {props.children}
           </UIModal.Body>
         </UIModal.Overlay>
       )}
