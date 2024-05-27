@@ -8,11 +8,10 @@ import { Header } from '@/components/header'
 
 type LayoutProps = {
   children: React.ReactNode
-  modal: React.ReactNode
   drawer: React.ReactNode
 }
 
-export default function Layout({ children, modal, drawer }: LayoutProps) {
+export default function Layout({ children, drawer }: LayoutProps) {
   useRedirectToLogin()
 
   return (
@@ -24,7 +23,6 @@ export default function Layout({ children, modal, drawer }: LayoutProps) {
         <BaseLayout.Main id="transition-root" className="flex h-full max-h-full overflow-auto">
           <div className="h-full max-h-full overflow-auto flex-1">{children}</div>
           <div className="contents h-full max-h-full">{drawer}</div>
-          {modal}
         </BaseLayout.Main>
       </BaseLayout>
     </div>
