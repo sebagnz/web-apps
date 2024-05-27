@@ -42,9 +42,7 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
   }
 
   const deleteAccount = async (id: Account['id']) => {
-    return mutate(ACCOUNTS_CACHE_KEY, accountsService.delete(id), {
-      optimisticData: accounts.filter((account) => account.id !== id),
-    })
+    return mutate(ACCOUNTS_CACHE_KEY, accountsService.delete(id))
   }
 
   const totalBalance = useMemo(() => {

@@ -109,8 +109,8 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
 
   if (!account) {
     return (
-      <div className={className}>
-        <p>Account not found</p>
+      <div className={twMerge('text-center', className)}>
+        <p className="text-lg">Account not found</p>
         <button onClick={() => router.push(Routes.app.accounts.index)}>Go back</button>
       </div>
     )
