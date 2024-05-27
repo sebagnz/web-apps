@@ -9,15 +9,13 @@ const font = Ubuntu({ subsets: ['latin'], weight: ['300', '400', '500', '700'] }
 
 type RootLayoutProps = {
   children: React.ReactNode
-  auth: React.ReactNode
 }
 
-export default function RootLayout({ children, auth }: RootLayoutProps) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={twMerge('bg-muted text-base', font.className)}>
         {children}
-        {auth}
         <ToastContainer position="bottom-center" autoClose={4000} pauseOnHover closeOnClick />
       </body>
     </html>
