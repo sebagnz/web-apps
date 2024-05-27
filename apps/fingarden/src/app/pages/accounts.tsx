@@ -1,12 +1,9 @@
 'use client'
 
-import Link from 'next/link'
 import { ComponentPropsWithoutRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-import { Routes } from '@/routes'
-
-import { PlusIcon, Skeleton } from '@web-apps/ui'
+import { Skeleton } from '@web-apps/ui'
 
 import { useAccounts } from '@/hooks/accounts'
 import { usePrefetchSnapshots } from '@/hooks/snapshots'
@@ -15,7 +12,6 @@ import { Account } from '@/domain'
 
 import { AccountCard, AddAccountCard } from '@/components/account-card'
 import { Balance } from '@/components/balance'
-import { Button } from '@/components/button'
 
 type AccountPageProps = { className?: string }
 

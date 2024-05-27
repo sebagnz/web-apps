@@ -17,7 +17,7 @@ export const Button: Metamorphic<'button', ButtonProps> = (props) => {
       className={twMerge(
         'py-2 px-4',
         'rounded-md',
-        'text-sm shadow-md hover:shadow-lg',
+        'text-sm shadow-sm hover:shadow-md shadow-base',
         'transition-shadow duration-300',
         isFill && 'bg-accent text-inverted',
         isOutline && 'bg-accent-muted text-accent',

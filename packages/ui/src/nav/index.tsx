@@ -36,7 +36,7 @@ const NavItem = ({ className, ...rest }: ComponentPropsWithoutRef<'li'>) => {
 }
 
 const NavDivider = ({ className, ...rest }: ComponentPropsWithoutRef<'hr'>) => {
-  return <hr className={twMerge('my-2', 'h-[1px]', 'border-0', 'bg-accent shadow-sm', className)} {...rest} />
+  return <hr className={twMerge('my-2', 'h-[1px]', 'border-0', 'bg-accent', className)} {...rest} />
 }
 
 const useNav = ({ ref }: { ref: RefObject<HTMLElement | null> }) => {

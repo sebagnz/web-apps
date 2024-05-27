@@ -12,7 +12,7 @@ const Close = ({ className, ...rest }: ComponentPropsWithoutRef<'button'>) => {
 }
 
 const Overlay = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) => {
-  return <div className="absolute inset-0 bg-inverted/30 backdrop-blur-sm" {...rest} />
+  return <div className="absolute inset-0 bg-inverted/70 backdrop-blur-sm" {...rest} />
 }
 
 type ModalRef = HTMLDivElement
@@ -25,28 +25,26 @@ const Body = forwardRef<ModalRef, ModalProps>(function Modal({ className, onClos
   }
 
   return (
-    <div className="absolute inset-0 bg-inverted/30 backdrop-blur-sm">
-      <div
-        ref={ref}
-        onClick={handleClick}
-        className={twMerge(
-          'bg-base/80',
-          'inline-block',
-          'relative',
-          'top-[150px] md:top-[250px] left-1/2',
-          '-translate-x-1/2',
-          'max-md:min-w-[90vw] max-xl:min-w-[50vw] min-w-[35vw] max-w-[90vw]',
-          'min-h-[400px] max-h-[90vh]',
-          'p-6',
-          'rounded-md',
-          'shadow-2xl',
-          className,
-        )}
-        {...rest}
-      >
-        {onClose ? <Close onClick={onClose} /> : null}
-        {children}
-      </div>
+    <div
+      ref={ref}
+      onClick={handleClick}
+      className={twMerge(
+        'bg-base/80',
+        'inline-block',
+        'relative',
+        'top-[150px] md:top-[250px] left-1/2',
+        '-translate-x-1/2',
+        'max-md:min-w-[90vw] max-xl:min-w-[50vw] min-w-[35vw] max-w-[90vw]',
+        'min-h-[400px] max-h-[90vh]',
+        'p-6',
+        'rounded-md',
+        'shadow-base shadow-2xl',
+        className,
+      )}
+      {...rest}
+    >
+      {onClose ? <Close onClick={onClose} /> : null}
+      {children}
     </div>
   )
 })

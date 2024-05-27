@@ -24,5 +24,11 @@ export const formatBalance = ({ value, currency = 'EUR', scale = '', precision }
   const stringValue = roundedValue.toLocaleString()
   const scaleUnit = scale
 
-  return `${currencySymbol} ${stringValue} ${scaleUnit}`
+  let balance = `${currencySymbol} ${stringValue}`
+
+  if (scaleUnit) {
+    balance = `${balance} ${scaleUnit}`
+  }
+
+  return balance
 }

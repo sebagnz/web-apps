@@ -1,43 +1,60 @@
-import type { ReactNode } from 'react'
+import { Children, ComponentPropsWithoutRef, type ReactNode, cloneElement, isValidElement } from 'react'
+import { twMerge } from 'tailwind-merge'
 
-export interface BaseLayoutProps {
-  header?: ReactNode
-  main: ReactNode
-  footer?: ReactNode
-  leftSidebar?: ReactNode
-  rightSidebar?: ReactNode
+function Header({ className, ...rest }: ComponentPropsWithoutRef<'div'>) {
+  return <div className={twMerge('col-span-5', className)} {...rest} />
 }
 
-export const BaseLayout = (props: BaseLayoutProps) => {
+function LeftAside({ className, ...rest }: ComponentPropsWithoutRef<'aside'>) {
+  return <aside className={twMerge('hidden lg:block col-span-1', className)} {...rest} />
+}
+
+function Main({ className, ...rest }: ComponentPropsWithoutRef<'main'>) {
+  return <main className={twMerge('col-span-5', className)} {...rest} />
+}
+
+function RightAside({ className, ...rest }: ComponentPropsWithoutRef<'aside'>) {
+  return <aside className={twMerge('hidden md:block col-span-1', className)} {...rest} />
+}
+
+function Footer({ className, ...rest }: ComponentPropsWithoutRef<'div'>) {
+  return <div className={twMerge('col-span-5', className)} {...rest} />
+}
+
+const findChildrenByType = (children: ReactNode | Array<ReactNode>, type: any) => {
+  return Children.toArray(children).find((child) => isValidElement(child) && child.type === type)
+}
+
+export function BaseLayout({ className, children }: { className?: string; children: ReactNode }) {
+  const header = findChildrenByType(children, Header)
+  const leftAside = findChildrenByType(children, LeftAside)
+  const main = findChildrenByType(children, Main)
+  const rightAside = findChildrenByType(children, RightAside)
+  const footer = findChildrenByType(children, Footer)
+
   let mainSpan
+  if (rightAside && leftAside) mainSpan = 'md:col-span-4 lg:col-span-3'
+  if (!rightAside && !leftAside) mainSpan = 'md:col-span-5 lg:col-span-5'
+  if (!leftAside && rightAside) mainSpan = 'md:col-span-4 lg:col-span-4'
+  if (leftAside && !rightAside) mainSpan = 'md:col-span-5 lg:col-span-4'
 
-  if (props.rightSidebar && props.leftSidebar) {
-    mainSpan = 'md:col-span-4 lg:col-span-3'
-  }
-
-  if (!props.rightSidebar && !props.leftSidebar) {
-    mainSpan = 'md:col-span-5 lg:col-span-5'
-  }
-
-  if (!props.leftSidebar && props.rightSidebar) {
-    mainSpan = 'md:col-span-4 lg:col-span-4'
-  }
-
-  if (props.leftSidebar && !props.rightSidebar) {
-    mainSpan = 'md:col-span-5 lg:col-span-4'
-  }
+  const mainWithClassNames = isValidElement(main)
+    ? cloneElement(main, { className: twMerge(main.props.className, mainSpan) } as ComponentPropsWithoutRef<typeof Main>)
+    : main
 
   return (
-    <div className="grid grid-cols-5 grid-rows-[auto_1fr_auto] min-h-[100svh]">
-      {props.header ? <div className="col-span-5">{props.header}</div> : null}
-
-      {props.leftSidebar ? <div className="hidden lg:block col-span-1">{props.leftSidebar}</div> : null}
-
-      {props.main ? <div className={`col-span-5 ${mainSpan}`}>{props.main}</div> : null}
-
-      {props.rightSidebar ? <div className="hidden md:block col-span-1">{props.rightSidebar}</div> : null}
-
-      {props.footer ? <div className="col-span-5">{props.footer}</div> : null}
+    <div className={twMerge('grid grid-cols-5 grid-rows-[auto_1fr_auto] min-h-[100svh]', className)}>
+      {header}
+      {leftAside}
+      {mainWithClassNames}
+      {rightAside}
+      {footer}
     </div>
   )
 }
+
+BaseLayout.Header = Header
+BaseLayout.LeftAside = LeftAside
+BaseLayout.Main = Main
+BaseLayout.RightAside = RightAside
+BaseLayout.Footer = Footer

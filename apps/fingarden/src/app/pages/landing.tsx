@@ -14,9 +14,11 @@ import accountImg from '../../../public/landing/account.png'
 import snapshotsImg from '../../../public/landing/snapshots.png'
 import { BarChart } from '../components/bar-chart'
 
-export const Landing = () => {
+type LandingProps = { className?: string }
+
+export const Landing = ({ className }: LandingProps) => {
   return (
-    <div className="space-y-14">
+    <div className={twMerge('space-y-14', className)}>
       <h1 className="text-center">
         Level up your savings <br />
         by

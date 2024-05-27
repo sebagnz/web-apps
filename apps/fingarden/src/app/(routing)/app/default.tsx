@@ -1,3 +1,3 @@
-import { Accounts } from '@/pages/accounts'
+import AccountsPage from './accounts/page'
 
-export default Accounts
+export default AccountsPage

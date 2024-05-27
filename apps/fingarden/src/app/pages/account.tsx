@@ -9,7 +9,7 @@ import { twMerge } from 'tailwind-merge'
 
 import { Routes } from '@/routes'
 
-import { PlusIcon, Skeleton, TrashCanIcon, UITable } from '@web-apps/ui'
+import { Skeleton, TrashCanIcon, UITable } from '@web-apps/ui'
 
 import { useAccounts } from '@/hooks/accounts'
 import { useSnapshots } from '@/hooks/snapshots'
@@ -18,7 +18,6 @@ import { Account } from '@/domain'
 
 import { Balance } from '@/components/balance'
 import { Button } from '@/components/button'
-import { TransitionLink } from '@/components/transition-link'
 
 export const metadata: Metadata = {
   title: 'FinGarden | Account details',
@@ -136,28 +135,19 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
   }
 
   return (
-    <div className={className}>
-      <p className="first-letter:flex items-center gap-x-1 text-sm">
-        <TransitionLink className="hover:underline" href={Routes.app.accounts.index}>
-          Accounts
-        </TransitionLink>
-        <span> / </span>
-        <span className="text-muted">{account.name}</span>
-      </p>
-
-      <div className="mt-3 text-center">
-        <p>Account balance</p>
-        <Balance className="text-4xl font-medium">{account.balance}</Balance>
+    <div className={twMerge('flex flex-col items-center', className)}>
+      <div className="text-center">
+        <p className="text-xl">
+          {account.name} {account.image}
+        </p>
+        <Balance className="text-2xl font-medium">{account.balance}</Balance>
       </div>
 
-      <div className="mt-6 w-fit mx-auto">
-        <Button as={Link} href={Routes.app.accounts.snapshots.new(account.id)} variant="outline" className="flex items-center gap-x-2">
-          <PlusIcon />
-          Add snapshot
-        </Button>
-      </div>
+      <Button as={Link} className="mt-5 w-fit mx-auto text-xs" href={Routes.app.accounts.snapshots.new(account.id)} variant="outline">
+        Add snapshot
+      </Button>
 
-      <Table className="my-3 w-full">
+      <Table className="w-full mt-7">
         <THead>
           <TR>
             <TH scope="col">Date</TH>

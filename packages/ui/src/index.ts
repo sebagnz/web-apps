@@ -2,6 +2,7 @@
  * Components
  */
 export * from './button'
+export * from './drawer'
 export * from './footers/base'
 export * from './headers/base'
 export * from './layouts/base'

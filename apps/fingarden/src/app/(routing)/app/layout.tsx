@@ -1,60 +1,32 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
-
-import { Routes } from '@/routes'
-
 import { BaseLayout } from '@web-apps/ui'
-import { UITabs } from '@web-apps/ui'
 
 import { useRedirectToLogin } from '@/hooks/auth/use-redirect-to-login'
 
 import { Header } from '@/components/header'
-import { TransitionLink } from '@/components/transition-link'
 
-type AccountsLayoutProps = {
+type LayoutProps = {
   children: React.ReactNode
   modal: React.ReactNode
+  drawer: React.ReactNode
 }
 
-const TABS = [
-  { id: 'accounts', label: 'Accounts', href: Routes.app.accounts.index },
-  { id: 'savings', label: 'Savings', href: Routes.app.savings.index },
-]
-
-const { Tab, TabList, Tabs } = UITabs
-
-export default function AccountsLayout({ children, modal }: AccountsLayoutProps) {
-  const pathname = usePathname()
-
-  const [selectedIndex, onSelect] = useState(-1)
-
-  useEffect(() => {
-    const selectedTab = TABS.findIndex((tab) => tab.href === pathname)
-    onSelect(selectedTab)
-  }, [pathname])
-
+export default function Layout({ children, modal, drawer }: LayoutProps) {
   useRedirectToLogin()
 
   return (
-    <BaseLayout
-      header={<Header />}
-      main={
-        <main>
-          <Tabs selectedIndex={selectedIndex} onSelect={onSelect}>
-            <TabList className="mx-auto -translate-y-1/3 bg-accent-muted/30 backdrop-blur-md">
-              {TABS.map((tab, i) => (
-                <Tab key={tab.id} index={i}>
-                  <TransitionLink href={tab.href}>{tab.label}</TransitionLink>
-                </Tab>
-              ))}
-            </TabList>
-          </Tabs>
-          <div id="transition-root">{children}</div>
+    <div className="h-dvh">
+      <BaseLayout className="max-h-full">
+        <BaseLayout.Header>
+          <Header />
+        </BaseLayout.Header>
+        <BaseLayout.Main id="transition-root" className="flex h-full max-h-full overflow-auto">
+          <div className="h-full max-h-full overflow-auto flex-1">{children}</div>
+          <div className="contents h-full max-h-full">{drawer}</div>
           {modal}
-        </main>
-      }
-    />
+        </BaseLayout.Main>
+      </BaseLayout>
+    </div>
   )
 }
