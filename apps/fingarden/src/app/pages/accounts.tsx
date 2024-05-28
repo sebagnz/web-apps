@@ -66,7 +66,7 @@ export const Accounts = ({ className }: AccountPageProps) => {
 
 const AccountsGrid = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) => (
   <div
-    className={twMerge('grid grid-cols-[repeat(auto-fill,_minmax(285px,_325px))] [grid-auto-rows:1fr] justify-center gap-4 sm:gap-8', className)}
+    className={twMerge('grid grid-cols-[repeat(auto-fit,_minmax(285px,_325px))] [grid-auto-rows:1fr] justify-center gap-4 sm:gap-8', className)}
     {...rest}
   />
 )

@@ -27,19 +27,19 @@ export const Landing = ({ className }: LandingProps) => {
       </h1>
 
       <div className="text-center mx-auto sm:w-5/6 space-y-4">
-        <p>FinGarden let&apos;s you to effortlessly track your accounts and achieve your savings goals.</p>
-
         <p>
-          In a few steps you can create and monitor <b>multiple accounts</b>, add <b>monthly statements</b>, and visualize your <b>progress</b> with
-          insightful graphs.
+          Create and monitor <b>multiple accounts</b>, add <b>monthly statements</b>
+          <br />
+          and visualize your <b>progress</b> with insightful graphs.
         </p>
       </div>
+
 
       <div className="text-center">
         <Button as={TransitionLink} href={Routes.app.accounts.index} variant="fill" className="inline-block px-12 py-4 font-medium">
           Boost your savings
         </Button>
-        <p className="mt-2 text-sm text-accent">One time payment, lifetime access.</p>
+        <p className="mt-2 text-xs text-accent">One time payment, lifetime access.</p>
       </div>
 
       <div className="space-y-20">
