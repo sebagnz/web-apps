@@ -38,14 +38,14 @@ type AddAccountCardProps = CardProps
 export const AddAccountCard = ({ className, ...rest }: AddAccountCardProps) => {
   return (
     <Link href={Routes.app.accounts.new}>
-      <Card className={twMerge('bg-base/70 text-center text-muted hover:text-base border-dotted', className)} {...rest}>
+      <div className={twMerge('text-center text-muted hover:text-base border border-base rounded-xl', className)} {...rest}>
         <div className="h-full flex flex-col items-center justify-center gap-y-1">
           <button>
             <PlusIcon />
           </button>
           <p>New account</p>
         </div>
-      </Card>
+      </div>
     </Link>
   )
 }
