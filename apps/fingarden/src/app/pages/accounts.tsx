@@ -3,15 +3,21 @@
 import { ComponentPropsWithoutRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
+import { Routes } from '@/routes'
+
 import { Skeleton } from '@web-apps/ui'
 
 import { useAccounts } from '@/hooks/accounts'
+import { RANGES } from '@/hooks/date-range'
 import { usePrefetchSnapshots } from '@/hooks/snapshots'
 
 import { Account } from '@/domain'
 
 import { AccountCard, AddAccountCard } from '@/components/account-card'
 import { Balance } from '@/components/balance'
+import { Button } from '@/components/button'
+import { SavingsChart } from '@/components/savings-chart'
+import { TransitionLink } from '@/components/transition-link'
 
 type AccountPageProps = { className?: string }
 
@@ -49,17 +55,27 @@ export const Accounts = ({ className }: AccountPageProps) => {
 
   return (
     <div className={className}>
-      <div className="mt-3 text-center">
+      <div className="mt-8 text-center">
         <p className="text-base">Total balance</p>
         <Balance className="text-4xl font-medium">{totalBalance}</Balance>
       </div>
 
-      <AccountsGrid className="mt-8">
+      <AccountsGrid className="mt-12">
         {accounts.map((account) => (
           <AccountCard key={account.id} account={account} onMouseOver={handleAccountHover(account.id)} className="h-full" />
         ))}
         <AddAccountCard className="h-full" />
       </AccountsGrid>
+
+      <div className="max-sm:hidden h-96 max-w-3xl mx-auto mt-20">
+        <SavingsChart dateFrom={RANGES.LAST_YEAR.dateFrom} dateTo={RANGES.LAST_YEAR.dateTo} />
+      </div>
+
+      <div className="sm:hidden flex justify-center mt-10">
+        <Button as={TransitionLink} href={Routes.app.savings.index} variant="outline">
+          View analytics
+        </Button>
+      </div>
     </div>
   )
 }

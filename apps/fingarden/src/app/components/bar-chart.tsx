@@ -2,7 +2,10 @@
 
 import { formatBalance } from '@/utils'
 import { BarElement, CategoryScale, ChartData, Chart as ChartJS, ChartOptions, Legend, LinearScale, Title, Tooltip } from 'chart.js'
+import merge from 'lodash/merge'
 import { Bar } from 'react-chartjs-2'
+
+ChartJS.defaults.font.weight = 500
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -22,7 +25,7 @@ const negativeBarColor = `rgb(${cssVar('--color-error-500')})`
 
 const isDataPoint = (data: any): data is DataPoint => data.x && data.y
 
-const barOptions: BarChartOptions = {
+const BASE_OPTIONS: BarChartOptions = {
   responsive: true,
   elements: {
     bar: {
@@ -33,10 +36,13 @@ const barOptions: BarChartOptions = {
     },
   },
   datasets: {
-    bar: { maxBarThickness: 20 },
+    bar: { maxBarThickness: 25 },
   },
   plugins: {
-    title: { display: false },
+    title: {
+      display: false,
+      font: { family: 'inherit' },
+    },
     legend: { display: false },
     tooltip: {
       callbacks: {
@@ -80,8 +86,21 @@ const barOptions: BarChartOptions = {
   },
 }
 
-type BarChartProps = { datasets: BarChartData['datasets'] }
+const createOptions = (override?: Partial<BarChartOptions>): BarChartOptions => {
+  return merge({}, BASE_OPTIONS, override)
+}
 
-export const BarChart = ({ datasets }: BarChartProps) => {
-  return <Bar options={barOptions} data={{ datasets }} />
+type BarChartProps = { datasets: BarChartData['datasets']; title?: string; className?: string }
+
+export const BarChart = ({ datasets, title, className }: BarChartProps) => {
+  const options = createOptions({
+    plugins: {
+      title: {
+        display: true,
+        text: title,
+      },
+    },
+  })
+
+  return <Bar className={className} options={options} data={{ datasets }} />
 }

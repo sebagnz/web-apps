@@ -7,9 +7,9 @@ import { BarChart } from './bar-chart'
 
 type ChartDataPoint = { x: string; y: number }
 
-type BalancesChartProps = { dateFrom: Date; dateTo: Date }
+type Props = { dateFrom: Date; dateTo: Date; className?: string }
 
-export const BalancesChart = ({ dateFrom, dateTo }: BalancesChartProps) => {
+export const BalancesChart = ({ dateFrom, dateTo, className }: Props) => {
   const { accounts } = useAccounts()
 
   const accountIds = accounts.map(({ id }) => id)
@@ -27,10 +27,5 @@ export const BalancesChart = ({ dateFrom, dateTo }: BalancesChartProps) => {
     return acc
   }, [])
 
-  return (
-    <div className="mt-6 text-center text-content-secondary text-base">
-      <p>Balances by period</p>
-      <BarChart datasets={balancesByPeriodByAccount} />
-    </div>
-  )
+  return <BarChart datasets={balancesByPeriodByAccount} title="Balances by period" className={className} />
 }

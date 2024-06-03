@@ -3,20 +3,18 @@ import { getShortDate } from '@/utils'
 import { useAccounts } from '@/hooks/accounts'
 import { useSavings } from '@/hooks/savings'
 
-import { Balance } from '@/components/balance'
-
 import { BarChart } from './bar-chart'
 
 type ChartDataPoint = { x: string; y: number }
 
-type SavingsChartProps = { dateFrom: Date; dateTo: Date }
+type Props = { dateFrom: Date; dateTo: Date; className?: string }
 
-export const SavingsChart = ({ dateFrom, dateTo }: SavingsChartProps) => {
+export const SavingsChart = ({ dateFrom, dateTo, className }: Props) => {
   const { accounts } = useAccounts()
 
   const accountIds = accounts.map(({ id }) => id)
 
-  const { savingsByPeriod, totalSavings } = useSavings(accountIds, dateFrom, dateTo)
+  const { savingsByPeriod } = useSavings(accountIds, dateFrom, dateTo)
 
   const label = 'Savings'
   const data: Array<ChartDataPoint> = savingsByPeriod.map(({ period, value }) => ({
@@ -24,16 +22,5 @@ export const SavingsChart = ({ dateFrom, dateTo }: SavingsChartProps) => {
     y: value,
   }))
 
-  return (
-    <div className="mt-6 space-y-6 text-center text-content-secondary text-base">
-      <div>
-        <p>Total Savings</p>
-        <Balance className="text-4xl font-medium">{totalSavings}</Balance>
-      </div>
-      <div>
-        <p>Savings by ponth</p>
-        <BarChart datasets={[{ label, data }]} />
-      </div>
-    </div>
-  )
+  return <BarChart datasets={[{ label, data }]} title="Monthly savings" className={className} />
 }

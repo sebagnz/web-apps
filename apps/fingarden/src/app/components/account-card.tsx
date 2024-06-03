@@ -18,7 +18,7 @@ type AccountCardProps = { account: Account } & CardProps
 export const AccountCard = ({ account, className, children, ...rest }: AccountCardProps) => {
   return (
     <Link href={Routes.app.accounts.id(account.id)}>
-      <Card className={twMerge('bg-base', 'transition-all hover:scale-105', className)} {...rest}>
+      <Card className={twMerge('transition-all hover:scale-105', className)} {...rest}>
         <div className="flex items-start justify-between gap-x-4">
           <div>
             <Balance className="text-lg font-semibold tracking-tighter">{account.balance}</Balance>
