@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import { CloseIcon } from '../icons/close'
@@ -11,13 +11,16 @@ const Close = ({ className, ...rest }: ComponentPropsWithoutRef<'button'>) => {
   )
 }
 
-type UIDrawerProps = ComponentPropsWithoutRef<'div'> & { onClose?: () => void }
+type DrawerRef = HTMLDivElement
+type DrawerProps = ComponentPropsWithoutRef<'div'> & { onClose?: () => void }
 
-export const Drawer = ({ className, onClose, children, ...rest }: UIDrawerProps) => {
+export const Drawer = forwardRef<DrawerRef, DrawerProps>(function Drawer({ className, onClose, children, ...rest }, ref) {
   return (
     <div className={twMerge('absolute inset-0 bg-inverted/70 backdrop-blur-sm pt-36 pb-6 px-6 sm:contents')}>
       <div
+        ref={ref}
         className={twMerge(
+          'relative',
           'max-sm:rounded-md max-sm:shadow-2xl',
           'max-h-full overflow-auto',
           'py-8 px-12',
@@ -32,4 +35,4 @@ export const Drawer = ({ className, onClose, children, ...rest }: UIDrawerProps)
       </div>
     </div>
   )
-}
+})

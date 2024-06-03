@@ -1,8 +1,8 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { CSSProperties, useRef } from 'react'
-import { Transition, TransitionStatus } from 'react-transition-group'
+import { useRef } from 'react'
+import { CSSTransition } from 'react-transition-group'
 
 import { Routes } from '@/routes'
 
@@ -15,40 +15,37 @@ type DrawerProps = {
 
 const duration = 100
 
-const initialStyle = {
-  transition: `all ${duration}ms ease-out`,
-  transformOrigin: 'right',
-  scale: '1 1',
-}
-
-const transitionStyles: Record<TransitionStatus, CSSProperties> = {
-  entering: { scale: '1.1' },
-  entered: { scale: '1 1' },
-  exiting: { scale: '0 1' },
-  exited: { scale: '0 1' },
-  unmounted: { scale: '0 1' },
-}
-
 export const Drawer = (props: DrawerProps) => {
   const router = useRouter()
 
-  const nodeRef = useRef(null)
+  const nodeRef = useRef<HTMLDivElement | null>(null)
 
   const onClose = props.onClose || (() => router.push(Routes.app.accounts.index))
 
   return (
-    <Transition nodeRef={nodeRef} appear in timeout={duration}>
-      {(state) => (
-        <UIDrawer
-          onClose={onClose}
-          style={{
-            ...initialStyle,
-            ...transitionStyles[state],
-          }}
-        >
-          {props.children}
-        </UIDrawer>
-      )}
-    </Transition>
+    <CSSTransition
+      appear
+      in
+      nodeRef={nodeRef}
+      timeout={duration}
+      classNames={{
+        appear: 'scale-x-0',
+        appearActive: 'scale-x-110',
+        appearDone: 'scale-x-100',
+        enter: 'scale-x-0',
+        enterActive: 'scale-x-110',
+        enterDone: 'scale-x-100',
+        exit: 'scale-x-100',
+        exitActive: 'scale-x-0',
+      }}
+    >
+      <UIDrawer
+        ref={nodeRef}
+        className="transition-all ease-[cubic-bezier(0.65,_0,_0.35,_1)] duration-100 origin-center sm:origin-right"
+        onClose={onClose}
+      >
+        {props.children}
+      </UIDrawer>
+    </CSSTransition>
   )
 }
