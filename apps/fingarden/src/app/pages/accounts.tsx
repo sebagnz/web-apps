@@ -71,7 +71,7 @@ export const Accounts = ({ className }: AccountPageProps) => {
         <SavingsChart dateFrom={RANGES.LAST_YEAR.dateFrom} dateTo={RANGES.LAST_YEAR.dateTo} />
       </div>
 
-      <div className="sm:hidden flex justify-center mt-10">
+      <div className="flex justify-center mt-10 mb-5">
         <Button as={TransitionLink} href={Routes.app.savings.index} variant="outline">
           View analytics
         </Button>
