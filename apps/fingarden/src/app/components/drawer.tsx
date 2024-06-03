@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useRef } from 'react'
+import { ReactNode, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 
 import { Routes } from '@/routes'
@@ -10,7 +10,7 @@ import { Drawer as UIDrawer } from '@web-apps/ui'
 
 type DrawerProps = {
   onClose?: () => void
-  children: React.ReactNode
+  children: ReactNode
 }
 
 const duration = 100

@@ -16,7 +16,7 @@ type DrawerProps = ComponentPropsWithoutRef<'div'> & { onClose?: () => void }
 
 export const Drawer = forwardRef<DrawerRef, DrawerProps>(function Drawer({ className, onClose, children, ...rest }, ref) {
   return (
-    <div className={twMerge('absolute inset-0 bg-inverted/70 backdrop-blur-sm pt-36 pb-6 px-6 sm:contents')}>
+    <div className={twMerge('absolute inset-0 bg-inverted/70 backdrop-blur-sm pt-28 sm:pt-36 pb-6 px-6 sm:contents')}>
       <div
         ref={ref}
         className={twMerge(
