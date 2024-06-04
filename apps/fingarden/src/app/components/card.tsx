@@ -13,7 +13,7 @@ export const Card = ({ className, ...rest }: CardProps) => {
         'transition-all ',
         'border border-accent/10',
         'bg-base',
-        'hover:shadow-base hover:shadow-sm',
+        'sm:hover:shadow-base sm:hover:shadow-sm',
         className,
       )}
       {...rest}
