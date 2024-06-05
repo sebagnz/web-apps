@@ -12,7 +12,7 @@ import { TransitionLink } from '@/components/transition-link'
 
 import accountImg from '../../../public/landing/account.png'
 import snapshotsImg from '../../../public/landing/snapshots.png'
-import { BarChart } from '../components/bar-chart'
+import { BarChart } from '../components/charts/bar-chart'
 
 type LandingProps = { className?: string }
 
@@ -33,7 +33,6 @@ export const Landing = ({ className }: LandingProps) => {
           and visualize your <b>progress</b> with insightful graphs.
         </p>
       </div>
-
 
       <div className="text-center">
         <Button as={TransitionLink} href={Routes.app.accounts.index} variant="fill" className="inline-block px-12 py-4 font-medium">

@@ -3,7 +3,7 @@ import { getShortDate } from '@/utils'
 import { useAccounts } from '@/hooks/accounts'
 import { useSavings } from '@/hooks/savings'
 
-import { BarChart } from './bar-chart'
+import { BarChart } from '@/components/charts/bar-chart'
 
 type ChartDataPoint = { x: string; y: number }
 
@@ -27,5 +27,5 @@ export const BalancesChart = ({ dateFrom, dateTo, className }: Props) => {
     return acc
   }, [])
 
-  return <BarChart datasets={balancesByPeriodByAccount} title="Balances by period" className={className} />
+  return <BarChart datasets={balancesByPeriodByAccount} title="Balances by period" className={className} stacked scales ticks grid />
 }
