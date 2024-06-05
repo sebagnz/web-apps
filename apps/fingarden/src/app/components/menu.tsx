@@ -5,7 +5,17 @@ import { twMerge } from 'tailwind-merge'
 
 import { Routes } from '@/routes'
 
-import { ArrowLeftToBracketIcon, ArrowRightToBracketIcon, BarsIcon, ChartLineUpIcon, ChartPieIcon, CloseIcon, UINav, UserIcon } from '@web-apps/ui'
+import {
+  ArrowLeftToBracketIcon,
+  ArrowRightToBracketIcon,
+  BarsIcon,
+  ChartLineUpIcon,
+  ChartPieIcon,
+  CloseIcon,
+  MessageIcon,
+  UINav,
+  UserIcon,
+} from '@web-apps/ui'
 
 import { useAuth } from '@/hooks/auth'
 
@@ -67,6 +77,16 @@ export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =>
           <NavDivider />
 
           <NavGroup>
+            <NavItem>
+              <NavExtLink href="https://insigh.to/b/fingarden" target="_blank" rel="noopener noreferrer">
+                <MessageIcon /> Feedback
+              </NavExtLink>
+            </NavItem>
+          </NavGroup>
+
+          <NavDivider />
+
+          <NavGroup>
             <NavItem onClick={close}>
               <Authenticated>
                 <NavButton onClick={logout}>
@@ -89,6 +109,10 @@ export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =>
 
 const NavLink = ({ className, ...rest }: ComponentPropsWithoutRef<typeof TransitionLink>) => {
   return <TransitionLink className={twMerge('flex items-center gap-x-2', className)} {...rest} />
+}
+
+const NavExtLink = ({ className, ...rest }: ComponentPropsWithoutRef<'a'>) => {
+  return <a className={twMerge('flex items-center gap-x-2', className)} {...rest} />
 }
 
 const NavButton = ({ className, ...rest }: ComponentPropsWithoutRef<'button'>) => {
