@@ -11,3 +11,10 @@ export const getMonthFirstDay = (date: Date): Date => new Date(date.getFullYear(
  * @returns A string with the short month and year
  */
 export const getShortDate = (date: Date): string => date.toLocaleDateString(undefined, { month: 'short', year: '2-digit' })
+
+/**
+ * Converts a date into a string with the long month and year
+ * @param date The date to be used
+ * @returns A string with the long month and year
+ */
+export const getLongDate = (date: Date): string => date.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })
