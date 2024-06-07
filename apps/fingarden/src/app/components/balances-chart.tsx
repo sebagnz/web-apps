@@ -1,9 +1,12 @@
 import { getShortDate } from '@/utils'
+import { twMerge } from 'tailwind-merge'
 
 import { useAccounts } from '@/hooks/accounts'
 import { useSavings } from '@/hooks/savings'
 
 import { BarChart } from '@/components/charts/bar-chart'
+
+import { LineChart } from './charts/line-chart'
 
 type ChartDataPoint = { x: string; y: number }
 
@@ -27,5 +30,29 @@ export const BalancesChart = ({ dateFrom, dateTo, className }: Props) => {
     return acc
   }, [])
 
-  return <BarChart datasets={balancesByPeriodByAccount} title="Balances by period" className={className} stacked scales ticks grid />
+  return (
+    <div className={twMerge('relative', className)}>
+      <BarChart datasets={balancesByPeriodByAccount} title="Balances by period" stacked scales ticks grid />
+    </div>
+  )
+}
+
+export const TotalBalanceChart = ({ dateFrom, dateTo, className }: Props) => {
+  const { accounts } = useAccounts()
+
+  const accountIds = accounts.map(({ id }) => id)
+
+  const { totalBalanceByPeriod } = useSavings(accountIds, dateFrom, dateTo)
+
+  const label = 'Savings'
+  const data: Array<ChartDataPoint> = totalBalanceByPeriod.map(({ period, value }) => ({
+    x: getShortDate(new Date(period)),
+    y: value,
+  }))
+
+  return (
+    <div className={twMerge('relative', className)}>
+      <LineChart className="rounded-xl" datasets={[{ label, data }]} aspectRatio={21 / 9} fill />
+    </div>
+  )
 }

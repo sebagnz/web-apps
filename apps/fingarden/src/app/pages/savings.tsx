@@ -7,12 +7,13 @@ import { Skeleton } from '@web-apps/ui'
 
 import { useAccounts } from '@/hooks/accounts'
 import { RANGE_LABELS, RangeKeySchema, useDateRange } from '@/hooks/date-range'
+import { useSavings } from '@/hooks/savings'
 import { useSnapshots } from '@/hooks/snapshots'
 
+import { Balance } from '@/components/balance'
 import { BalancesChart } from '@/components/balances-chart'
 import { LabeledInput } from '@/components/labeled-input'
 import { SavingsChart } from '@/components/savings-chart'
-import { TotalSavings } from '@/components/total-savings'
 
 type SavingPageProps = { className?: string }
 
@@ -22,6 +23,8 @@ export const Savings = ({ className }: SavingPageProps) => {
   const { error: accountsError, isLoading: isLoadingAccounts } = useAccounts()
 
   const { error: snapshotsError, isLoading: isLoadingSnapshots } = useSnapshots(null, { order: 'asc' })
+
+  const { totalSavings } = useSavings(null, range.dateFrom, range.dateTo)
 
   const handleRangeChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setRange(RangeKeySchema.parse(e.currentTarget.value))
@@ -77,10 +80,13 @@ export const Savings = ({ className }: SavingPageProps) => {
           </LabeledInput.Select>
         </LabeledInput>
       </form>
-      <div className="space-y-10 max-w-2xl mx-auto">
-        <TotalSavings dateFrom={range.dateFrom} dateTo={range.dateTo} className="text-center" />
-        <SavingsChart dateFrom={range.dateFrom} dateTo={range.dateTo} className="text-center" />
-        <BalancesChart dateFrom={range.dateFrom} dateTo={range.dateTo} className="text-center" />
+      <div className="space-y-10 max-w-2xl mx-auto text-center">
+        <div>
+          <p>Total Savings</p>
+          <Balance className="text-4xl font-medium">{totalSavings}</Balance>
+        </div>
+        <SavingsChart dateFrom={range.dateFrom} dateTo={range.dateTo} />
+        <BalancesChart dateFrom={range.dateFrom} dateTo={range.dateTo} />
       </div>
     </div>
   )

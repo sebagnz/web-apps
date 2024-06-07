@@ -52,16 +52,31 @@ const baseOptions: ChartOptions<'bar'> = {
 type Props = {
   datasets: BarChartData['datasets']
   title?: string
+  responsive?: boolean
   legend?: boolean
   scales?: boolean
   grid?: boolean
   ticks?: boolean
   stacked?: boolean
+  aspectRatio?: number
   className?: string
 }
 
-export const BarChart = ({ datasets, className, title, legend = false, scales = false, grid = false, ticks = false, stacked = false }: Props) => {
+export const BarChart = ({
+  datasets,
+  className,
+  title,
+  responsive = true,
+  legend = false,
+  scales = false,
+  grid = false,
+  ticks = false,
+  stacked = false,
+  aspectRatio = 16 / 9,
+}: Props) => {
   const options = mergeOptions(baseOptions, {
+    responsive,
+    aspectRatio,
     plugins: {
       title: {
         display: Boolean(title),

@@ -8,21 +8,22 @@ import { Routes } from '@/routes'
 import { Skeleton } from '@web-apps/ui'
 
 import { useAccounts } from '@/hooks/accounts'
-import { RANGES } from '@/hooks/date-range'
 import { usePrefetchSnapshots } from '@/hooks/snapshots'
 
 import { Account } from '@/domain'
 
-import { AccountCard, AddAccountCard } from '@/components/account-card'
-import { Balance } from '@/components/balance'
 import { Button } from '@/components/button'
-import { SavingsChart } from '@/components/savings-chart'
+import { AccountCard } from '@/components/cards/account-card'
+import { AddAccountCard } from '@/components/cards/add-account-card'
+import { BalanceCard } from '@/components/cards/balance-card'
+import { MaxSavingCard } from '@/components/cards/max-saving-card'
+import { SavingsCard } from '@/components/cards/savings-card'
 import { TransitionLink } from '@/components/transition-link'
 
 type AccountPageProps = { className?: string }
 
 export const Accounts = ({ className }: AccountPageProps) => {
-  const { accounts, error, isLoading, totalBalance } = useAccounts()
+  const { accounts, error, isLoading } = useAccounts()
   const { prefetchSnapshots } = usePrefetchSnapshots()
 
   const handleAccountHover = (id: Account['id']) => () => prefetchSnapshots([id])
@@ -38,27 +39,36 @@ export const Accounts = ({ className }: AccountPageProps) => {
   if (isLoading) {
     return (
       <div className={className}>
-        <div className="flex flex-col items-center content-center gap-y-2">
-          <Skeleton className="h-4 w-32" />
+        <div className="mt-6 flex flex-col items-center content-center gap-y-2">
           <Skeleton className="h-12 w-48" />
         </div>
-        <div className="mt-4 flex flex-col items-center content-center">
-          <Skeleton className="h-12 w-32 rounded-3xl" />
-        </div>
-        <AccountsGrid className="mt-8">
+
+        <AccountsGrid className="mt-12">
+          <Skeleton className="h-24" />
           <Skeleton className="h-24" />
           <Skeleton className="h-24" />
         </AccountsGrid>
+
+        <div className="mt-20 flex flex-col items-center content-center gap-y-2">
+          <Skeleton className="h-12 w-48" />
+        </div>
+
+        <div className="mt-12 flex gap-4 justify-center">
+          <Skeleton className="h-56 w-80" />
+          <Skeleton className="h-56 w-80" />
+          <Skeleton className="h-56 w-80" />
+        </div>
+
+        <div className="mt-10 flex flex-col items-center content-center gap-y-2">
+          <Skeleton className="h-12 w-32 rounded-3xl" />
+        </div>
       </div>
     )
   }
 
   return (
     <div className={className}>
-      <div className="mt-8 text-center">
-        <p className="text-base">Total balance</p>
-        <Balance className="text-4xl font-medium">{totalBalance}</Balance>
-      </div>
+      <p className="mt-6 text-center text-3xl">Accounts</p>
 
       <AccountsGrid className="mt-12">
         {accounts.map((account) => (
@@ -67,15 +77,17 @@ export const Accounts = ({ className }: AccountPageProps) => {
         <AddAccountCard className="h-full" />
       </AccountsGrid>
 
-      <div className="max-sm:hidden h-96 max-w-3xl mx-auto mt-20">
-        <SavingsChart dateFrom={RANGES.LAST_YEAR.dateFrom} dateTo={RANGES.LAST_YEAR.dateTo} />
-      </div>
+      <p className="mt-20 text-center text-3xl">Summary</p>
 
-      <div className="flex justify-center mt-10 mb-5">
-        <Button as={TransitionLink} href={Routes.app.savings.index} variant="outline">
-          View analytics
-        </Button>
-      </div>
+      <SummaryGrid className="mt-12">
+        <BalanceCard className="flex-1" />
+        <MaxSavingCard className="flex-1" />
+        <SavingsCard className="flex-1" />
+      </SummaryGrid>
+
+      <Button className="block w-fit mx-auto mt-10 mb-5" as={TransitionLink} href={Routes.app.savings.index} variant="outline">
+        View analytics
+      </Button>
     </div>
   )
 }
@@ -91,4 +103,8 @@ const AccountsGrid = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =
     )}
     {...rest}
   />
+)
+
+const SummaryGrid = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) => (
+  <div className={twMerge('flex gap-4 justify-center flex-wrap', className)} {...rest} />
 )

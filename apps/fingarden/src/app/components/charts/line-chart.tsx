@@ -1,18 +1,17 @@
 'use client'
 
-import { ChartData, ChartOptions } from 'chart.js'
+import { ChartData, ChartOptions, FillTarget } from 'chart.js'
 import { Line } from 'react-chartjs-2'
 
 import { DataPoint, mergeOptions } from './chart'
 
 type LineChartData = ChartData<'line', Array<DataPoint>, string>
+type LineChartOptions = ChartOptions<'line'>
 
-const baseOptions: ChartOptions<'line'> = {
-  responsive: true,
+const baseOptions: LineChartOptions = {
   elements: {
     line: {
       tension: 0.3,
-      fill: true,
       borderWidth: 1,
     },
   },
@@ -21,20 +20,23 @@ const baseOptions: ChartOptions<'line'> = {
 type Props = {
   datasets: LineChartData['datasets']
   title?: string
+  responsive?: boolean
   legend?: boolean
   scales?: boolean
   grid?: boolean
   ticks?: boolean
-  pointRadius?: number
-  fill?: boolean
+  fill?: FillTarget
   tension?: number
   borderWidth?: number
+  pointRadius?: number
+  aspectRatio?: number
   className?: string
 }
 
 export const LineChart = ({
   datasets,
   title,
+  responsive = true,
   legend = false,
   scales = false,
   grid = false,
@@ -43,9 +45,12 @@ export const LineChart = ({
   tension = 0.3,
   borderWidth = 1,
   pointRadius = 0,
+  aspectRatio = 16 / 9,
   className,
 }: Props) => {
   const options = mergeOptions(baseOptions, {
+    responsive,
+    aspectRatio,
     elements: {
       point: { radius: pointRadius },
       line: { tension, fill, borderWidth },
@@ -57,16 +62,22 @@ export const LineChart = ({
       },
       legend: { display: legend },
     },
+    layout: {
+      padding: {
+        bottom: -8,
+        left: -8,
+      },
+    },
     scales: {
       x: {
         display: scales,
         grid: { display: grid },
-        ticks: { display: ticks },
+        ticks: { display: ticks, padding: 0 },
       },
       y: {
         display: scales,
         grid: { display: grid },
-        ticks: { display: ticks },
+        ticks: { display: ticks, padding: 0 },
       },
     },
   })

@@ -4,8 +4,6 @@ import { twMerge } from 'tailwind-merge'
 
 import { Routes } from '@/routes'
 
-import { PlusIcon } from '@web-apps/ui'
-
 import { Account } from '@/domain'
 
 import { Balance } from '@/components/balance'
@@ -29,23 +27,6 @@ export const AccountCard = ({ account, className, children, ...rest }: AccountCa
           </div>
         </div>
       </Card>
-    </Link>
-  )
-}
-
-type AddAccountCardProps = CardProps
-
-export const AddAccountCard = ({ className, ...rest }: AddAccountCardProps) => {
-  return (
-    <Link href={Routes.app.accounts.new}>
-      <div className={twMerge('text-center text-muted hover:text-base border border-base rounded-xl', className)} {...rest}>
-        <div className="h-full flex flex-col items-center justify-center gap-y-1">
-          <button>
-            <PlusIcon />
-          </button>
-          <p>New account</p>
-        </div>
-      </div>
     </Link>
   )
 }
