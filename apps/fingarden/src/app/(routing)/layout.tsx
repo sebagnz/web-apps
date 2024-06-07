@@ -14,7 +14,7 @@ type RootLayoutProps = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body className={twMerge('bg-muted text-base', font.className)}>
+      <body className={twMerge('bg-gradient-to-b from-neutral-100 from-85% to-neutral-500/20 text-base', font.className)}>
         {children}
         <ToastContainer position="bottom-center" autoClose={4000} pauseOnHover closeOnClick />
       </body>
