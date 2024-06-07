@@ -14,7 +14,7 @@ export const BalancesChart = ({ dateFrom, dateTo, className }: Props) => {
 
   const accountIds = accounts.map(({ id }) => id)
 
-  const { balancesByPeriod } = useSavings(accountIds, dateFrom, dateTo)
+  const { balancesByPeriod } = useSavings(null, dateFrom, dateTo)
 
   const balancesByPeriodByAccount = Array.from(accountIds).reduce<Array<{ label: string; data: Array<ChartDataPoint> }>>((acc, accountId) => {
     const balanceDataPoints = Array.from(balancesByPeriod).map(([period, balances]) => {

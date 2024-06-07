@@ -19,10 +19,9 @@ type SavingPageProps = { className?: string }
 export const Savings = ({ className }: SavingPageProps) => {
   const { rangeKey, range, setRange } = useDateRange()
 
-  const { error: accountsError, isLoading: isLoadingAccounts, accounts } = useAccounts()
+  const { error: accountsError, isLoading: isLoadingAccounts } = useAccounts()
 
-  const accountIds = accounts.map(({ id }) => id)
-  const { error: snapshotsError, isLoading: isLoadingSnapshots } = useSnapshots(accountIds, { order: 'asc' })
+  const { error: snapshotsError, isLoading: isLoadingSnapshots } = useSnapshots(null, { order: 'asc' })
 
   const handleRangeChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setRange(RangeKeySchema.parse(e.currentTarget.value))

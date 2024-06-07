@@ -15,7 +15,10 @@ type AccountIds = Array<Snapshot['accountId']>
 
 export const SNAPSHOTS_CACHE_KEY = 'snapshots'
 
-const createCacheKey = (accountIds: AccountIds) => [SNAPSHOTS_CACHE_KEY].concat(accountIds)
+const createCacheKey = (accountIds: AccountIds | null) => {
+  if (accountIds === null) return SNAPSHOTS_CACHE_KEY
+  return [SNAPSHOTS_CACHE_KEY].concat(accountIds)
+}
 
 export const createUsePrefetchSnapshots = (snapshotsService: SnapshotsService, options?: UseSnapshotsOptions) => () => {
   const order = options?.order || 'desc'
@@ -27,14 +30,14 @@ export const createUsePrefetchSnapshots = (snapshotsService: SnapshotsService, o
   return { prefetchSnapshots }
 }
 
-export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accountIds: AccountIds, options?: UseSnapshotsOptions) => {
+export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accountIds: AccountIds | null, options?: UseSnapshotsOptions) => {
   const order = options?.order || 'desc'
 
   const { mutate } = useSWRConfig()
 
   const { user, isLoading: isLoadingUser } = useAuth()
 
-  const CACHE_KEY = user && accountIds.length ? createCacheKey(accountIds) : null
+  const CACHE_KEY = user ? createCacheKey(accountIds) : null
 
   const {
     data: snapshots,

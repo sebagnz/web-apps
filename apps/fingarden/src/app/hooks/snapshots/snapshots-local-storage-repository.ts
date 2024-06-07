@@ -53,16 +53,20 @@ export const createLocalStorageSnapshotsRepository = (): SnapshotsRepository => 
     },
     getByAccounts: async (accountIds, options) => {
       const maybeSnapshotList = JSON.parse(localStorage.getItem(LOCALSTORAGE_ACCOUNTS_KEY) || '[]')
-      const accountsSnapshotsList = SnapshotListSchema.parse(maybeSnapshotList).filter((snap) => accountIds.includes(snap.accountId))
+      let snapshots = SnapshotListSchema.parse(maybeSnapshotList)
 
-      const orderedSnapshotList =
+      if (accountIds !== null) {
+        snapshots = snapshots.filter((snap) => accountIds.includes(snap.accountId))
+      }
+
+      snapshots =
         options.order === 'asc'
-          ? accountsSnapshotsList.sort((a, b) => a.date.getTime() - b.date.getTime())
-          : accountsSnapshotsList.sort((a, b) => b.date.getTime() - a.date.getTime())
+          ? snapshots.sort((a, b) => a.date.getTime() - b.date.getTime())
+          : snapshots.sort((a, b) => b.date.getTime() - a.date.getTime())
 
       await delay()
 
-      return orderedSnapshotList
+      return snapshots
     },
   }
 }

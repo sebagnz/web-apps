@@ -86,7 +86,7 @@ const createSavingsByPeriod = (BalancesByPeriod: BalancesByPeriod): Array<DataPo
   }, [])
 }
 
-export const useSavings = (accountIds: Array<Account['id']>, dateFrom: Date, dateTo: Date) => {
+export const useSavings = (accountIds: Array<Account['id']> | null, dateFrom: Date, dateTo: Date) => {
   const { snapshots } = useSnapshots(accountIds, { order: 'asc' })
 
   const snapshotsByPediod = useMemo(() => groupSnapshotsByPeriod(snapshots), [snapshots])

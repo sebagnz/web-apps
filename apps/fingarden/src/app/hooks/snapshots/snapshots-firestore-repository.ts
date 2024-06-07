@@ -76,12 +76,11 @@ export const createFirestoreSnapshotsRepository = (transactionManager: Firestore
       const converter = createSnapshotsMapper(userId)
       const snapshotsRef = collectionGroup(db, SNAPSHOTS_FIRESTORE_COLLECTION_PATH)
 
-      const q = query(
-        snapshotsRef.withConverter(converter),
-        where('userId', '==', userId),
-        where('accountId', 'in', accountIds),
-        orderBy('date', options.order),
-      )
+      let q = query(snapshotsRef.withConverter(converter), where('userId', '==', userId), orderBy('date', options.order))
+
+      if (accountIds !== null) {
+        q = query(q, where('accountId', 'in', accountIds))
+      }
 
       const snapshotsSnap = await getDocs(q)
       const snapshots = snapshotsSnap.docs.map((doc) => doc.data())

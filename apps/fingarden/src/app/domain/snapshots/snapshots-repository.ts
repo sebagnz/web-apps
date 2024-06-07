@@ -7,5 +7,5 @@ export interface SnapshotsRepository {
   update: (snapshot: Snapshot) => Promise<void>
   delete: (accountId: Snapshot['accountId'], snapshotId: Snapshot['id']) => Promise<void>
   get: (accountId: Snapshot['accountId'], snapshotId: Snapshot['id']) => Promise<Snapshot | undefined>
-  getByAccounts: (accountIds: Array<Snapshot['accountId']>, options: GetByAccountOptions) => Promise<Snapshot[]>
+  getByAccounts: (accountIds: Array<Snapshot['accountId']> | null, options: GetByAccountOptions) => Promise<Snapshot[]>
 }
