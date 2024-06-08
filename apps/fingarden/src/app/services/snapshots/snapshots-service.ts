@@ -25,10 +25,7 @@ export const createSnapshotsService = (
 
         const snapshots = await snapshotsRepository.getByAccounts([newSnapshot.accountId], { order: 'desc' })
 
-        if (snapshots.length === 0) {
-          await accountsRepository.update({ ...account, balance: newSnapshot.balance })
-        }
-        if (snapshots.length > 0 && snapshots[0].date < newSnapshot.date) {
+        if (snapshots.length === 0 || snapshots[0].date < newSnapshot.date) {
           await accountsRepository.update({ ...account, balance: newSnapshot.balance })
         }
 
