@@ -83,8 +83,6 @@ export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =>
             </NavItem>
           </NavGroup>
 
-          <NavDivider />
-
           <NavGroup>
             <NavItem onClick={close}>
               <Authenticated>
