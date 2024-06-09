@@ -10,7 +10,6 @@ import {
   ArrowRightToBracketIcon,
   BarsIcon,
   ChartLineUpIcon,
-  ChartPieIcon,
   CloseIcon,
   MessageIcon,
   UINav,
@@ -147,8 +146,6 @@ const UserInfo = () => {
 }
 
 const AccontsIcon = () => <UserIcon className="text-accent w-[20px]" />
-
-const ExpensesIcon = () => <ChartPieIcon className="text-accent w-[20px]" />
 
 const SavingsIcon = () => <ChartLineUpIcon className="text-accent w-[20px]" />
 
