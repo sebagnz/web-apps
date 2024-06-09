@@ -10,11 +10,10 @@ export const createLocalStoragePreferencesRepository = (): PreferencesRepository
       const preferences = PreferencesSchema.parse(maybePreferences)
       return preferences
     },
-    setHideBalances: async (hideBalances) => {
+    set: async (newPreferences) => {
       const maybePreferences = JSON.parse(localStorage.getItem(LOCALSTORAGE_PREFERENCES_KEY) || '{}')
       const preferences = PreferencesSchema.parse(maybePreferences)
-      preferences.hideBalances = hideBalances
-      localStorage.setItem(LOCALSTORAGE_PREFERENCES_KEY, JSON.stringify(preferences))
+      localStorage.setItem(LOCALSTORAGE_PREFERENCES_KEY, JSON.stringify({ ...preferences, ...newPreferences }))
     },
   }
 }

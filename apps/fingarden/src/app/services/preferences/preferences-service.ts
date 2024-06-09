@@ -1,8 +1,8 @@
 import { Preferences, PreferencesRepository } from '@/domain'
 
 export interface PreferencesService {
-  get: () => Promise<Preferences>
-  setHideBalances: (hideBalances: Preferences['hideBalances']) => Promise<void>
+  get: () => Promise<Preferences | undefined>
+  set: (preferences: Partial<Preferences>) => Promise<void>
 }
 
 export const createPreferencesService = (preferencesRepository: PreferencesRepository): PreferencesService => {
@@ -10,8 +10,8 @@ export const createPreferencesService = (preferencesRepository: PreferencesRepos
     get: async () => {
       return await preferencesRepository.get()
     },
-    setHideBalances: async (hideBalances: boolean) => {
-      return await preferencesRepository.setHideBalances(hideBalances)
+    set: async (preferences) => {
+      return await preferencesRepository.set(preferences)
     },
   }
 }

@@ -31,3 +31,4 @@ export type FirestoreMapper<TDB, TDomain> = {
 
 export const ACCOUNTS_FIRESTORE_COLLECTION_PATH = 'accounts'
 export const SNAPSHOTS_FIRESTORE_COLLECTION_PATH = 'snapshots'
+export const PREFERENCES_FIRESTORE_COLLECTION_PATH = 'preferences'

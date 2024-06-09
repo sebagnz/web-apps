@@ -15,7 +15,7 @@ export const createUsePreferences = (preferencesService: PreferencesService) => 
     isLoading,
   } = useSWR(PREFERENCES_CACHE_KEY, () => preferencesService.get(), {
     revalidateOnFocus: false,
-    dedupingInterval: 1000 * 60,
+    dedupingInterval: 1000 * 60 * 10,
     keepPreviousData: true,
   })
 
@@ -24,7 +24,9 @@ export const createUsePreferences = (preferencesService: PreferencesService) => 
   }, [error])
 
   const setHideBalances = async (hideBalances: boolean) => {
-    await mutate(PREFERENCES_CACHE_KEY, preferencesService.setHideBalances(hideBalances))
+    await mutate(PREFERENCES_CACHE_KEY, preferencesService.set({ hideBalances }), {
+      optimisticData: { ...preferences, hideBalances },
+    })
   }
 
   return {
