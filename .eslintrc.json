@@ -1,4 +1,4 @@
 {
   "root": true,
-  "extends": ["next/babel", "next/core-web-vitals", "turbo", "prettier"]
+  "extends": ["next/core-web-vitals", "turbo", "prettier"]
 }

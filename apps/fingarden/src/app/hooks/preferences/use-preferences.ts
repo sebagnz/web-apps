@@ -33,6 +33,6 @@ export const createUsePreferences = (preferencesService: PreferencesService) => 
     preferences,
     error,
     isLoading,
-    setHideBalances: useCallback(setHideBalances, [PREFERENCES_CACHE_KEY, mutate]),
+    setHideBalances: useCallback(setHideBalances, [mutate, preferences]),
   }
 }

@@ -56,6 +56,6 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
     totalBalance,
     createAccount: useCallback(createAccount, [mutate]),
     updateAccount: useCallback(updateAccount, [mutate, accounts]),
-    deleteAccount: useCallback(deleteAccount, [mutate, accounts]),
+    deleteAccount: useCallback(deleteAccount, [mutate]),
   }
 }

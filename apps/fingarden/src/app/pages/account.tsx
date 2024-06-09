@@ -119,7 +119,7 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
   if (snapshots.length === 0) {
     return (
       <div className={twMerge('flex flex-col gap-y-5', className)}>
-        <p className="w-fit mx-auto text-muted">This account doesn't have any snapshots</p>
+        <p className="w-fit mx-auto text-muted">This account doesn&apos;t have any snapshots</p>
         <Button as={Link} href={Routes.app.accounts.snapshots.new(account.id)} variant="fill" className="flex items-center gap-x-1 w-fit mx-auto">
           Add snapshot
         </Button>
