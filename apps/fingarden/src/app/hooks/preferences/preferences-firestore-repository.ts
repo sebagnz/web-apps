@@ -1,5 +1,5 @@
 import { getAuth } from 'firebase/auth'
-import { doc, getDoc, updateDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 
 import { PREFERENCES_FIRESTORE_COLLECTION_PATH, getFirestoreDB } from '@/hooks/firebase'
 
@@ -29,7 +29,7 @@ export const createFirestorePreferencesRepository = (): PreferencesRepository =>
     set: async (preferences) => {
       const userId = getUserId()
       const preferencesRef = doc(db, PREFERENCES_FIRESTORE_COLLECTION_PATH, userId)
-      await updateDoc(preferencesRef, preferences)
+      await setDoc(preferencesRef, preferences, { merge: true })
     },
   }
 }
