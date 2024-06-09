@@ -26,6 +26,7 @@ export * from './icons/user'
 export * from './icons/chart-line-up'
 export * from './icons/chart-pie'
 export * from './icons/message'
+export * from './icons/preferences'
 
 /**
  * Types
