@@ -23,7 +23,7 @@ type TabsProps = {
   children: ReactNode
 }
 
-const Tabs = ({ selectedIndex, onSelect, ...props }: TabsProps) => {
+export function Tabs({ selectedIndex, onSelect, ...props }: TabsProps) {
   const containerRef = useRef<HTMLUListElement | null>(null)
   const selectedTabRef = useRef<HTMLLIElement | null>(null)
 
@@ -57,20 +57,14 @@ const TabList = ({ className, ...props }: TabListProps) => {
         'w-fit',
         'list-none',
         'relative flex justify-between',
-        'gap-x-4 sm:gap-x-6',
-        'px-1',
+        'p-1 gap-x-4 sm:gap-x-6',
         'rounded-lg',
-        'shadow-sm',
-        'py-1 before:my-1',
-        'before:bg-base/40',
+        'before:my-1',
+        'before:bg-accent-muted/50',
         'before:shadow-inner',
-        'before:content-[""]',
-        'before:absolute',
-        'before:z-0',
-        'before:left-0 before:right-0 before:bottom-0 before:top-0',
-        'before:duration-300',
-        'before:transition-transform ease-in',
-        'before:origin-left',
+        'before:absolute before:content-[""]',
+        'before:z-0 before:left-0 before:right-0 before:bottom-0 before:top-0',
+        'before:transition-transform before:duration-300 before:origin-left ease-in',
         'before:scale-x-[var(--width,_0)]',
         'before:translate-x-[var(--left,_50%)]',
         'before:rounded-[calc(var(--radius,_0)/var(--width,_0))_/_var(--radius,_0)]',
@@ -97,14 +91,14 @@ const Tab = ({ index, className, ...props }: TabProps) => {
       ref={selectedIndex === index ? selectedTabRef : null}
       onClick={() => onSelect(index)}
       className={twMerge(
+        'flex-1',
         'z-10',
         'select-none',
         'cursor-pointer',
         'rounded-lg',
         'transition-all ease-in-out',
-        'px-3 py-2 sm:px-6 sm:py-3',
-        'text-lg',
-        'text-content-secondary',
+        'px-2 py-1 sm:px-3 sm:py-1',
+        'text-center',
         className,
       )}
       {...props}
@@ -112,4 +106,5 @@ const Tab = ({ index, className, ...props }: TabProps) => {
   )
 }
 
-export const UITabs = { Tabs, TabList, Tab }
+Tabs.List = TabList
+Tabs.Item = Tab
