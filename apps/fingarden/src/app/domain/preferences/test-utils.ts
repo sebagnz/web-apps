@@ -8,6 +8,6 @@ export const createMockPreferences: (override?: Partial<Preferences>) => Prefere
 export const createMockPreferencesRepository: () => PreferencesRepository = () => {
   return {
     get: async () => createMockPreferences(),
-    setHideBalances: async (hideBalances) => {},
+    set: async (preferences) => {},
   }
 }
