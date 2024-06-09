@@ -1,4 +1,5 @@
 export * from './auth'
 export * from './accounts'
-export * from './snapshots'
+export * from './currencies'
 export * from './preferences'
+export * from './snapshots'
