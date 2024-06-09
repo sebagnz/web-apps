@@ -1,4 +1,4 @@
-import { Preferences, PreferencesRepository } from '@/domain'
+import { Preferences, PreferencesRepository, PreferencesSchema } from '@/domain'
 
 export interface PreferencesService {
   get: () => Promise<Preferences | undefined>
@@ -8,7 +8,11 @@ export interface PreferencesService {
 export const createPreferencesService = (preferencesRepository: PreferencesRepository): PreferencesService => {
   return {
     get: async () => {
-      return await preferencesRepository.get()
+      try {
+        return await preferencesRepository.get()
+      } catch (error) {
+        return PreferencesSchema.parse(undefined)
+      }
     },
     set: async (preferences) => {
       return await preferencesRepository.set(preferences)
