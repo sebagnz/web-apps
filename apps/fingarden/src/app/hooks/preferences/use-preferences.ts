@@ -33,13 +33,13 @@ export const createUsePreferences = (preferencesService: PreferencesService) => 
 
   const setHideBalances = async (hideBalances: Preferences['hideBalances']) => {
     await mutate(PREFERENCES_CACHE_KEY, preferencesService.set({ hideBalances }), {
-      optimisticData: { ...preferences, hideBalances },
+      optimisticData: (preferences) => ({ ...preferences, hideBalances }),
     })
   }
 
   const setMainCurrency = async (mainCurrency: Preferences['mainCurrency']) => {
     await mutate(PREFERENCES_CACHE_KEY, preferencesService.set({ mainCurrency }), {
-      optimisticData: { ...preferences, mainCurrency },
+      optimisticData: (preferences) => ({ ...preferences, mainCurrency }),
     })
   }
 
@@ -47,7 +47,7 @@ export const createUsePreferences = (preferencesService: PreferencesService) => 
     preferences,
     error,
     isLoading,
-    setHideBalances: useCallback(setHideBalances, [mutate, preferences]),
-    setMainCurrency: useCallback(setMainCurrency, [mutate, preferences]),
+    setHideBalances: useCallback(setHideBalances, [mutate]),
+    setMainCurrency: useCallback(setMainCurrency, [mutate]),
   }
 }

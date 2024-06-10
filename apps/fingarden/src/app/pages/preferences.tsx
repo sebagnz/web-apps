@@ -11,9 +11,9 @@ import { CurrencyTabs } from '@/components/currency-tabs'
 import { HideBalancesSwitch } from '@/components/hide-balance-switch'
 
 export const Preferences = () => {
-  const { isLoading } = usePreferences()
+  const { preferences, isLoading } = usePreferences()
 
-  if (isLoading) return <Loading className="space-y-8 pt-4" />
+  if (!preferences && isLoading) return <Loading className="space-y-8 pt-4" />
 
   return (
     <div className="space-y-8 pt-4">
