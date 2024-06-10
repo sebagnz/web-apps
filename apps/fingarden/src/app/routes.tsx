@@ -22,5 +22,8 @@ export const Routes = {
     savings: {
       index: '/app/savings',
     },
+    preferences: {
+      index: '/app/preferences',
+    },
   },
 }
