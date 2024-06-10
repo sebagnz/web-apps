@@ -52,7 +52,7 @@ export const NewSnapshot = ({ accountId }: NewSnapshotPageProps) => {
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-      <h2 className="my-4 text-center text-2xl">Create snapshot</h2>
+      <h3 className="my-4 text-center">Create snapshot</h3>
 
       <div>
         <LabeledInput>

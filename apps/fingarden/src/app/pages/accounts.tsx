@@ -68,7 +68,7 @@ export const Accounts = ({ className }: AccountPageProps) => {
 
   return (
     <div className={className}>
-      <p className="mt-6 text-center text-3xl">Accounts</p>
+      <h2 className="mt-6 text-center">Accounts</h2>
 
       <AccountsGrid className="mt-12">
         {accounts.map((account) => (
@@ -77,7 +77,7 @@ export const Accounts = ({ className }: AccountPageProps) => {
         <AddAccountCard className="h-full" />
       </AccountsGrid>
 
-      <p className="mt-20 text-center text-3xl">Summary</p>
+      <h2 className="mt-20 text-center">Summary</h2>
 
       <SummaryGrid className="mt-12">
         <BalanceCard className="flex-1" />

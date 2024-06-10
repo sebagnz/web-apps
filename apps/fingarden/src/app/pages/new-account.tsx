@@ -53,7 +53,7 @@ export const NewAccount = () => {
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-      <h2 className="text-center text-2xl my-4">Create account</h2>
+      <h3 className="my-4 text-center">Create account</h3>
 
       <div className="space-y-4">
         <div>

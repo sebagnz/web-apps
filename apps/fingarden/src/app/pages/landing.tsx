@@ -45,7 +45,7 @@ export const Landing = ({ className }: LandingProps) => {
         <div className="py-20 space-y-20 border-image-conic from-accent-100 to-accent-100 border-outset-x-screen">
           <ResponsiveContainer>
             <div className="space-y-4">
-              <h2>⚙️ Set up your accounts</h2>
+              <h3>⚙️ Set up your accounts</h3>
               <p>Add as many accounts as you need, from savings and checking to cash holdings.</p>
               <p>
                 You can also customize your accounts with unique names and emojis to easily identify them. And know at avery moment all your balances
@@ -57,7 +57,7 @@ export const Landing = ({ className }: LandingProps) => {
 
           <ResponsiveContainer rowReverse>
             <div className="space-y-4">
-              <h2>⏱️ Track your balances</h2>
+              <h3>⏱️ Track your balances</h3>
               <p>
                 Keep track of each account balance over time. Add monthly snapshots to see how your accounts are performing and make better financial
                 decisions.
@@ -68,7 +68,7 @@ export const Landing = ({ className }: LandingProps) => {
         </div>
 
         <div className="space-y-10">
-          <h2 className="text-center">🚀 Watch your savings blast off</h2>
+          <h3 className="text-center">🚀 Watch your savings blast off</h3>
 
           <div className="mx-auto sm:w-5/6 text-center">
             <p>Track your savings over time and make better financial decisions.</p>

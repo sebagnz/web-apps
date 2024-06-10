@@ -69,7 +69,7 @@ export const Login = () => {
 
   return (
     <form className="space-y-3 max-w-[350px] mx-auto" onSubmit={handleSubmit(handleLoginWithEmail)}>
-      <h2 className="my-4 text-center text-3xl">Log in</h2>
+      <h3 className="my-4 text-center">Log in</h3>
 
       <div className="mx-auto">
         <LabeledInput>
