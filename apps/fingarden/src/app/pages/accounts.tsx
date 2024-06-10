@@ -1,6 +1,6 @@
 'use client'
 
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, useEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import { Routes } from '@/routes'
@@ -20,51 +20,17 @@ import { MaxSavingCard } from '@/components/cards/max-saving-card'
 import { SavingsCard } from '@/components/cards/savings-card'
 import { TransitionLink } from '@/components/transition-link'
 
-type AccountPageProps = { className?: string }
+type Props = { className?: string }
 
-export const Accounts = ({ className }: AccountPageProps) => {
+export const Accounts = ({ className }: Props) => {
   const { accounts, error, isLoading } = useAccounts()
   const { prefetchSnapshots } = usePrefetchSnapshots()
 
   const handleAccountHover = (id: Account['id']) => () => prefetchSnapshots([id])
 
-  if (error) {
-    return (
-      <div className={className}>
-        <p>{error.message}</p>
-      </div>
-    )
-  }
+  if (error) return <Error className={className} error={error} />
 
-  if (isLoading) {
-    return (
-      <div className={className}>
-        <div className="mt-6 flex flex-col items-center content-center gap-y-2">
-          <Skeleton className="h-12 w-48" />
-        </div>
-
-        <AccountsGrid className="mt-12">
-          <Skeleton className="h-24" />
-          <Skeleton className="h-24" />
-          <Skeleton className="h-24" />
-        </AccountsGrid>
-
-        <div className="mt-20 flex flex-col items-center content-center gap-y-2">
-          <Skeleton className="h-12 w-48" />
-        </div>
-
-        <div className="mt-12 flex gap-4 justify-center">
-          <Skeleton className="h-56 w-80" />
-          <Skeleton className="h-56 w-80" />
-          <Skeleton className="h-56 w-80" />
-        </div>
-
-        <div className="mt-10 flex flex-col items-center content-center gap-y-2">
-          <Skeleton className="h-12 w-32 rounded-3xl" />
-        </div>
-      </div>
-    )
-  }
+  if (isLoading) return <Loading className={className} />
 
   return (
     <div className={className}>
@@ -107,4 +73,38 @@ const AccountsGrid = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =
 
 const SummaryGrid = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) => (
   <div className={twMerge('flex gap-4 justify-center flex-wrap', className)} {...rest} />
+)
+
+const Loading = (props: ComponentPropsWithoutRef<'div'>) => (
+  <div {...props}>
+    <div className="mt-6 flex flex-col items-center content-center gap-y-2">
+      <Skeleton className="h-12 w-48" />
+    </div>
+
+    <AccountsGrid className="mt-12">
+      <Skeleton className="h-24" />
+      <Skeleton className="h-24" />
+      <Skeleton className="h-24" />
+    </AccountsGrid>
+
+    <div className="mt-20 flex flex-col items-center content-center gap-y-2">
+      <Skeleton className="h-12 w-48" />
+    </div>
+
+    <div className="mt-12 flex gap-4 justify-center">
+      <Skeleton className="h-56 w-80" />
+      <Skeleton className="h-56 w-80" />
+      <Skeleton className="h-56 w-80" />
+    </div>
+
+    <div className="mt-10 flex flex-col items-center content-center gap-y-2">
+      <Skeleton className="h-12 w-32 rounded-3xl" />
+    </div>
+  </div>
+)
+
+const Error = ({ error, ...rest }: ComponentPropsWithoutRef<'div'> & { error: any }) => (
+  <div {...rest}>
+    <p>{error.message}</p>
+  </div>
 )
