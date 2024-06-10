@@ -25,5 +25,9 @@ export const useCurrencies = () => {
     return CURRENCIES[preferences.mainCurrency]
   }, [preferences])
 
-  return { mainCurrency }
+  const getCurrency = (code: Currency['code']) => {
+    return CURRENCIES[code]
+  }
+
+  return { mainCurrency, getCurrency }
 }
