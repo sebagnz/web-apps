@@ -5,6 +5,11 @@ const nextConfig = {
   webpack: (config) => {
     return config
   },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   images: {
     remotePatterns: [
       {
