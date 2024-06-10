@@ -12,12 +12,5 @@ export const HideBalancesSwitch = ({ className, ...rest }: HideBalancesSwitchPro
 
   if (!preferences) return null
 
-  return (
-    <div className="flex items-center gap-x-2">
-      <Switch id="toggle-balance" className={twMerge('w-12', className)} on={preferences.hideBalances} onChange={setHideBalances} {...rest} />
-      <label htmlFor="toggle-balance" className="cursor-pointer">
-        Hide balances
-      </label>
-    </div>
-  )
+  return <Switch className={twMerge('w-12', className)} on={preferences.hideBalances} onChange={setHideBalances} {...rest} />
 }

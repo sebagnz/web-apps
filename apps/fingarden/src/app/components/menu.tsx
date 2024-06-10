@@ -58,8 +58,11 @@ export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =>
             <NavDivider />
 
             <NavGroup>
-              <NavItem>
-                <HideBalancesSwitch />
+              <NavItem className="flex items-center gap-x-2">
+                <HideBalancesSwitch id="balance-toggle" />{' '}
+                <label className="cursor-pointer" htmlFor="balance-toggle">
+                  Hide balances
+                </label>
               </NavItem>
             </NavGroup>
           </Authenticated>
