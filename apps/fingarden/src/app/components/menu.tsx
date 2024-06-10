@@ -5,7 +5,17 @@ import { twMerge } from 'tailwind-merge'
 
 import { Routes } from '@/routes'
 
-import { ArrowLeftToBracketIcon, ArrowRightToBracketIcon, BarsIcon, ChartLineUpIcon, CloseIcon, MessageIcon, UINav, UserIcon } from '@web-apps/ui'
+import {
+  ArrowLeftToBracketIcon,
+  ArrowRightToBracketIcon,
+  BarsIcon,
+  ChartLineUpIcon,
+  CloseIcon,
+  MessageIcon,
+  PreferencesIcon,
+  UINav,
+  UserIcon,
+} from '@web-apps/ui'
 
 import { useAuth } from '@/hooks/auth'
 
@@ -70,14 +80,18 @@ export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =>
           <NavDivider />
 
           <NavGroup>
+            <NavItem onClick={close}>
+              <NavLink href={Routes.app.preferences.index}>
+                <PreferencesIcon /> Preferences
+              </NavLink>
+            </NavItem>
+
             <NavItem>
               <NavExtLink href="https://insigh.to/b/fingarden" target="_blank" rel="noopener noreferrer">
                 <MessageIcon /> Feedback
               </NavExtLink>
             </NavItem>
-          </NavGroup>
 
-          <NavGroup>
             <NavItem onClick={close}>
               <Authenticated>
                 <NavButton onClick={logout}>
