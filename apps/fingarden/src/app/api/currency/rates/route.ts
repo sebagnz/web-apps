@@ -1,13 +1,13 @@
-import { NextRequest } from 'next/server'
-
 const FREE_CURRENCY_API_URL = 'https://api.freecurrencyapi.com/v1/latest'
 
-export async function GET(request: NextRequest) {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+
   const apikey = process.env.FREECURRENCY_API_KEY || ''
   const revalidate = 3600
 
-  const currencies = request.nextUrl.searchParams.get('currencies')
-  const base_currency = request.nextUrl.searchParams.get('base_currency')
+  const currencies = searchParams.get('currencies')
+  const base_currency = searchParams.get('base_currency')
 
   if (currencies === null) {
     return Response.json({ error: 'Invalid currencies provided' }, { status: 400 })
