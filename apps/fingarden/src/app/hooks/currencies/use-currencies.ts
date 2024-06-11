@@ -39,7 +39,7 @@ export const createUseCurrencies = (currenciesService: CurrenciesService) => () 
 
   const currencyRatesKey = useMemo(() => {
     if (!mainCurrency || !currencyCodes) return null
-    return CURRENCY_RATES_CACHE_KEY.concat(...currencyCodes)
+    return CURRENCY_RATES_CACHE_KEY.concat(mainCurrency.code).concat(...currencyCodes)
   }, [mainCurrency, currencyCodes])
 
   const {
