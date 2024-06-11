@@ -3,24 +3,22 @@ import { twMerge } from 'tailwind-merge'
 
 import { Tabs } from '@web-apps/ui'
 
+import { useCurrencies } from '@/hooks/currencies'
 import { usePreferences } from '@/hooks/preferences'
-
-import { Currency } from '../domain/currencies'
 
 type Props = Omit<ComponentPropsWithoutRef<typeof Tabs.List>, 'children'>
 
-const currencyCodes: Array<Currency['code']> = ['EUR', 'USD']
-
 export const CurrencyTabs = ({ className, ...rest }: Props) => {
-  const { preferences, setMainCurrency } = usePreferences()
+  const { setMainCurrency } = usePreferences()
+  const { mainCurrency, currencyCodes } = useCurrencies()
 
   const handleSelect = async (index: number) => {
     await setMainCurrency(currencyCodes[index])
   }
 
-  const selectedIndex = useMemo(() => currencyCodes.findIndex((code) => code === preferences?.mainCurrency), [preferences])
+  const selectedIndex = useMemo(() => currencyCodes.findIndex((code) => code === mainCurrency), [mainCurrency, currencyCodes])
 
-  if (!preferences) return null
+  if (!currencyCodes || !mainCurrency) return null
 
   return (
     <Tabs selectedIndex={selectedIndex} onSelect={handleSelect}>

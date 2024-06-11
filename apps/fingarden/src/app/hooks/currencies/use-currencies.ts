@@ -62,6 +62,7 @@ export const createUseCurrencies = (currenciesService: CurrenciesService) => () 
   return {
     mainCurrency,
     currencies,
+    currencyCodes,
     currencyRates,
     isLoadingCurrencies,
     isLoadingCurrencyRates,
