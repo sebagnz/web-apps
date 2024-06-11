@@ -1,6 +1,6 @@
 'use client'
 
-import { ComponentPropsWithoutRef, useEffect } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import { Routes } from '@/routes'

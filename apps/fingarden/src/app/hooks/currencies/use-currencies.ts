@@ -28,9 +28,9 @@ export const createUseCurrencies = (currenciesService: CurrenciesService) => () 
   })
 
   const mainCurrency = useMemo(() => {
-    if (!preferences) return null
-    return preferences.mainCurrency
-  }, [preferences])
+    if (!preferences || !currencies) return null
+    return currencies[preferences.mainCurrency]
+  }, [preferences, currencies])
 
   const currencyCodes = useMemo<Array<CurrencyCode>>(() => {
     if (!currencies) return []
@@ -46,7 +46,7 @@ export const createUseCurrencies = (currenciesService: CurrenciesService) => () 
     data: currencyRates,
     error: currencyRatesError,
     isLoading: isLoadingCurrencyRates,
-  } = useSWR(currencyRatesKey, () => currenciesService.getRates(mainCurrency!, currencyCodes), {
+  } = useSWR(currencyRatesKey, () => currenciesService.getRates(mainCurrency!.code, currencyCodes), {
     revalidateOnFocus,
     dedupingInterval,
     keepPreviousData,

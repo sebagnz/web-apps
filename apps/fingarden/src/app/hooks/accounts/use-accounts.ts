@@ -31,8 +31,8 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
 
   const isLoading = useMemo(() => isLoadingUser || isLoadingAccounts, [isLoadingUser, isLoadingAccounts])
 
-  const createAccount = async (name: Account['name'], balance: Account['balance'], image: Account['image']) => {
-    return mutate(ACCOUNTS_CACHE_KEY, accountsService.create({ name, balance, image }))
+  const createAccount = async (name: Account['name'], balance: Account['balance'], currencyCode: Account['currencyCode']) => {
+    return mutate(ACCOUNTS_CACHE_KEY, accountsService.create({ name, balance, currencyCode }))
   }
 
   const updateAccount = async (account: Account) => {

@@ -33,13 +33,13 @@ export const createFirestoreAccountsRepository = (transactionManager: FirestoreT
       return { id: accountRef.id, ...account }
     },
     update: async (account) => {
-      const { name, image, balance } = account
+      const { name, currencyCode, balance } = account
       const accountRef = doc(db, ACCOUNTS_FIRESTORE_COLLECTION_PATH, account.id)
 
       if (transactionManager.transaction) {
-        transactionManager.transaction.update(accountRef, { name, image, balance })
+        transactionManager.transaction.update(accountRef, { name, currencyCode, balance })
       } else {
-        await updateDoc(accountRef, { name, image, balance })
+        await updateDoc(accountRef, { name, currencyCode, balance })
       }
     },
     delete: async (id) => {

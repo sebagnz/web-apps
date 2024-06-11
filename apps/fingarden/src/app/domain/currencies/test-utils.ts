@@ -4,8 +4,8 @@ import { CurrencyRatesRepository } from './currency-rates-repository'
 
 export const createMockCurrencies: (override?: Partial<CurrencyList>) => CurrencyList = (override = {}) => {
   return {
-    USD: { code: 'USD', name: 'US Dollar', symbol: '$' },
-    EUR: { code: 'EUR', name: 'Euro', symbol: '€' },
+    USD: { code: 'USD', name: 'US Dollar', symbol: '$', icon: '💵' },
+    EUR: { code: 'EUR', name: 'Euro', symbol: '€', icon: '💶' },
     ...override,
   }
 }

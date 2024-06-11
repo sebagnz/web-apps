@@ -4,7 +4,7 @@ import { Account } from './account'
 import { AccountsRepository } from './accounts-repository'
 
 export const createMockAccount: (override?: Partial<Account>) => Account = (override = {}) => {
-  return { id: uuidv4(), name: 'Mock Account', balance: 1000, image: '🏦', userId: '123', ...override }
+  return { id: uuidv4(), name: 'Mock Account', balance: 1000, currencyCode: 'EUR', userId: '123', ...override }
 }
 
 export const createMockAccountsRepository: () => AccountsRepository = () => {

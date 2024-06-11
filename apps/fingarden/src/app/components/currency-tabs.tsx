@@ -16,7 +16,7 @@ export const CurrencyTabs = ({ className, ...rest }: Props) => {
     await setMainCurrency(currencyCodes[index])
   }
 
-  const selectedIndex = useMemo(() => currencyCodes.findIndex((code) => code === mainCurrency), [mainCurrency, currencyCodes])
+  const selectedIndex = useMemo(() => currencyCodes.findIndex((code) => code === mainCurrency?.code), [mainCurrency, currencyCodes])
 
   if (!currencyCodes || !mainCurrency) return null
 

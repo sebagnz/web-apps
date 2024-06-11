@@ -1,10 +1,12 @@
 import { z } from 'zod'
 
+import { CurrencyCodeSchema } from '../currencies'
+
 export const AccountSchema = z.object({
   id: z.string(),
   name: z.string(),
   balance: z.number(),
-  image: z.string(),
+  currencyCode: CurrencyCodeSchema,
 })
 
 export const AccountListSchema = z.array(AccountSchema)

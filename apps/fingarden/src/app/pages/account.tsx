@@ -12,6 +12,7 @@ import { Routes } from '@/routes'
 import { Skeleton, TrashCanIcon, UITable } from '@web-apps/ui'
 
 import { useAccounts } from '@/hooks/accounts'
+import { useCurrencies } from '@/hooks/currencies'
 import { useSnapshots } from '@/hooks/snapshots'
 
 import { Account } from '@/domain'
@@ -33,6 +34,7 @@ const { TBody, TD, TH, THead, TR, Table } = UITable
 
 export const AccountPage = ({ accountId, className }: AccountPageProps) => {
   const router = useRouter()
+  const { currencies, isLoadingCurrencies } = useCurrencies()
   const { accounts, isLoading: isLoadingAccount, error: accountsError, deleteAccount } = useAccounts()
   const { snapshots, isLoading: isLoadingSnapshots, error: snapshotsError, deleteSnapshot } = useSnapshots([accountId])
 
@@ -87,7 +89,7 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
     )
   }
 
-  if (isLoadingAccount || isLoadingSnapshots) {
+  if (isLoadingCurrencies || isLoadingAccount || isLoadingSnapshots) {
     return (
       <div className={className}>
         <div className="flex flex-col">
@@ -134,11 +136,13 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
     )
   }
 
+  const currency = currencies ? currencies[account.currencyCode] : null
+
   return (
     <div className={twMerge('flex flex-col items-center', className)}>
       <div className="text-center">
         <p className="text-xl">
-          {account.name} {account.image}
+          {account.name} {currency?.icon}
         </p>
         <Balance className="text-2xl font-medium">{account.balance}</Balance>
       </div>

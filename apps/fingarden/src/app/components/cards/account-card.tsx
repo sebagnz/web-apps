@@ -4,6 +4,8 @@ import { twMerge } from 'tailwind-merge'
 
 import { Routes } from '@/routes'
 
+import { useCurrencies } from '@/hooks/currencies'
+
 import { Account } from '@/domain'
 
 import { Balance } from '@/components/balance'
@@ -14,6 +16,10 @@ type CardProps = ComponentPropsWithoutRef<typeof Card>
 type AccountCardProps = { account: Account } & CardProps
 
 export const AccountCard = ({ account, className, children, ...rest }: AccountCardProps) => {
+  const { currencies } = useCurrencies()
+
+  const currency = currencies ? currencies[account.currencyCode] : null
+
   return (
     <Link href={Routes.app.accounts.id(account.id)}>
       <Card className={twMerge('transition-all active:scale-105 sm:hover:scale-105', className)} {...rest}>
@@ -23,7 +29,9 @@ export const AccountCard = ({ account, className, children, ...rest }: AccountCa
             <p className="text-sm">{account.name}</p>
           </div>
           <div>
-            <p className="text-3xl">{account.image}</p>
+            <p className="text-3xl" title={currency?.name}>
+              {currency?.icon}
+            </p>
           </div>
         </div>
       </Card>

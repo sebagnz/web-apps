@@ -12,6 +12,9 @@ import { Routes } from '@/routes'
 import { Spinner } from '@web-apps/ui'
 
 import { useAccounts } from '@/hooks/accounts'
+import { useCurrencies } from '@/hooks/currencies'
+
+import { AccountSchema } from '@/domain'
 
 import { Button } from '@/components/button'
 import { LabeledInput } from '@/components/labeled-input'
@@ -23,9 +26,9 @@ const errorMessages = {
 }
 
 const FormInputSchema = z.object({
-  name: z.string().min(1, errorMessages.nameRequired).max(20, errorMessages.nameMaxLength),
+  name: AccountSchema.shape.name.min(1, errorMessages.nameRequired).max(20, errorMessages.nameMaxLength),
   balance: z.number({ invalid_type_error: errorMessages.invalidBalance }),
-  image: z.string(),
+  currencyCode: AccountSchema.shape.currencyCode,
 })
 
 type FormInput = z.infer<typeof FormInputSchema>
@@ -33,6 +36,7 @@ type FormInput = z.infer<typeof FormInputSchema>
 export const NewAccount = () => {
   const router = useRouter()
   const { createAccount, isLoading } = useAccounts()
+  const { currencies, mainCurrency } = useCurrencies()
 
   const { register, handleSubmit, formState } = useForm<FormInput>({
     resolver: zodResolver(FormInputSchema),
@@ -44,7 +48,7 @@ export const NewAccount = () => {
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     try {
-      await createAccount(data.name, data.balance, data.image)
+      await createAccount(data.name, data.balance, data.currencyCode)
       router.push(Routes.app.accounts.index)
     } catch (error) {
       if (error instanceof Error) toast.error(error.message)
@@ -59,16 +63,13 @@ export const NewAccount = () => {
         <div>
           <div className={twJoin('flex', 'flex-col max-md:gap-y-4', 'md:flex-row md:gap-x-4')}>
             <LabeledInput className="max-md:flex-1">
-              <LabeledInput.Label htmlFor="image">Image</LabeledInput.Label>
-              <LabeledInput.Select id="image" {...register('image')}>
-                <LabeledInput.Option value="💶">💶</LabeledInput.Option>
-                <LabeledInput.Option value="💵">💵</LabeledInput.Option>
-                <LabeledInput.Option value="💸">💸</LabeledInput.Option>
-                <LabeledInput.Option value="💰">💰</LabeledInput.Option>
-                <LabeledInput.Option value="🤑">🤑</LabeledInput.Option>
-                <LabeledInput.Option value="💳">💳</LabeledInput.Option>
-                <LabeledInput.Option value="💲">💲</LabeledInput.Option>
-                <LabeledInput.Option value="🪙">🪙</LabeledInput.Option>
+              <LabeledInput.Label htmlFor="currency-code">Currency</LabeledInput.Label>
+              <LabeledInput.Select id="currency-code" {...register('currencyCode')}>
+                {Object.values(currencies || {}).map((currency) => (
+                  <LabeledInput.Option key={currency.code} value={currency.code} selected={currency.code === mainCurrency?.code}>
+                    {currency.icon} {currency.name}
+                  </LabeledInput.Option>
+                ))}
               </LabeledInput.Select>
             </LabeledInput>
             <LabeledInput className="flex-1">
