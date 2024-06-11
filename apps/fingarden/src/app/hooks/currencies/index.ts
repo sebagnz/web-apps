@@ -1,33 +1,15 @@
-import { useMemo } from 'react'
+import { createCurrenciesService } from '@/services'
 
-import { usePreferences } from '@/hooks/preferences'
+import { createCurrenciesRepository } from './currencies-inmemory-repository'
+import { createCurrencyRatesRepository } from './currency-rates-network-repository'
+import { createUseCurrencies } from './use-currencies'
 
-import { Currency } from '@/domain'
+const currenciesRepository = createCurrenciesRepository()
 
-const CURRENCIES: Record<Currency['code'], Currency> = {
-  EUR: {
-    code: 'EUR',
-    name: 'Euro',
-    symbol: '€',
-  },
-  USD: {
-    code: 'USD',
-    name: 'US Dollar',
-    symbol: '$',
-  },
-}
+const currencyRatesRepository = createCurrencyRatesRepository()
 
-export const useCurrencies = () => {
-  const { preferences } = usePreferences()
+const currenciesService = createCurrenciesService(currenciesRepository, currencyRatesRepository)
 
-  const mainCurrency = useMemo<Currency | null>(() => {
-    if (!preferences) return null
-    return CURRENCIES[preferences.mainCurrency]
-  }, [preferences])
+export const useCurrencies = createUseCurrencies(currenciesService)
 
-  const getCurrency = (code: Currency['code']) => {
-    return CURRENCIES[code]
-  }
-
-  return { mainCurrency, getCurrency }
-}
+export { CURRENCIES_CACHE_KEY, CURRENCY_RATES_CACHE_KEY } from './use-currencies'

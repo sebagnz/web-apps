@@ -2,6 +2,7 @@ export { type AccountsService, createAccountsService } from './accounts/accounts
 export { type SnapshotsService, createSnapshotsService } from './snapshots/snapshots-service'
 export { type PreferencesService, createPreferencesService } from './preferences/preferences-service'
 export { type AuthService, createAuthService } from './auth/auth-service'
+export { type CurrenciesService, createCurrenciesService } from './currencies/currencies-service'
 
 export interface TransactionManager<TTransaction> {
   runTransaction: (updateFn: (transaction: TTransaction, ...args: unknown[]) => Promise<unknown>) => Promise<unknown>
