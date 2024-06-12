@@ -3,6 +3,7 @@ import { toast } from 'react-toastify'
 import useSWR, { useSWRConfig } from 'swr'
 
 import { useAuth } from '@/hooks/auth'
+import { useCurrencies } from '@/hooks/currencies'
 
 import { Account } from '@/domain'
 
@@ -14,6 +15,7 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
   const { mutate } = useSWRConfig()
 
   const { user, isLoading: isLoadingUser } = useAuth()
+  const { currencyRates, isLoadingCurrencyRates } = useCurrencies()
 
   const {
     data: accounts,
@@ -29,7 +31,10 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
     if (error) toast.error(error.message)
   }, [error])
 
-  const isLoading = useMemo(() => isLoadingUser || isLoadingAccounts, [isLoadingUser, isLoadingAccounts])
+  const isLoading = useMemo(
+    () => isLoadingUser || isLoadingAccounts || isLoadingCurrencyRates,
+    [isLoadingUser, isLoadingAccounts, isLoadingCurrencyRates],
+  )
 
   const createAccount = async (name: Account['name'], balance: Account['balance'], currencyCode: Account['currencyCode']) => {
     return mutate(ACCOUNTS_CACHE_KEY, accountsService.create({ name, balance, currencyCode }))
@@ -46,8 +51,16 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
   }
 
   const totalBalance = useMemo(() => {
-    return accounts.reduce((acc, account) => account.balance + acc, 0)
-  }, [accounts])
+    if (!currencyRates) return null
+
+    return accounts.reduce((acc, account) => {
+      const rate = currencyRates[account.currencyCode]
+
+      if (!rate) return acc
+
+      return acc + account.balance / rate
+    }, 0)
+  }, [accounts, currencyRates])
 
   return {
     accounts,

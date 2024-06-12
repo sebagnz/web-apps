@@ -1,25 +1,28 @@
 import { getShortDate } from '@/utils'
+import { ComponentPropsWithoutRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import { useAccounts } from '@/hooks/accounts'
+import { useBalances } from '@/hooks/balances'
 import { useSavings } from '@/hooks/savings'
 
 import { BarChart } from '@/components/charts/bar-chart'
 
+import { DataPoint, isDataPoint } from './charts/chart'
 import { LineChart } from './charts/line-chart'
-
-type ChartDataPoint = { x: string; y: number }
 
 type Props = { dateFrom: Date; dateTo: Date; className?: string }
 
 export const BalancesChart = ({ dateFrom, dateTo, className }: Props) => {
+  const { formatBalance } = useBalances()
+
   const { accounts } = useAccounts()
 
   const accountIds = accounts.map(({ id }) => id)
 
   const { balancesByPeriod } = useSavings(null, dateFrom, dateTo)
 
-  const balancesByPeriodByAccount = Array.from(accountIds).reduce<Array<{ label: string; data: Array<ChartDataPoint> }>>((acc, accountId) => {
+  const balancesByPeriodByAccount = Array.from(accountIds).reduce<Array<{ label: string; data: Array<DataPoint> }>>((acc, accountId) => {
     const balanceDataPoints = Array.from(balancesByPeriod).map(([period, balances]) => {
       const balance = balances.find((balance) => balance.accountId === accountId)
 
@@ -30,9 +33,22 @@ export const BalancesChart = ({ dateFrom, dateTo, className }: Props) => {
     return acc
   }, [])
 
+  const getTooltipFooter: ComponentPropsWithoutRef<typeof BarChart>['getTooltipFooter'] = (value) => formatBalance({ value })
+
+  const getYTicks: ComponentPropsWithoutRef<typeof BarChart>['getYTicks'] = (value) => formatBalance({ value, precision: 1, scale: 'k' })
+
   return (
     <div className={twMerge('relative', className)}>
-      <BarChart datasets={balancesByPeriodByAccount} title="Balances by period" stacked scales ticks grid />
+      <BarChart
+        title="Balances by period"
+        datasets={balancesByPeriodByAccount}
+        getTooltipFooter={getTooltipFooter}
+        getYTicks={getYTicks}
+        stacked
+        scales
+        ticks
+        grid
+      />
     </div>
   )
 }
@@ -45,7 +61,7 @@ export const TotalBalanceChart = ({ dateFrom, dateTo, className }: Props) => {
   const { totalBalanceByPeriod } = useSavings(accountIds, dateFrom, dateTo)
 
   const label = 'Savings'
-  const data: Array<ChartDataPoint> = totalBalanceByPeriod.map(({ period, value }) => ({
+  const data: Array<DataPoint> = totalBalanceByPeriod.map(({ period, value }) => ({
     x: getShortDate(new Date(period)),
     y: value,
   }))

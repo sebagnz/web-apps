@@ -1,8 +1,9 @@
-import { CurrencyType, ScaleType, formatBalance } from '@/utils'
 import { CSSProperties, ComponentPropsWithoutRef, useRef } from 'react'
 import { SwitchTransition, Transition, TransitionStatus } from 'react-transition-group'
 
-import { usePreferences } from '@/hooks/preferences'
+import { SCALES, useBalances } from '@/hooks/balances'
+
+import { CurrencyCode } from '@/domain'
 
 const duration = 100
 
@@ -22,20 +23,20 @@ const transitionStyles: Record<TransitionStatus, CSSProperties> = {
 
 type BalanceProps = {
   children: number
-  currency?: keyof CurrencyType
-  scale?: keyof ScaleType
+  currencyCode?: CurrencyCode
+  scale?: keyof typeof SCALES
   precision?: number
 }
 
 type BalanceComponentProps = Omit<ComponentPropsWithoutRef<'p'>, keyof BalanceProps> & BalanceProps
 
-export const Balance = ({ currency, scale, precision, children, ...rest }: BalanceComponentProps) => {
+export const Balance = ({ currencyCode, scale, precision, children, ...rest }: BalanceComponentProps) => {
   const nodeRef = useRef(null)
-  const { preferences } = usePreferences()
+  const { hideBalances, formatBalance } = useBalances()
 
-  if (!preferences) return null
+  if (hideBalances === null) return null
 
-  const textContent = preferences.hideBalances ? '••••••' : formatBalance({ currency, scale, precision, value: children })
+  const textContent = hideBalances ? '••••••' : formatBalance({ value: children, currencyCode, scale, precision })
 
   return (
     <SwitchTransition>

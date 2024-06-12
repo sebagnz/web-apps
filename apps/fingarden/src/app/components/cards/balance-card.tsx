@@ -11,7 +11,15 @@ import { Card } from '@/components/card'
 type CardProps = ComponentPropsWithoutRef<typeof Card>
 
 export const BalanceCard = ({ className, ...rest }: CardProps) => {
-  const { totalBalance } = useAccounts()
+  const { totalBalance, isLoading } = useAccounts()
+
+  if (isLoading) {
+    return (
+      <Card className={twMerge('pb-8 flex flex-col items-center justify-center text-center text-muted italic', className)} {...rest}>
+        <p className="text-lg text-muted">Loading</p>
+      </Card>
+    )
+  }
 
   if (!totalBalance) {
     return (

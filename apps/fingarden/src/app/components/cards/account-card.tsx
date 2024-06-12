@@ -25,7 +25,9 @@ export const AccountCard = ({ account, className, children, ...rest }: AccountCa
       <Card className={twMerge('transition-all active:scale-105 sm:hover:scale-105', className)} {...rest}>
         <div className="flex items-start justify-between gap-x-4">
           <div>
-            <Balance className="text-lg font-semibold tracking-tighter">{account.balance}</Balance>
+            <Balance className="text-lg font-semibold tracking-tighter" currencyCode={account.currencyCode}>
+              {account.balance}
+            </Balance>
             <p className="text-sm">{account.name}</p>
           </div>
           <div>

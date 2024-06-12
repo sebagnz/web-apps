@@ -1,53 +1,13 @@
 'use client'
 
-import { formatBalance } from '@/utils'
-import { ChartData, ChartOptions } from 'chart.js'
+import { ChartData, ChartOptions, TooltipItem } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
 
 import { DataPoint, isDataPoint, mergeOptions } from './chart'
 
 type BarChartData = ChartData<'bar', Array<DataPoint>, string>
 
-const baseOptions: ChartOptions<'bar'> = {
-  datasets: {
-    bar: { maxBarThickness: 25 },
-  },
-  plugins: {
-    tooltip: {
-      callbacks: {
-        footer: (contexts) => {
-          const context = contexts[0]
-
-          if (context?.chart?.data?.datasets?.length <= 1) return
-
-          const datasets = context.chart.data.datasets
-          const dataIndex = context.dataIndex
-
-          const value = datasets.reduce((acc, dataset) => {
-            const data = dataset.data[dataIndex]
-            if (!isDataPoint(data)) return acc
-            return acc + data.y
-          }, 0)
-
-          const formattedTotal = formatBalance({ value })
-
-          return `Total: ${formattedTotal}`
-        },
-      },
-    },
-  },
-  scales: {
-    y: {
-      ticks: {
-        callback: (rawValue) => {
-          const value = parseFloat(rawValue.toString())
-          if (isNaN(value)) return rawValue
-          return formatBalance({ value, precision: 1, scale: 'k' })
-        },
-      },
-    },
-  },
-}
+const baseOptions: ChartOptions<'bar'> = { datasets: { bar: { maxBarThickness: 25 } } }
 
 type Props = {
   datasets: BarChartData['datasets']
@@ -60,7 +20,12 @@ type Props = {
   stacked?: boolean
   aspectRatio?: number
   className?: string
+  getTooltipFooter?: (value: number) => string | null
+  getYTicks?: (value: number) => string | null
 }
+
+const defaultGetTooltipFooter: Props['getTooltipFooter'] = (value) => value.toString()
+const defaultGetYTicks: Props['getYTicks'] = (value) => value.toString()
 
 export const BarChart = ({
   datasets,
@@ -73,7 +38,34 @@ export const BarChart = ({
   ticks = false,
   stacked = false,
   aspectRatio = 16 / 9,
+  getTooltipFooter = defaultGetTooltipFooter,
+  getYTicks = defaultGetYTicks,
 }: Props) => {
+  const tooltipFooter = (contexts: Array<TooltipItem<'bar'>>): string => {
+    const context = contexts[0]
+
+    if (context?.chart?.data?.datasets?.length <= 1) return ''
+
+    const datasets = context.chart.data.datasets
+    const dataIndex = context.dataIndex
+
+    const value = datasets.reduce((acc, dataset) => {
+      const data = dataset.data[dataIndex]
+      if (!isDataPoint(data)) return acc
+      return acc + data.y
+    }, 0)
+
+    const formattedTotal = getTooltipFooter(value)
+
+    return formattedTotal ? `Total: ${formattedTotal}` : value.toString()
+  }
+
+  const yTicks = (rawValue: string | number): string => {
+    const value = parseFloat(rawValue.toString())
+    if (isNaN(value)) return rawValue.toString()
+    return getYTicks(value) || value.toString()
+  }
+
   const options = mergeOptions(baseOptions, {
     responsive,
     aspectRatio,
@@ -83,6 +75,11 @@ export const BarChart = ({
         text: title,
       },
       legend: { display: legend },
+      tooltip: {
+        callbacks: {
+          footer: tooltipFooter,
+        },
+      },
     },
     scales: {
       x: {
@@ -94,7 +91,7 @@ export const BarChart = ({
       y: {
         display: scales,
         grid: { display: grid },
-        ticks: { display: ticks },
+        ticks: { display: ticks, callback: yTicks },
         stacked,
       },
     },

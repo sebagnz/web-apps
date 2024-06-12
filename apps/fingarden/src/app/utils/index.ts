@@ -1,5 +1,5 @@
 export * from './map'
 export * from './date'
 export * from './array'
-export * from './balance'
 export * from './css'
+export * from './number'
