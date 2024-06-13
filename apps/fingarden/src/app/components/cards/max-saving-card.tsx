@@ -12,7 +12,7 @@ import { getLongDate } from '../../utils/date'
 type CardProps = ComponentPropsWithoutRef<typeof Card>
 
 export const MaxSavingCard = ({ className, ...rest }: CardProps) => {
-  const { savingsByPeriod } = useSavings(null, RANGES.LAST_YEAR.dateFrom, RANGES.LAST_YEAR.dateTo)
+  const { savingsByPeriod } = useSavings(RANGES.LAST_YEAR.dateFrom, RANGES.LAST_YEAR.dateTo)
 
   const maxSaving = useMemo(
     () =>

@@ -12,7 +12,7 @@ type ChartDataPoint = { x: string; y: number }
 type Props = { dateFrom: Date; dateTo: Date; className?: string }
 
 export const SavingsChart = ({ dateFrom, dateTo, className }: Props) => {
-  const { savingsByPeriod } = useSavings(null, dateFrom, dateTo)
+  const { savingsByPeriod } = useSavings(dateFrom, dateTo)
 
   const label = 'Savings'
   const data: Array<ChartDataPoint> = savingsByPeriod.map(({ period, value }) => ({
@@ -28,7 +28,7 @@ export const SavingsChart = ({ dateFrom, dateTo, className }: Props) => {
 }
 
 export const SavingsLineChart = ({ dateFrom, dateTo, className }: Props) => {
-  const { savingsByPeriod } = useSavings(null, dateFrom, dateTo)
+  const { savingsByPeriod } = useSavings(dateFrom, dateTo)
 
   const label = 'Savings'
   const data: Array<ChartDataPoint> = savingsByPeriod.map(({ period, value }) => ({

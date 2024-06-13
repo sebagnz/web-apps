@@ -11,7 +11,7 @@ import { SavingsLineChart } from '@/components/savings-chart'
 type CardProps = ComponentPropsWithoutRef<typeof Card>
 
 export const SavingsCard = ({ className, ...rest }: CardProps) => {
-  const { totalSavings } = useSavings(null, RANGES.LAST_YEAR.dateFrom, RANGES.LAST_YEAR.dateTo)
+  const { totalSavings } = useSavings(RANGES.LAST_YEAR.dateFrom, RANGES.LAST_YEAR.dateTo)
 
   if (!totalSavings) {
     return (

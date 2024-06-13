@@ -24,7 +24,7 @@ export const Savings = ({ className }: SavingPageProps) => {
 
   const { error: snapshotsError, isLoading: isLoadingSnapshots } = useSnapshots(null, { order: 'asc' })
 
-  const { totalSavings } = useSavings(null, range.dateFrom, range.dateTo)
+  const { totalSavings } = useSavings(range.dateFrom, range.dateTo)
 
   const handleRangeChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setRange(RangeKeySchema.parse(e.currentTarget.value))

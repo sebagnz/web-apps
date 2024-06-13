@@ -3,7 +3,10 @@ import { useMemo } from 'react'
 
 import { useSnapshots } from '@/hooks/snapshots'
 
-import { Account, Snapshot, SnapshotList } from '@/domain'
+import { Snapshot, SnapshotList } from '@/domain'
+
+import { useAccounts } from '../accounts'
+import { useCurrencies } from '../currencies'
 
 type DataPoint = { period: number; value: number }
 
@@ -23,33 +26,74 @@ const groupSnapshotsByPeriod = (snapshots: SnapshotList): SnapshotsByPeriod => {
  * @param lastSnapshotByPeriod An array of snapshots containing only the last snapshot of each period
  * @returns An Map where each key representes a period and the value is an array of account balances
  */
-const getBalancesByPeriod = (snapshotsByPeriod: SnapshotsByPeriod): BalancesByPeriod => {
-  const allPeriods = Array.from(snapshotsByPeriod.keys())
+const useAllBalancesByPeriod = (snapshotsByPeriod: SnapshotsByPeriod): BalancesByPeriod => {
+  const { currencyRates } = useCurrencies()
+  const { accounts } = useAccounts()
 
-  return allPeriods.reduce<BalancesByPeriod>((map, period, periodIndex) => {
-    const periodSnspshots = snapshotsByPeriod.get(period) || []
-    const proyectedBalances = map.get(period) || []
+  const allPeriods = useMemo(() => Array.from(snapshotsByPeriod.keys()), [snapshotsByPeriod])
 
-    const filteredProyectedBalances = proyectedBalances.filter((balance) => {
-      return !periodSnspshots.some((snapshot) => snapshot.accountId === balance.accountId)
-    })
+  const balancesByPeriod = useMemo<BalancesByPeriod>(() => {
+    if (!currencyRates || !accounts) return new Map()
 
-    const lastSnapshotsInPeriod = periodSnspshots.filter((snapshot, i, arr) => {
-      return arr.findLastIndex(({ accountId }) => accountId === snapshot.accountId) === i
-    })
+    /**
+     * Traverse the periods array
+     */
+    return allPeriods.reduce<BalancesByPeriod>((map, period, periodIndex) => {
+      /**
+       * Grab all the snapshots in this period
+       */
+      const periodSnspshots = snapshotsByPeriod.get(period) || []
 
-    const realBalances = lastSnapshotsInPeriod.map(({ accountId, balance }) => ({ accountId, balance }))
+      /**
+       * Grab all the proyected balances for this period.
+       * Empty if this is the first iteration.
+       */
+      const proyectedBalances = map.get(period) || []
 
-    const mergedBalances = [...filteredProyectedBalances, ...realBalances]
+      /**
+       * Remove the proyected balance if this account has snapshots in this period.
+       */
+      const accountProyectedBalances = proyectedBalances.filter((balance) => {
+        return !periodSnspshots.some((snapshot) => snapshot.accountId === balance.accountId)
+      })
 
-    map.set(period, mergedBalances)
+      /**
+       * Keep only the last snapshot of this period for each account
+       */
+      const lastSnapshotsInPeriod = periodSnspshots.filter((snapshot, i, arr) => {
+        return arr.findLastIndex(({ accountId }) => accountId === snapshot.accountId) === i
+      })
 
-    const nextPeriod = allPeriods[periodIndex + 1]
+      /**
+       * Build an array of balances using the last snapshot of each account for this period.
+       */
+      const realBalances = lastSnapshotsInPeriod.map(({ accountId, balance }) => {
+        const account = accounts.find((account) => account.id === accountId)
+        const rate = currencyRates[account!.currencyCode] || 1
+        return { accountId, balance: balance / rate }
+      })
 
-    if (nextPeriod) map.set(nextPeriod, mergedBalances)
+      /**
+       * Merge the proyected balances with the real ones.
+       */
+      const mergedBalances = [...accountProyectedBalances, ...realBalances]
 
-    return map
-  }, new Map())
+      /**
+       * Override the proyected balances with the new mix between real and proyected.
+       */
+      map.set(period, mergedBalances)
+
+      /**
+       * If there is a next period, Proyect the current values on it.
+       */
+      const nextPeriod = allPeriods[periodIndex + 1]
+      if (nextPeriod) map.set(nextPeriod, mergedBalances)
+
+      return map
+    }, new Map())
+  }, [accounts, currencyRates, snapshotsByPeriod, allPeriods])
+
+  return balancesByPeriod
 }
 
 const filterBalancesByPeriod = (balancesByPeriod: BalancesByPeriod, dateFrom: Date, dateTo: Date) => {
@@ -86,12 +130,12 @@ const createSavingsByPeriod = (BalancesByPeriod: BalancesByPeriod): Array<DataPo
   }, [])
 }
 
-export const useSavings = (accountIds: Array<Account['id']> | null, dateFrom: Date, dateTo: Date) => {
-  const { snapshots } = useSnapshots(accountIds, { order: 'asc' })
+export const useSavings = (dateFrom: Date, dateTo: Date) => {
+  const { snapshots } = useSnapshots(null, { order: 'asc' })
 
   const snapshotsByPediod = useMemo(() => groupSnapshotsByPeriod(snapshots), [snapshots])
 
-  const allBalancesByPeriod = useMemo(() => getBalancesByPeriod(snapshotsByPediod), [snapshotsByPediod])
+  const allBalancesByPeriod = useAllBalancesByPeriod(snapshotsByPediod)
 
   const balancesByPeriod = useMemo(() => filterBalancesByPeriod(allBalancesByPeriod, dateFrom, dateTo), [allBalancesByPeriod, dateFrom, dateTo])
 
