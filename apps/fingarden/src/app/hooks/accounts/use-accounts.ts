@@ -25,6 +25,7 @@ export const createUseAccounts = (accountsService: AccountsService) => () => {
     fallbackData: [],
     revalidateOnFocus: false,
     dedupingInterval: 1000 * 60,
+    keepPreviousData: true,
   })
 
   useEffect(() => {

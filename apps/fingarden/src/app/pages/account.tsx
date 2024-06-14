@@ -89,7 +89,7 @@ export const AccountPage = ({ accountId, className }: AccountPageProps) => {
     )
   }
 
-  if (isLoadingCurrencies || isLoadingAccount || isLoadingSnapshots) {
+  if (snapshots.length === 0 && (isLoadingCurrencies || isLoadingAccount || isLoadingSnapshots)) {
     return (
       <div className={className}>
         <div className="flex flex-col">
