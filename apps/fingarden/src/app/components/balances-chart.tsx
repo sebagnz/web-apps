@@ -8,7 +8,7 @@ import { useSavings } from '@/hooks/savings'
 
 import { BarChart } from '@/components/charts/bar-chart'
 
-import { DataPoint, isDataPoint } from './charts/chart'
+import { DataPoint } from './charts/chart'
 import { LineChart } from './charts/line-chart'
 
 type Props = { dateFrom: Date; dateTo: Date; className?: string }

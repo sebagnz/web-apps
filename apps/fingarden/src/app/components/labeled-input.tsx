@@ -2,23 +2,24 @@ import { ComponentPropsWithoutRef, ReactNode, forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 function LabeledInput({ className, ...props }: { className?: string; children: ReactNode }) {
-  return <div className={twMerge('flex overflow-hidden', 'border border-base rounded-md', 'focus-within:ring-1', className)} {...props} />
+  return <div className={twMerge('flex', 'py-1', 'border border-base/50 rounded-md', 'focus-within:ring-1', className)} {...props} />
 }
 
-function Label(
-  props: ComponentPropsWithoutRef<'label'> & {
-    htmlFor: NonNullable<ComponentPropsWithoutRef<'label'>['htmlFor']>
-    children: NonNullable<ComponentPropsWithoutRef<'label'>['children']>
-  },
-) {
-  return <label className={twMerge('py-3 px-2')} {...props} />
+function Label({
+  className,
+  ...rest
+}: ComponentPropsWithoutRef<'label'> & {
+  htmlFor: NonNullable<ComponentPropsWithoutRef<'label'>['htmlFor']>
+  children: NonNullable<ComponentPropsWithoutRef<'label'>['children']>
+}) {
+  return <label className={twMerge('my-auto px-2', className)} {...rest} />
 }
 
 type TextRef = HTMLInputElement
 type TextProps = ComponentPropsWithoutRef<'input'>
 
 const Input = forwardRef<TextRef, TextProps>(function TextInput({ className, ...props }, ref) {
-  return <input className={twMerge('flex-1', 'py-3 px-2', 'rounded-l-none', 'bg-transparent', className)} {...props} ref={ref} />
+  return <input className={twMerge('flex-1', 'p-2', 'rounded-l-none', 'bg-transparent', className)} {...props} ref={ref} />
 })
 
 type SelectRef = HTMLSelectElement
@@ -29,9 +30,10 @@ const Select = forwardRef<SelectRef, SelectProps>(function SelectInput({ classNa
     <select
       className={twMerge(
         'flex-1',
-        'pl-3 pr-5 py-2',
+        'pr-1',
         'border-r-8 border-r-transparent rounded-l-none focus:outline-none',
         'bg-transparent',
+        'cursor-pointer',
         className,
       )}
       {...props}

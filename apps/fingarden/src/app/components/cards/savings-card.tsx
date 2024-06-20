@@ -1,7 +1,7 @@
+import { useDateRange } from '@/contexts/date-range'
 import { ComponentPropsWithoutRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-import { RANGES } from '@/hooks/date-range'
 import { useSavings } from '@/hooks/savings'
 
 import { Balance } from '@/components/balance'
@@ -11,7 +11,9 @@ import { SavingsLineChart } from '@/components/savings-chart'
 type CardProps = ComponentPropsWithoutRef<typeof Card>
 
 export const SavingsCard = ({ className, ...rest }: CardProps) => {
-  const { totalSavings } = useSavings(RANGES.LAST_YEAR.dateFrom, RANGES.LAST_YEAR.dateTo)
+  const { range } = useDateRange()
+
+  const { totalSavings } = useSavings(range.dateFrom, range.dateTo)
 
   if (!totalSavings) {
     return (
@@ -27,7 +29,7 @@ export const SavingsCard = ({ className, ...rest }: CardProps) => {
         <p className="text-lg">Last year savings</p>
         <Balance className="text-3xl font-medium">{totalSavings}</Balance>
       </div>
-      <SavingsLineChart className="h-36" dateFrom={RANGES.LAST_YEAR.dateFrom} dateTo={RANGES.LAST_YEAR.dateTo} />
+      <SavingsLineChart className="h-36" dateFrom={range.dateFrom} dateTo={range.dateTo} />
     </Card>
   )
 }

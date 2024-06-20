@@ -1,34 +1,27 @@
 'use client'
 
-import { ChangeEvent } from 'react'
+import { useDateRange } from '@/contexts/date-range'
 import { twMerge } from 'tailwind-merge'
 
 import { Skeleton } from '@web-apps/ui'
 
 import { useAccounts } from '@/hooks/accounts'
-import { RANGE_LABELS, RangeKeySchema, useDateRange } from '@/hooks/date-range'
 import { useSavings } from '@/hooks/savings'
 import { useSnapshots } from '@/hooks/snapshots'
 
 import { Balance } from '@/components/balance'
 import { BalancesChart } from '@/components/balances-chart'
-import { LabeledInput } from '@/components/labeled-input'
 import { SavingsChart } from '@/components/savings-chart'
 
 type SavingPageProps = { className?: string }
 
 export const Savings = ({ className }: SavingPageProps) => {
-  const { rangeKey, range, setRange } = useDateRange()
-
+  const { range } = useDateRange()
   const { error: accountsError, isLoading: isLoadingAccounts } = useAccounts()
 
   const { error: snapshotsError, isLoading: isLoadingSnapshots } = useSnapshots(null, { order: 'asc' })
 
   const { totalSavings } = useSavings(range.dateFrom, range.dateTo)
-
-  const handleRangeChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setRange(RangeKeySchema.parse(e.currentTarget.value))
-  }
 
   if (accountsError || snapshotsError) {
     return (
@@ -68,18 +61,6 @@ export const Savings = ({ className }: SavingPageProps) => {
 
   return (
     <div className={twMerge('space-y-3', className)}>
-      <form>
-        <LabeledInput className="w-fit mx-auto">
-          <LabeledInput.Label htmlFor="range">Range</LabeledInput.Label>
-          <LabeledInput.Select id="range" onChange={handleRangeChange} defaultValue={rangeKey}>
-            {Object.entries(RANGE_LABELS).map(([key, label]) => (
-              <LabeledInput.Option key={key} value={key}>
-                {label}
-              </LabeledInput.Option>
-            ))}
-          </LabeledInput.Select>
-        </LabeledInput>
-      </form>
       <div className="space-y-10 max-w-2xl mx-auto text-center">
         <div>
           <p>Total Savings</p>

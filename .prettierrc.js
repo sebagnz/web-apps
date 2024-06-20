@@ -8,6 +8,7 @@ module.exports = {
     '<THIRD_PARTY_MODULES>',
     '^@/routes',
     '^@web-apps/(.*)$',
+    '^@/contexts(.*)$',
     '^@/hooks(.*)$',
     '^@/domain',
     '^@/services',

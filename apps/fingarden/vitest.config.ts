@@ -8,6 +8,7 @@ export default defineConfig({
     environment: 'jsdom',
     alias: {
       '@/domain': path.resolve(__dirname, './src/app/domain'),
+      '@/contexts': path.resolve(__dirname, './src/app/contexts'),
       '@/hooks': path.resolve(__dirname, './src/app/hooks'),
       '@/utils': path.resolve(__dirname, './src/app/utils'),
     },

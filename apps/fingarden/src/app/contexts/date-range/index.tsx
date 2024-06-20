@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ReactNode, createContext, useContext, useState } from 'react'
 import { z } from 'zod'
 
 export const RangeSchema = z.object({ dateFrom: z.date(), dateTo: z.date() })
@@ -21,12 +21,28 @@ export const RANGE_LABELS: Record<RangeKey, string> = {
   ALL_TIME: 'All time',
 }
 
-export const useDateRange = (defaultKey: RangeKey = 'LAST_YEAR') => {
-  const [key, setKey] = useState<RangeKey>(defaultKey)
+type DateRangeContext = {
+  range: Range
+  rangeKey: RangeKey
+  setRangeKey: (key: RangeKey) => void
+}
 
-  const range = RANGES[key]
+const DataRangeContext = createContext<DateRangeContext>({
+  rangeKey: 'LAST_YEAR',
+  range: RANGES.LAST_YEAR,
+  setRangeKey: () => undefined,
+})
 
-  const setRange = (key: RangeKey) => setKey(key)
+export const useDateRange = () => {
+  return useContext(DataRangeContext)
+}
 
-  return { rangeKey: key, range, setRange }
+type Props = { defaultKey?: RangeKey; children: ReactNode }
+
+export const DateRangeProvider = (props: Props) => {
+  const [rangeKey, setRangeKey] = useState<RangeKey>(props.defaultKey || 'LAST_YEAR')
+
+  const range = RANGES[rangeKey]
+
+  return <DataRangeContext.Provider value={{ range, rangeKey, setRangeKey }} {...props} />
 }

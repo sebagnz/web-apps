@@ -1,7 +1,7 @@
+import { useDateRange } from '@/contexts/date-range'
 import { ComponentPropsWithoutRef, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-import { RANGES } from '@/hooks/date-range'
 import { useSavings } from '@/hooks/savings'
 
 import { Balance } from '@/components/balance'
@@ -12,7 +12,9 @@ import { getLongDate } from '../../utils/date'
 type CardProps = ComponentPropsWithoutRef<typeof Card>
 
 export const MaxSavingCard = ({ className, ...rest }: CardProps) => {
-  const { savingsByPeriod } = useSavings(RANGES.LAST_YEAR.dateFrom, RANGES.LAST_YEAR.dateTo)
+  const { range } = useDateRange()
+
+  const { savingsByPeriod } = useSavings(range.dateFrom, range.dateTo)
 
   const maxSaving = useMemo(
     () =>

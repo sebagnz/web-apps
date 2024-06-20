@@ -1,8 +1,8 @@
+import { useDateRange } from '@/contexts/date-range'
 import { ComponentPropsWithoutRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import { useAccounts } from '@/hooks/accounts'
-import { RANGES } from '@/hooks/date-range'
 
 import { Balance } from '@/components/balance'
 import { TotalBalanceChart } from '@/components/balances-chart'
@@ -12,6 +12,8 @@ type CardProps = ComponentPropsWithoutRef<typeof Card>
 
 export const BalanceCard = ({ className, ...rest }: CardProps) => {
   const { totalBalance, isLoading } = useAccounts()
+
+  const { range } = useDateRange()
 
   if (isLoading) {
     return (
@@ -35,7 +37,7 @@ export const BalanceCard = ({ className, ...rest }: CardProps) => {
         <p className="text-lg">Total balance</p>
         <Balance className="text-3xl font-medium">{totalBalance}</Balance>
       </div>
-      <TotalBalanceChart className="h-36" dateFrom={RANGES.LAST_YEAR.dateFrom} dateTo={RANGES.LAST_YEAR.dateTo} />
+      <TotalBalanceChart className="h-36" dateFrom={range.dateFrom} dateTo={range.dateTo} />
     </Card>
   )
 }

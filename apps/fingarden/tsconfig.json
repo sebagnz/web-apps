@@ -22,6 +22,7 @@
     "paths": {
       "@/components/*": ["./src/app/components/*"],
       "@/domain": ["./src/app/domain/index"],
+      "@/contexts/*": ["./src/app/contexts/*"],
       "@/hooks/*": ["./src/app/hooks/*"],
       "@/pages/*": ["./src/app/pages/*"],
       "@/routes": ["./src/app/routes"],
