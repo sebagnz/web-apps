@@ -13,7 +13,7 @@ type CardProps = ComponentPropsWithoutRef<typeof Card>
 export const AddAccountCard = ({ className, ...rest }: CardProps) => {
   return (
     <Link href={Routes.app.accounts.new}>
-      <div className={twMerge('text-center text-muted hover:text-base border border-base rounded-xl', className)} {...rest}>
+      <div className={twMerge('p-6 text-center text-muted hover:text-base border border-base rounded-xl', className)} {...rest}>
         <div className="h-full flex flex-col items-center justify-center gap-y-1">
           <button>
             <PlusIcon />
