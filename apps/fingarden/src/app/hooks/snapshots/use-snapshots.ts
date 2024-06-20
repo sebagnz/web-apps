@@ -67,10 +67,6 @@ export const createUseSnapshots = (snapshotsService: SnapshotsService) => (accou
   })
 
   useEffect(() => {
-    console.log('snapshots :>> ', snapshots)
-  }, [snapshots])
-
-  useEffect(() => {
     if (error) toast.error(error.message)
   }, [error])
 

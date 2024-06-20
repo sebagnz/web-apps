@@ -51,7 +51,7 @@ export const Accounts = ({ className }: Props) => {
         <SavingsCard className="flex-1" />
       </SummaryGrid>
 
-      <Button className="block w-fit mx-auto mt-10 mb-5" as={TransitionLink} href={Routes.app.savings.index} variant="outline">
+      <Button className="block w-fit mx-auto mt-10 mb-5" as={TransitionLink} href={Routes.app.analytics.index} variant="outline">
         View analytics
       </Button>
     </div>

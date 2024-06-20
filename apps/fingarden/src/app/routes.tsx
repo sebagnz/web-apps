@@ -19,8 +19,8 @@ export const Routes = {
       index: '/app/expenses',
       new: '/app/expenses/new',
     },
-    savings: {
-      index: '/app/savings',
+    analytics: {
+      index: '/app/analytics',
     },
     preferences: {
       index: '/app/preferences',

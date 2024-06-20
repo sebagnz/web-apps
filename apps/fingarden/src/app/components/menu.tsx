@@ -58,8 +58,8 @@ export const Menu = ({ className, ...rest }: ComponentPropsWithoutRef<'div'>) =>
             </NavItem>
 
             <NavItem onClick={close}>
-              <NavLink href={Routes.app.savings.index}>
-                <SavingsIcon /> Savings
+              <NavLink href={Routes.app.analytics.index}>
+                <AnalyticsIcon /> Analytics
               </NavLink>
             </NavItem>
           </NavGroup>
@@ -153,7 +153,7 @@ const UserInfo = () => {
 
 const AccontsIcon = () => <UserIcon className="text-accent w-[20px]" />
 
-const SavingsIcon = () => <ChartLineUpIcon className="text-accent w-[20px]" />
+const AnalyticsIcon = () => <ChartLineUpIcon className="text-accent w-[20px]" />
 
 const LogoutIcon = () => <ArrowRightToBracketIcon className="text-accent w-[20px]" />
 

@@ -13,9 +13,9 @@ import { Balance } from '@/components/balance'
 import { BalancesChart } from '@/components/balances-chart'
 import { SavingsChart } from '@/components/savings-chart'
 
-type SavingPageProps = { className?: string }
+type Props = { className?: string }
 
-export const Savings = ({ className }: SavingPageProps) => {
+export const Analytics = ({ className }: Props) => {
   const { range } = useDateRange()
   const { error: accountsError, isLoading: isLoadingAccounts } = useAccounts()
 
