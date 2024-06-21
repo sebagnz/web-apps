@@ -15,7 +15,7 @@ export const TopSavingCard = ({ className, ...rest }: CardProps) => {
 
   const { savingsByPeriod } = useSavings(range.dateFrom, range.dateTo)
 
-  const [top1, top2, top3] = savingsByPeriod.sort((a, b) => (a.value > b.value ? 1 : -1))
+  const [top1, top2, top3] = savingsByPeriod.sort((a, b) => (a.value < b.value ? -1 : 1))
 
   if (!top1) {
     return (
