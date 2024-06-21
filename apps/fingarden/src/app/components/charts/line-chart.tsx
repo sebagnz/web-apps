@@ -22,9 +22,9 @@ type Props = {
   title?: string
   responsive?: boolean
   legend?: boolean
-  scales?: boolean
-  grid?: boolean
-  ticks?: boolean
+  scales?: 'x' | 'y' | boolean
+  grid?: 'x' | 'y' | boolean
+  ticks?: 'x' | 'y' | boolean
   fill?: FillTarget
   tension?: number
   borderWidth?: number
@@ -70,14 +70,14 @@ export const LineChart = ({
     },
     scales: {
       x: {
-        display: scales,
-        grid: { display: grid },
-        ticks: { display: ticks, padding: 0 },
+        display: Boolean(scales === true || scales === 'x'),
+        grid: { display: Boolean(grid === true || grid === 'x') },
+        ticks: { display: Boolean(ticks === true || ticks === 'x'), padding: 0 },
       },
       y: {
-        display: scales,
-        grid: { display: grid },
-        ticks: { display: ticks, padding: 0 },
+        display: Boolean(ticks === true || ticks === 'y'),
+        grid: { display: Boolean(grid === true || grid === 'y') },
+        ticks: { display: Boolean(ticks === true || ticks === 'y'), padding: 0 },
       },
     },
   })

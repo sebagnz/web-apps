@@ -19,7 +19,9 @@ export const useBalances = () => {
   const { preferences } = usePreferences()
   const { mainCurrency, currencies } = useCurrencies()
 
-  const hideBalances = useMemo(() => Boolean(preferences?.hideBalances), [preferences])
+  const hideBalances = useMemo(() => Boolean(preferences?.hideBalances ?? true), [preferences])
+
+  const hideable = useCallback((balance: string | null) => (hideBalances ? '••••••' : balance), [hideBalances])
 
   const formatBalance = ({ value, currencyCode, scale, precision }: FormatBalanceParams) => {
     if (hideBalances === null || mainCurrency === null || !currencies) return null
@@ -45,6 +47,7 @@ export const useBalances = () => {
 
   return {
     hideBalances,
+    hideable,
     formatBalance: useCallback(formatBalance, [hideBalances, mainCurrency, currencies]),
   }
 }

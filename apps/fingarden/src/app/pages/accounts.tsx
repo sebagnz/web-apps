@@ -16,8 +16,8 @@ import { Button } from '@/components/button'
 import { AccountCard } from '@/components/cards/account-card'
 import { AddAccountCard } from '@/components/cards/add-account-card'
 import { BalanceCard } from '@/components/cards/balance-card'
-import { MaxSavingCard } from '@/components/cards/max-saving-card'
 import { SavingsCard } from '@/components/cards/savings-card'
+import { TopSavingCard } from '@/components/cards/top-savings-card'
 import { TransitionLink } from '@/components/transition-link'
 
 type Props = { className?: string }
@@ -47,7 +47,7 @@ export const Accounts = ({ className }: Props) => {
 
       <SummaryGrid className="mt-12">
         <BalanceCard className="flex-1" />
-        <MaxSavingCard className="flex-1" />
+        <TopSavingCard className="flex-1" />
         <SavingsCard className="flex-1" />
       </SummaryGrid>
 

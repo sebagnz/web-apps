@@ -14,7 +14,7 @@ import { LineChart } from './charts/line-chart'
 type Props = { dateFrom: Date; dateTo: Date; className?: string }
 
 export const BalancesChart = ({ dateFrom, dateTo, className }: Props) => {
-  const { formatBalance } = useBalances()
+  const { formatBalance, hideable } = useBalances()
 
   const { accounts } = useAccounts()
 
@@ -33,9 +33,9 @@ export const BalancesChart = ({ dateFrom, dateTo, className }: Props) => {
     return acc
   }, [])
 
-  const getTooltipFooter: ComponentPropsWithoutRef<typeof BarChart>['getTooltipFooter'] = (value) => formatBalance({ value })
+  const getTooltipFooter: ComponentPropsWithoutRef<typeof BarChart>['getTooltipFooter'] = (value) => hideable(formatBalance({ value }))
 
-  const getYTicks: ComponentPropsWithoutRef<typeof BarChart>['getYTicks'] = (value) => formatBalance({ value, precision: 1, scale: 'k' })
+  const getYTicks: ComponentPropsWithoutRef<typeof BarChart>['getYTicks'] = (value) => hideable(formatBalance({ value, precision: 1, scale: 'k' }))
 
   return (
     <div className={twMerge('relative', className)}>

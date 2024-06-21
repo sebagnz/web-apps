@@ -32,11 +32,9 @@ type BalanceComponentProps = Omit<ComponentPropsWithoutRef<'p'>, keyof BalancePr
 
 export const Balance = ({ currencyCode, scale, precision, children, ...rest }: BalanceComponentProps) => {
   const nodeRef = useRef(null)
-  const { hideBalances, formatBalance } = useBalances()
+  const { hideable, formatBalance } = useBalances()
 
-  if (hideBalances === null) return null
-
-  const textContent = hideBalances ? '••••••' : formatBalance({ value: children, currencyCode, scale, precision })
+  const textContent = hideable(formatBalance({ value: children, currencyCode, scale, precision }))
 
   return (
     <SwitchTransition>

@@ -26,7 +26,7 @@ export const SavingsCard = ({ className, ...rest }: CardProps) => {
   return (
     <Card className={twMerge('p-6 pb-2 flex flex-col items-center gap-y-7', className)} {...rest}>
       <div className="text-center">
-        <p className="text-lg">Last year savings</p>
+        <p className="text-lg">Total savings</p>
         <Balance className="text-3xl font-medium">{totalSavings}</Balance>
       </div>
       <SavingsLineChart className="h-36" dateFrom={range.dateFrom} dateTo={range.dateTo} />

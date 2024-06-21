@@ -14,9 +14,9 @@ type Props = {
   title?: string
   responsive?: boolean
   legend?: boolean
-  scales?: boolean
-  grid?: boolean
-  ticks?: boolean
+  scales?: 'x' | 'y' | boolean
+  grid?: 'x' | 'y' | boolean
+  ticks?: 'x' | 'y' | boolean
   stacked?: boolean
   aspectRatio?: number
   className?: string
@@ -83,15 +83,15 @@ export const BarChart = ({
     },
     scales: {
       x: {
-        display: scales,
-        grid: { display: grid },
-        ticks: { display: ticks },
+        display: Boolean(scales === true || scales === 'x'),
+        grid: { display: Boolean(grid === true || grid === 'x') },
+        ticks: { display: Boolean(ticks === true || ticks === 'x'), padding: 0 },
         stacked,
       },
       y: {
-        display: scales,
-        grid: { display: grid },
-        ticks: { display: ticks, callback: yTicks },
+        display: Boolean(ticks === true || ticks === 'y'),
+        grid: { display: Boolean(grid === true || grid === 'y') },
+        ticks: { display: Boolean(ticks === true || ticks === 'y'), padding: 0, callback: yTicks },
         stacked,
       },
     },
