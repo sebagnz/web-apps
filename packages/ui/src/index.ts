@@ -28,6 +28,8 @@ export * from './icons/chart-pie'
 export * from './icons/message'
 export * from './icons/preferences'
 export * from './icons/calendar'
+export * from './icons/coins'
+export * from './icons/key'
 
 /**
  * Types

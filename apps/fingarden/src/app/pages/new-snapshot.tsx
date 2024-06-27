@@ -2,13 +2,14 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
+import { ComponentPropsWithoutRef } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { z } from 'zod'
 
 import { Routes } from '@/routes'
 
-import { Spinner } from '@web-apps/ui'
+import { CalendarIcon, CoinsIcon, Spinner } from '@web-apps/ui'
 
 import { useSnapshots } from '@/hooks/snapshots'
 
@@ -16,8 +17,8 @@ import { Button } from '@/components/button'
 import { LabeledInput } from '@/components/labeled-input'
 
 const errorMessages = {
-  dateRequired: 'Please, introduce a date for your new snapshot',
-  invalidBalance: 'Please, introduce a valid balance for your new account',
+  dateRequired: 'Please, introduce a date',
+  invalidBalance: 'Please, introduce a valid balance',
 }
 
 const FormInputSchema = z.object({
@@ -56,7 +57,9 @@ export const NewSnapshot = ({ accountId }: NewSnapshotPageProps) => {
 
       <div>
         <LabeledInput>
-          <LabeledInput.Label htmlFor="date">Date</LabeledInput.Label>
+          <LabeledInput.Label htmlFor="date">
+            <CalendarIcon />
+          </LabeledInput.Label>
           <LabeledInput.Input
             id="date"
             type="date"
@@ -69,10 +72,12 @@ export const NewSnapshot = ({ accountId }: NewSnapshotPageProps) => {
 
       <div className="space-y-2">
         <LabeledInput>
-          <LabeledInput.Label htmlFor="balance">Balance</LabeledInput.Label>
+          <LabeledInput.Label htmlFor="balance">
+            <CoinsIcon />
+          </LabeledInput.Label>
           <LabeledInput.Input
             id="balance"
-            placeholder="100"
+            placeholder="1.000"
             autoComplete="off"
             type="number"
             inputMode="decimal"

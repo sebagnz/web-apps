@@ -9,7 +9,7 @@ import { z } from 'zod'
 
 import { Routes } from '@/routes'
 
-import { Spinner } from '@web-apps/ui'
+import { CoinsIcon, Spinner, UserIcon } from '@web-apps/ui'
 
 import { useAccounts } from '@/hooks/accounts'
 import { useCurrencies } from '@/hooks/currencies'
@@ -63,17 +63,19 @@ export const NewAccount = () => {
         <div>
           <div className={twJoin('flex', 'flex-col max-md:gap-y-4', 'md:flex-row md:gap-x-4')}>
             <LabeledInput className="max-md:flex-1">
-              <LabeledInput.Label htmlFor="currency-code">Currency</LabeledInput.Label>
-              <LabeledInput.Select id="currency-code" {...register('currencyCode')}>
+              <LabeledInput.Label htmlFor="currency-code"> </LabeledInput.Label>
+              <LabeledInput.Select id="currency-code" {...register('currencyCode')} defaultValue={mainCurrency?.code}>
                 {Object.values(currencies || {}).map((currency) => (
-                  <LabeledInput.Option key={currency.code} value={currency.code} selected={currency.code === mainCurrency?.code}>
+                  <LabeledInput.Option key={currency.code} value={currency.code}>
                     {currency.icon} {currency.name}
                   </LabeledInput.Option>
                 ))}
               </LabeledInput.Select>
             </LabeledInput>
             <LabeledInput className="flex-1">
-              <LabeledInput.Label htmlFor="name">Name</LabeledInput.Label>
+              <LabeledInput.Label htmlFor="name">
+                <UserIcon />
+              </LabeledInput.Label>
               <LabeledInput.Input id="name" autoComplete="off" placeholder="Name" {...register('name')} />
             </LabeledInput>
           </div>
@@ -81,10 +83,12 @@ export const NewAccount = () => {
         </div>
 
         <LabeledInput>
-          <LabeledInput.Label htmlFor="balance">Balance</LabeledInput.Label>
+          <LabeledInput.Label htmlFor="balance">
+            <CoinsIcon />
+          </LabeledInput.Label>
           <LabeledInput.Input
             id="balance"
-            placeholder="100"
+            placeholder="1.000"
             autoComplete="off"
             type="number"
             inputMode="decimal"

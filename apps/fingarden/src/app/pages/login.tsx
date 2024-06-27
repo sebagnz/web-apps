@@ -10,7 +10,7 @@ import { z } from 'zod'
 
 import { Routes } from '@/routes'
 
-import { Spinner } from '@web-apps/ui'
+import { KeyIcon, Spinner, UserIcon } from '@web-apps/ui'
 
 import { useAuth } from '@/hooks/auth'
 
@@ -73,16 +73,20 @@ export const Login = () => {
 
       <div className="mx-auto">
         <LabeledInput>
-          <LabeledInput.Label htmlFor="username">Email</LabeledInput.Label>
-          <LabeledInput.Input autoCapitalize="off" id="username" {...register('username')} />
+          <LabeledInput.Label htmlFor="username">
+            <UserIcon />
+          </LabeledInput.Label>
+          <LabeledInput.Input autoCapitalize="off" id="username" placeholder="Username" {...register('username')} />
         </LabeledInput>
         {errors.username?.message && <p className="text-error text-sm">{errors.username?.message}</p>}
       </div>
 
       <div className="mx-auto">
         <LabeledInput>
-          <LabeledInput.Label htmlFor="password">Password</LabeledInput.Label>
-          <LabeledInput.Input autoCapitalize="off" id="password" type="password" {...register('password')} />
+          <LabeledInput.Label htmlFor="password">
+            <KeyIcon />
+          </LabeledInput.Label>
+          <LabeledInput.Input autoCapitalize="off" id="password" type="password" placeholder="Password" {...register('password')} />
         </LabeledInput>
         {errors.password?.message && <p className="text-error text-sm">{errors.password?.message}</p>}
       </div>
